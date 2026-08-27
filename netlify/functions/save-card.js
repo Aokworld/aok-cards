@@ -28,7 +28,7 @@ exports.handler = async (event) => {
       "Kindness statement": d.means || "",
       "Story or memory": d.act || "",
       "Public slug": slug,
-      "Rung": "Rung " + (d.rung || "1 Free Flag"),
+      "Rung": d.rung || "1 Free Flag",
       "Card status": "Submitted"
     };
 
