@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Kindness Card — A²OK</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--gold:#9A7B29;--gold-l:#C9B681;--dark:#1F2937;--grey:#6B7280;--cream:#FAF6EC;--paper:#fff;--line:#E7DCC2;--maroon:#5a1414;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--cream);color:var(--dark);font-family:'Crimson Pro',Georgia,serif;padding:40px 20px;}
+  .wrap{max-width:620px;margin:0 auto;}
+  .brand{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;text-align:center;margin-bottom:14px;}
+  .card{border:1px solid var(--gold-l);border-radius:16px;overflow:hidden;background:var(--paper);box-shadow:0 8px 30px rgba(60,45,15,.10);}
+  .card .top{background:var(--dark);color:#F3E7C6;padding:22px 26px;}
+  .card .org{font-family:'Playfair Display',serif;font-weight:900;font-size:30px;color:#fff;line-height:1.1;}
+  .card .meta{font-family:'DM Mono',monospace;font-size:12px;color:var(--gold-l);margin-top:5px;}
+  .card .body{padding:22px 26px;}
+  .fieldline{margin-bottom:16px;}
+  .fieldline:last-child{margin-bottom:0;}
+  .fieldline .k{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;}
+  .fieldline .v{font-size:18px;color:var(--dark);line-height:1.4;}
+  .rung{font-family:'DM Mono',monospace;font-size:11px;color:var(--maroon);text-align:center;margin-top:14px;letter-spacing:.05em;}
+  .foot{text-align:center;color:var(--grey);font-size:13px;font-style:italic;margin-top:16px;}
+  .state{text-align:center;color:var(--grey);font-style:italic;padding:40px;}
+</style></head>
+<body><div class="wrap">
+  <div class="brand">A²OK · Anonymous Acts of Kindness</div>
+  <div id="mount"><div class="state">Loading the card…</div></div>
+  <div class="foot" id="foot"></div>
+</div>
+<script>
+function esc(s){return (s||'').replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
+function line(k,v){ if(!v) return ''; return '<div class="fieldline"><div class="k">'+k+'</div><div class="v">'+esc(v)+'</div></div>'; }
+function render(d){
+  var loc=[d.city,d.state].filter(Boolean).join(', ');
+  var html='<div class="card"><div class="top"><div class="org">'+esc(d.org||'A Kind Organization')+'</div>'+
+    (loc?'<div class="meta">'+esc(loc)+'</div>':'')+'</div><div class="body">'+
+    line('Motto',d.motto)+line('What kindness means to us',d.means)+line('An act of kindness',d.act)+
+    '</div></div>'+
+    (d.rung?'<div class="rung">'+esc(d.rung)+'</div>':'');
+  document.getElementById('mount').innerHTML=html;
+  document.getElementById('foot').textContent='A card in the A²OK community. Acts stay unsigned — that is the first law.';
+}
+(async function(){
+  var slug=new URLSearchParams(location.search).get('slug');
+  if(!slug){ document.getElementById('mount').innerHTML='<div class="state">No card specified.</div>'; return; }
+  try{
+    var res=await fetch('/.netlify/functions/get-card?slug='+encodeURIComponent(slug));
+    if(!res.ok) throw new Error('not found');
+    render(await res.json());
+  }catch(e){
+    document.getElementById('mount').innerHTML='<div class="state">We couldn’t find that card yet. If it was just created, give it a moment and refresh.</div>';
+  }
+})();
+</script>
+</body></html>
