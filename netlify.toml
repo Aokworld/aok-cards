@@ -4,3 +4,11 @@
 
 [functions]
   node_bundler = "esbuild"
+
+# Pretty card URLs: /billy-charity serves the card page (which reads the slug
+# from the path). Real files (/, index.html, card.html, functions) still win,
+# because this rewrite only fires when no actual file matches.
+[[redirects]]
+  from = "/*"
+  to = "/card.html"
+  status = 200

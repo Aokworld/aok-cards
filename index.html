@@ -1,111 +1,593 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Create Your Kindness Card — A²OK</title>
+<title>A²OK — Create your Kindness Card</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{--gold:#9A7B29;--gold-l:#C9B681;--dark:#1F2937;--grey:#6B7280;--cream:#FAF6EC;--paper:#fff;--line:#E7DCC2;--maroon:#5a1414;--green:#2f6b3a;--soft:#F3ECDA;}
+  :root{--gold:#9A7B29;--gold-l:#C9B681;--dark:#1F2937;--grey:#6B7280;--cream:#FAF6EC;--paper:#FFFFFF;--line:#E4D9BE;--soft:#F3ECDA;--maroon:#5a1414;--ink:#2A1B0E;--field:#5B4A33;}
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--cream);color:var(--dark);font-family:'Crimson Pro',Georgia,serif;padding:26px 20px 44px;}
-  .wrap{max-width:960px;margin:0 auto;}
-  .brand{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;text-align:center;}
-  h1{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;text-align:center;margin:.15rem 0;}
-  .lead{text-align:center;color:var(--grey);font-style:italic;font-size:16px;border-bottom:2px solid var(--gold-l);padding-bottom:16px;margin-bottom:20px;}
-  .cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-  @media(max-width:760px){.cols{grid-template-columns:1fr;}}
-  .panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:18px 20px;box-shadow:0 4px 14px rgba(60,45,15,.06);}
-  .ptitle{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--maroon);font-weight:600;margin-bottom:12px;}
-  label{display:block;font-size:12.5px;color:var(--grey);font-family:'DM Mono',monospace;margin:11px 0 3px;text-transform:uppercase;letter-spacing:.03em;}
-  input,textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-family:'Crimson Pro',serif;font-size:15px;color:var(--dark);background:#fffdf8;}
-  textarea{resize:none;height:52px;}
-  .card{border:1px solid var(--gold-l);border-radius:12px;overflow:hidden;background:var(--paper);}
-  .card .top{background:var(--dark);color:#F3E7C6;padding:13px 16px;}
-  .card .org{font-family:'Playfair Display',serif;font-weight:900;font-size:21px;color:#fff;}
-  .card .meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--gold-l);margin-top:2px;}
-  .card .body{padding:14px 16px;}
-  .fieldline{margin-bottom:10px;}
-  .fieldline .k{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);}
-  .fieldline .v{font-size:15px;color:var(--dark);line-height:1.35;}
-  .fieldline .v.empty{color:#c9beA6;font-style:italic;}
-  .rung{display:flex;align-items:center;gap:8px;margin:0 0 12px;}
-  .rungbar{flex:1;height:8px;background:var(--soft);border-radius:99px;overflow:hidden;}
-  .rungfill{height:100%;background:linear-gradient(90deg,var(--gold-l),var(--gold));width:15%;transition:width .25s;}
-  .runglabel{font-family:'DM Mono',monospace;font-size:11px;color:var(--maroon);font-weight:600;white-space:nowrap;}
-  .btn{margin-top:14px;width:100%;background:var(--maroon);color:#fff;border:none;border-radius:9px;padding:11px;font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.05em;cursor:pointer;}
-  .btn:disabled{opacity:.5;cursor:default;}
-  .msg{margin-top:12px;font-size:14px;text-align:center;min-height:20px;}
-  .msg a{color:var(--maroon);font-weight:600;}
-  .msg.ok{color:var(--green);} .msg.err{color:#8a2b2b;}
-</style></head>
-<body><div class="wrap">
-  <div class="brand">A²OK · Kindness Card</div>
-  <h1>Create your kindness card</h1>
-  <div class="lead">Fill in a little or a lot — your card fills in as you type. When you're ready, save it and we'll give you a link that's yours.</div>
+  body{background:var(--cream);color:var(--dark);font-family:'Crimson Pro',Georgia,serif;font-size:16px;line-height:1.5;}
+  .top{max-width:1240px;margin:0 auto;padding:26px 26px 6px;}
+  .eyebrow{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);}
+  h1{font-family:'Playfair Display',serif;font-size:30px;font-weight:700;margin:.15rem 0;}
+  .lede{color:var(--grey);font-style:italic;font-size:16px;border-bottom:2px solid var(--gold-l);padding-bottom:14px;}
+  .grid{max-width:1240px;margin:0 auto;padding:18px 26px 46px;display:grid;grid-template-columns:1fr 1fr;gap:26px;align-items:start;}
+  @media(max-width:940px){.grid{grid-template-columns:1fr;}.card-col{position:static!important;}}
 
-  <div class="cols">
-    <div class="panel">
-      <div class="ptitle">◐ Your details</div>
-      <label>Organization name</label>
-      <input id="org" oninput="draw()">
-      <label>City / State</label>
-      <input id="loc" placeholder="City, ST" oninput="draw()">
-      <label>Website (optional)</label>
-      <input id="website" oninput="draw()">
-      <label>Your motto</label>
-      <input id="motto" oninput="draw()">
-      <label>What kindness means to your organization</label>
-      <textarea id="means" oninput="draw()"></textarea>
-      <label>One act of kindness (in your own words)</label>
-      <textarea id="act" oninput="draw()"></textarea>
-      <button class="btn" id="save" onclick="save()">▲ Save my card</button>
-      <div class="msg" id="msg"></div>
+  .rung{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin-bottom:16px;box-shadow:0 4px 16px rgba(60,45,15,.05);}
+  .rh{display:flex;align-items:baseline;gap:10px;border-bottom:1px solid var(--soft);padding-bottom:9px;margin-bottom:12px;}
+  .rn{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#fff;background:var(--gold);padding:2px 8px;border-radius:6px;}
+  .r2 .rn{background:var(--field);}.r3 .rn{background:var(--maroon);}
+  .rt{font-family:'Playfair Display',serif;font-size:18px;font-weight:700;color:var(--dark);}
+  .rtag{font-family:'DM Mono',monospace;font-size:10px;color:var(--grey);letter-spacing:.05em;text-transform:uppercase;margin-left:auto;}
+  .ever{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:#2f6b3a;background:#E9F3EA;border:1px solid #cfe6d2;padding:1px 7px;border-radius:5px;}
+  .fresh{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:#8a5a12;background:#FBEFD8;border:1px solid #EEDBB2;padding:1px 7px;border-radius:5px;}
+
+  .fld{margin-bottom:11px;}
+  .fldhead{display:flex;align-items:center;gap:8px;margin-bottom:3px;}
+  .fld label{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.02em;color:var(--field);}
+  .peri{font-size:9px;font-family:'DM Mono',monospace;letter-spacing:.03em;text-transform:uppercase;color:#a06a1a;}
+  .fld .hint{font-size:13.5px;color:var(--grey);font-style:italic;margin:-1px 0 4px;}
+  .fld input,.fld textarea,.fld select{width:100%;font-family:'Crimson Pro',serif;font-size:15px;color:var(--dark);background:#FEFCF6;border:1px solid var(--line);border-radius:8px;padding:8px 10px;transition:border-color .15s,box-shadow .15s,opacity .2s;}
+  .fld textarea{min-height:48px;resize:vertical;line-height:1.4;}
+  .fld input:focus,.fld textarea:focus,.fld select:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(154,123,41,.12);}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:560px){.two{grid-template-columns:1fr;}}
+  .fld.off input,.fld.off textarea{opacity:.4;}
+  /* include/hide toggle */
+  .tog{margin-left:auto;display:inline-flex;align-items:center;gap:6px;cursor:pointer;user-select:none;}
+  .tog span{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--grey);}
+  .sw{width:30px;height:17px;border-radius:99px;background:var(--gold);position:relative;transition:background .18s;flex:none;}
+  .sw::after{content:'';position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#fff;transition:left .18s;}
+  .tog.no .sw{background:#cfc3a6;}.tog.no .sw::after{left:15px;}
+
+  /* ---- questionnaire tap chips ---- */
+  .qwrap{margin-top:15px;border-top:1px dashed var(--line);padding-top:13px;}
+  .qhead{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--maroon);margin-bottom:2px;}
+  .qsub{font-size:13.5px;color:var(--grey);font-style:italic;margin-bottom:11px;}
+  .qgroup{margin-bottom:13px;}
+  .qq{font-family:'Crimson Pro',serif;font-size:15px;color:var(--field);margin-bottom:5px;}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;}
+  .chip{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.02em;background:#FEFCF6;border:1px solid var(--line);border-radius:99px;padding:6px 12px;cursor:pointer;transition:background .13s,color .13s,border-color .13s;color:var(--field);user-select:none;}
+  .chip:hover{border-color:var(--gold-l);}
+  .chip.sel{background:var(--gold);color:#fff;border-color:var(--gold);}
+  .qgroup.pulse .qq{font-weight:600;color:var(--maroon);}
+  .qgroup.pulse .chip.sel{background:var(--maroon);border-color:var(--maroon);}
+  .otherbox{margin-top:7px;display:none;}
+  .otherbox.show{display:block;}
+  .otherbox input,.qmem textarea{width:100%;font-family:'Crimson Pro',serif;font-size:14.5px;background:#FEFCF6;border:1px solid var(--line);border-radius:8px;padding:7px 10px;color:var(--dark);}
+  .otherbox input:focus,.qmem textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(154,123,41,.12);}
+  .qmem{margin-top:7px;display:none;}
+  .qmem.show{display:block;}
+  .qmem .memhead{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+  .qmem .memhead label{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--field);}
+  .qmem .skip{margin-left:auto;font-family:'DM Mono',monospace;font-size:9.5px;color:var(--grey);text-transform:uppercase;letter-spacing:.05em;cursor:pointer;border:1px solid var(--line);border-radius:6px;padding:2px 8px;}
+  .qmem .skip:hover{color:var(--maroon);}
+  .qmem .memnote{font-size:12.5px;color:var(--grey);font-style:italic;margin-bottom:4px;}
+
+  /* photo pickers */
+  .plabel{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.03em;text-transform:uppercase;color:var(--field);margin:4px 0 6px;}
+  .picks{display:flex;flex-wrap:wrap;gap:8px;max-height:300px;overflow-y:auto;padding:2px;}
+  .pk{width:74px;height:56px;border-radius:9px;border:2px solid var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;font-size:22px;position:relative;transition:border-color .15s,transform .1s;overflow:hidden;}
+  .pk small{font-family:'DM Mono',monospace;font-size:7.5px;letter-spacing:.02em;text-transform:uppercase;color:#6b5836;margin-top:2px;}
+  .pk.sel{border-color:var(--gold);box-shadow:0 0 0 3px rgba(154,123,41,.14);}
+  .pk.sel::before{content:'✓';position:absolute;top:2px;right:4px;font-size:11px;color:var(--gold);}
+  .pk.up{background:#FBF6E8;color:var(--gold);font-size:13px;}
+
+  .r4note{background:var(--soft);border:1px dashed var(--gold-l);border-radius:12px;padding:13px 16px;font-size:14.5px;color:var(--field);}
+  .r4note b{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--maroon);display:block;margin-bottom:3px;}
+
+  /* submit */
+  .subwrap{margin-top:16px;}
+  .nudge{background:linear-gradient(180deg,#FFFDF6,#FBF3DE);border:1px solid var(--gold-l);border-radius:11px;padding:11px 15px;font-size:14.5px;color:var(--field);font-style:italic;margin-bottom:12px;display:none;}
+  .nudge.show{display:block;}
+  .nudge b{font-style:normal;color:var(--maroon);}
+  .btn{font-family:'DM Mono',monospace;font-size:13px;letter-spacing:.04em;text-transform:uppercase;background:var(--gold);color:#fff;border:none;border-radius:10px;padding:13px 22px;cursor:pointer;transition:background .15s,opacity .15s;}
+  .btn:hover{background:#836823;}
+  .btn:disabled{opacity:.55;cursor:default;}
+  .msg{margin-top:11px;font-size:14.5px;min-height:1.2em;}
+  .msg.ok{color:#2f6b3a;}
+  .msg.err{color:var(--maroon);}
+  .msg a{color:var(--gold);font-weight:600;word-break:break-all;}
+  .subnote{margin-top:8px;font-size:13px;color:var(--grey);font-style:italic;}
+  .upbtn{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.03em;text-transform:uppercase;background:#FBF6E8;color:var(--gold);border:1px solid var(--gold-l);border-radius:8px;padding:8px 14px;cursor:pointer;}
+  .upbtn:hover{background:#F5EAD0;}
+  .upok{font-family:'DM Mono',monospace;font-size:10px;color:#2f6b3a;margin-left:8px;}
+
+  /* CARD */
+  .card-col{position:sticky;top:18px;}
+  .pv-label{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--grey);text-align:center;margin-bottom:8px;}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 18px 44px rgba(60,45,15,.13);}
+  .meter{display:flex;align-items:center;gap:10px;padding:10px 16px;background:linear-gradient(90deg,#FFFDF7,#FBF4E2);border-bottom:1px solid var(--line);}
+  .flag{font-size:17px;}
+  .mtxt{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--maroon);}
+  .bar{flex:1;height:6px;background:var(--soft);border-radius:99px;overflow:hidden;}
+  .bar i{display:block;height:100%;width:8%;background:linear-gradient(90deg,var(--gold-l),var(--gold));border-radius:99px;transition:width .35s ease;}
+  .chero{position:relative;height:150px;display:flex;align-items:center;justify-content:center;background:radial-gradient(120% 120% at 30% 20%,#F3E7C6,#E9D9Ae 60%,#DFC98F);}
+  .chero .emoji{font-size:56px;opacity:.92;}
+  .catlbl{position:absolute;top:9px;left:11px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:rgba(42,27,14,.55);padding:2px 7px;border-radius:6px;}
+  .stockmark{position:absolute;bottom:7px;right:9px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.04em;text-transform:uppercase;color:rgba(42,27,14,.5);}
+  .frstamp{position:absolute;bottom:7px;left:9px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.04em;text-transform:uppercase;color:rgba(42,27,14,.5);}
+  .gallery{display:flex;gap:0;}
+  .gallery .g{flex:1;height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:26px;background:var(--soft);border-top:2px solid #fff;transition:height .3s;position:relative;}
+  .gallery .g small{position:absolute;bottom:3px;font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.03em;text-transform:uppercase;color:#6b5836;}
+  .gallery.on .g{height:70px;}
+  .cstatement{padding:12px 18px 2px;text-align:center;font-family:'Playfair Display',serif;font-style:italic;font-size:18px;line-height:1.35;color:var(--maroon);}
+  .cstatement:empty::before{content:'Your one line will sit right here.';color:var(--gold-l);}
+  .cbody{padding:6px 20px 20px;}
+  .cid{text-align:center;border-bottom:1px solid var(--soft);padding-bottom:10px;margin-bottom:2px;}
+  .cid .logo{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:var(--soft);border:1px solid var(--gold-l);font-family:'Playfair Display',serif;font-weight:700;font-size:19px;color:var(--gold);margin-bottom:5px;}
+  .cid .name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--dark);}
+  .cid .name:empty::before{content:'Your Business';color:var(--gold-l);}
+  .cid .motto{font-style:italic;color:var(--field);font-size:14.5px;margin-top:2px;}
+  .cid .meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--grey);margin-top:5px;}
+  .values{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
+  .values .vcell{background:#FCF7EA;border:1px solid var(--soft);border-radius:9px;padding:8px 10px;}
+  .values .vcell.full{grid-column:1/3;}
+  .values .k,.cblk .k{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;}
+  .values .v,.cblk .v{font-size:14.5px;color:var(--ink);line-height:1.42;}
+  .cblk{margin-top:12px;padding:2px 2px 2px 12px;border-left:3px solid var(--gold-l);border-radius:2px;transition:background .2s,border-color .2s;}
+  .cblk[data-empty="1"],.cblk.hide,.values .vcell[data-empty="1"]{display:none;}
+  .cblk.lit{background:#FBF3DF;border-left-color:var(--gold);}
+  .cblk .peritag{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.03em;text-transform:uppercase;color:#a06a1a;margin-left:6px;}
+  /* pulse badges on the card */
+  .pulse{margin-top:13px;background:#FBF7EC;border:1px solid var(--soft);border-radius:11px;padding:11px 13px;}
+  .pulse[data-empty="1"]{display:none;}
+  .pulse .k{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:7px;}
+  .pbadges{display:flex;flex-wrap:wrap;gap:5px;}
+  .pbadge{font-family:'DM Mono',monospace;font-size:10px;background:#fff;border:1px solid var(--gold-l);border-radius:99px;padding:3px 9px;color:var(--field);line-height:1.35;}
+  .pbadge b{color:var(--maroon);font-weight:500;}
+  /* month spotlights */
+  .spots{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
+  .spot{background:linear-gradient(180deg,#FFFDF6,#FBF3DE);border:1px solid var(--gold-l);border-radius:10px;padding:9px 11px;text-align:center;}
+  .spot .k{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:var(--maroon);}
+  .spot .who{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--dark);margin-top:2px;}
+  .spot .for{font-size:13px;color:var(--field);font-style:italic;margin-top:1px;line-height:1.3;}
+  .spot[data-empty="1"]{display:none;}
+  .spotwrap[data-empty="1"]{display:none;}
+  .spotcap{text-align:center;font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--grey);margin-top:5px;}
+  /* act counter + gazette */
+  .actbar{margin-top:15px;background:#241a0f;border-radius:11px;padding:11px 14px;display:flex;align-items:center;gap:11px;color:#F3E7C6;}
+  .actbar .n{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#E9C877;line-height:1;}
+  .actbar .lb{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:#cbb98f;}
+  .actbar .cta{margin-left:auto;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.04em;text-transform:uppercase;background:var(--gold);color:#fff;padding:5px 10px;border-radius:7px;}
+  .gaz{margin-top:10px;text-align:center;font-size:13.5px;color:var(--field);font-style:italic;}
+  .gaz[data-empty="1"]{display:none;}
+  .gaz b{font-style:normal;color:var(--maroon);font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;}
+  .cfoot{margin-top:14px;text-align:center;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);border-top:1px solid var(--soft);padding-top:10px;}
+  .cfoot .grow{color:var(--gold);}
+  /* A²OK World brand footer — on every card */
+  .brandfoot{margin-top:12px;display:flex;align-items:center;justify-content:center;gap:8px;padding-top:11px;border-top:1px solid var(--soft);}
+  .brandfoot .mk{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--maroon);color:#F3E7C6;font-family:'Playfair Display',serif;font-weight:700;font-size:12px;flex:none;}
+  .brandfoot .bt{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--grey);line-height:1.35;text-align:left;}
+  .brandfoot .bt b{color:var(--maroon);font-weight:500;}
+</style></head>
+<body>
+  <div class="top">
+    <div class="eyebrow">A²OK in Action · Your Kindness Card</div>
+    <h1>Create your kindness card</h1>
+    <div class="lede">Fill in as much or as little as you like — your card builds itself on the right as you type. Card 1 plants your flag. Cards 2 and 3 add your voice and your people. Every question has a switch, so nothing shows unless you want it to.</div>
+  </div>
+
+  <div class="grid">
+    <!-- ============ FORM ============ -->
+    <div class="form-col">
+
+      <!-- CARD 1 -->
+      <div class="rung r1">
+        <div class="rh"><span class="rn">Card 1</span><span class="rt">Plant our flag · Recognition</span><span class="ever">Evergreen · static</span></div>
+        <div class="two">
+          <div class="fld"><div class="fldhead"><label>Business name</label></div><input id="f_name" placeholder="Corner Cup Coffee"></div>
+          <div class="fld"><div class="fldhead"><label>Category</label></div>
+            <select id="f_cat">
+              <option value="Café" data-e="☕">Café / Coffee</option>
+              <option value="Restaurant" data-e="🍲">Restaurant</option>
+              <option value="Salon / Barber" data-e="✂️">Salon / Barber</option>
+              <option value="Hardware / Trades" data-e="🔧">Hardware / Trades</option>
+              <option value="Shop / Retail" data-e="🛍️">Shop / Retail</option>
+              <option value="Theater / Drama" data-e="🎭">Theater / Drama</option>
+              <option value="Senior care" data-e="🌷">Senior care</option>
+              <option value="Faith community" data-e="🕊️">Faith community</option>
+              <option value="Service" data-e="🤝">Service business</option>
+            </select></div>
+        </div>
+        <div class="two">
+          <div class="fld"><div class="fldhead"><label>Owner / manager</label></div><input id="f_owner" placeholder="Ana Reyes"></div>
+          <div class="fld"><div class="fldhead"><label>City / neighborhood</label></div><input id="f_city" placeholder="Northeast Minneapolis"></div>
+        </div>
+        <div class="two">
+          <div class="fld"><div class="fldhead"><label>Phone</label></div><input id="f_phone" placeholder="(612) 555-0142"></div>
+          <div class="fld"><div class="fldhead"><label>Website</label></div><input id="f_web" placeholder="cornercup.coffee"></div>
+        </div>
+        <div class="fld"><div class="fldhead"><label>Your logo (optional)</label></div><button type="button" class="upbtn" id="up_logo">⬆︎ Upload logo</button><span class="upok" id="up_logo_ok"></span></div>
+        <div class="fld"><div class="fldhead"><label>Your one line</label></div><div class="hint">Sits under your photo.</div><input id="f_state" placeholder="A warm cup and a warmer hello, since 2009."></div>
+        <div class="fld"><div class="fldhead"><label>Motto</label><div class="tog" data-tog="v_motto"><span>on card</span><i class="sw"></i></div></div><input id="f_motto" data-slot="v_motto" placeholder="Nobody stays a stranger here."></div>
+        <div class="fld"><div class="fldhead"><label>Company vision</label><div class="tog" data-tog="v_vision"><span>on card</span><i class="sw"></i></div></div><textarea id="f_vision" data-slot="v_vision" placeholder="A block where every regular is known by name."></textarea></div>
+        <div class="fld"><div class="fldhead"><label>What does kindness mean to your organization?</label><div class="tog" data-tog="v_kind"><span>on card</span><i class="sw"></i></div></div><div class="hint">Tap an answer below, or write it here in your own words.</div><textarea id="f_kind" data-slot="v_kind" placeholder="Treating everyone who walks in like they were expected."></textarea></div>
+
+        <!-- Questionnaire · Card 1 -->
+        <div class="qwrap" id="q1">
+          <div class="qhead">The Kindness Pulse — everyone answers</div>
+          <div class="qsub">A few taps. Same questions for every card, so together they become the world's kindness scoreboard. This little bit of data is the only "fee" for your card.</div>
+        </div>
+      </div>
+
+      <!-- CARD 2 -->
+      <div class="rung r2">
+        <div class="rh"><span class="rn">Card 2</span><span class="rt">Add our voice · Story</span><span class="fresh">Refresh · 6 mo</span></div>
+        <div class="plabel">Choose a photo — or upload your own</div>
+        <div class="picks" id="picks2">
+          <div class="pk up" data-emoji="⬆︎" data-l="your photo">⬆︎<small>Upload</small></div>
+        </div>
+        <div class="fld" style="margin-top:12px;"><div class="fldhead"><label>A kindness that helped this place</label><div class="tog" data-tog="b_recv"><span>on card</span><i class="sw"></i></div></div><div class="hint">A customer, a mentor, a stranger — what did they do?</div><textarea id="f_recv" data-slot="b_recv"></textarea></div>
+        <div class="fld"><div class="fldhead"><label>A kindness you gave a customer</label><div class="tog" data-tog="b_give"><span>on card</span><i class="sw"></i></div></div><textarea id="f_give" data-slot="b_give"></textarea></div>
+        <div class="fld"><div class="fldhead"><label>Why did you open your doors?</label><div class="tog" data-tog="b_why"><span>on card</span><i class="sw"></i></div></div><textarea id="f_why" data-slot="b_why"></textarea></div>
+        <div class="fld"><div class="fldhead"><label>Who taught you kindness?</label><div class="tog" data-tog="b_who"><span>on card</span><i class="sw"></i></div></div><textarea id="f_who" data-slot="b_who"></textarea></div>
+        <div class="fld"><div class="fldhead"><label>A regular you'd genuinely miss</label><span class="peri">⏱ perishable</span><div class="tog" data-tog="b_reg"><span>on card</span><i class="sw"></i></div></div><textarea id="f_reg" data-slot="b_reg" data-peri="1"></textarea></div>
+        <div class="fld"><div class="fldhead"><label>Your "house move"</label><div class="tog" data-tog="b_house"><span>on card</span><i class="sw"></i></div></div><div class="hint">The kind thing off the menu you'd never charge for.</div><textarea id="f_house" data-slot="b_house"></textarea></div>
+
+        <!-- Questionnaire · Card 2 -->
+        <div class="qwrap" id="q2"></div>
+      </div>
+
+      <!-- CARD 3 -->
+      <div class="rung r3">
+        <div class="rh"><span class="rn">Card 3</span><span class="rt">Bring our people in · Participation</span><span class="fresh">Refresh · 6 mo</span></div>
+        <div class="plabel">Choose up to two — or upload your own</div>
+        <div class="picks" id="picks3">
+          <div class="pk up" data-emoji="⬆︎" data-l="your photo">⬆︎<small>Upload</small></div>
+        </div>
+        <div class="fld" style="margin-top:12px;"><div class="fldhead"><label>When you hire someone new, what do you teach them about treating people?</label><div class="tog" data-tog="b_train"><span>on card</span><i class="sw"></i></div></div><textarea id="f_train" data-slot="b_train"></textarea></div>
+        <div class="fld"><div class="fldhead"><label>Do you already do something kind on a regular basis?</label><div class="tog" data-tog="b_do"><span>on card</span><i class="sw"></i></div></div><textarea id="f_do" data-slot="b_do"></textarea></div>
+        <div class="fld"><div class="fldhead"><label>A yearly customer-appreciation or acknowledgment event?</label><span class="peri">⏱ perishable</span><div class="tog" data-tog="b_event"><span>on card</span><i class="sw"></i></div></div><textarea id="f_event" data-slot="b_event" data-peri="1"></textarea></div>
+        <div class="two">
+          <div class="fld"><div class="fldhead"><label>Employee of the month</label><span class="peri">⏱</span></div><input id="f_emp_who" placeholder="Becky"><textarea id="f_emp_for" style="margin-top:6px;" placeholder="for remembering every regular's order"></textarea></div>
+          <div class="fld"><div class="fldhead"><label>Customer of the month</label><span class="peri">⏱</span></div><input id="f_cust_who" placeholder="Anna"><textarea id="f_cust_for" style="margin-top:6px;" placeholder="for the birthday cards she brings the staff"></textarea></div>
+        </div>
+        <div class="fld"><div class="fldhead"><label>Would you host something small?</label><div class="tog" data-tog="b_host"><span>on card</span><i class="sw"></i></div></div><div class="hint">A jar, a shelf, a 2–5 min skit, an AOK Man visit.</div><textarea id="f_host" data-slot="b_host"></textarea></div>
+        <div class="fld"><div class="fldhead"><label>Who else deserves to be seen?</label><div class="tog" data-tog="b_invite"><span>on card</span><i class="sw"></i></div></div><div class="hint">Invite a customer or neighbor business onto the map.</div><textarea id="f_invite" data-slot="b_invite"></textarea></div>
+        <div class="fld"><div class="fldhead"><label>Would you contribute a kindness story to the Kindness Gazette?</label><div class="tog" data-tog="c_gaz"><span>on card</span><i class="sw"></i></div></div><div class="hint">This is the doorway into the civilization itself.</div>
+          <select id="f_gaz" data-slot="c_gaz"><option value="">—</option><option value="Yes — we'd love to.">Yes — we'd love to</option><option value="Maybe, tell us more.">Maybe, tell us more</option></select></div>
+
+        <!-- Questionnaire · Card 3 -->
+        <div class="qwrap" id="q3"></div>
+      </div>
+
+      <div class="r4note"><b>Card 4 · All In · Star</b>No form for the top rung. Becoming a local anchor — a <em>Star</em> — is a conversation, and a real person on our side lifts you there.</div>
+
+      <div class="subwrap">
+        <div class="nudge" id="nudge"></div>
+        <button id="save" class="btn">Create my card →</button>
+        <div id="msg" class="msg" role="status"></div>
+        <div class="subnote">You can come back and add more any time — the card grows with you.</div>
+      </div>
     </div>
 
-    <div class="panel">
-      <div class="ptitle">◑ Your card (live preview)</div>
-      <div class="rung"><span class="runglabel" id="rl">Rung 1 · Free Flag</span><div class="rungbar"><div class="rungfill" id="rf"></div></div></div>
+    <!-- ============ LIVE CARD ============ -->
+    <div class="card-col">
+      <div class="pv-label">↓ your live card ↓</div>
       <div class="card">
-        <div class="top"><div class="org" id="c_org">Your Organization</div><div class="meta" id="c_loc">City, State</div></div>
-        <div class="body">
-          <div class="fieldline"><div class="k">Motto</div><div class="v empty" id="c_motto">—</div></div>
-          <div class="fieldline"><div class="k">What kindness means to us</div><div class="v empty" id="c_means">—</div></div>
-          <div class="fieldline"><div class="k">An act of kindness</div><div class="v empty" id="c_act">—</div></div>
+        <div class="meter"><span class="flag" id="pv_flag">🏳️</span><div class="bar"><i id="pv_bar"></i></div><span class="mtxt" id="pv_rung">Flag planted</span></div>
+        <div class="chero" id="pv_hero"><span class="catlbl" id="pv_catlbl">Café / Coffee</span><span class="emoji" id="pv_emoji">☕</span><span class="stockmark" id="pv_stock">AOK stock · swap for your own</span><span class="frstamp" id="pv_fresh"></span></div>
+        <div class="gallery" id="pv_gallery"></div>
+        <div class="cstatement" id="pv_state"></div>
+        <div class="cbody">
+          <div class="cid">
+            <div class="logo" id="pv_logo">·</div>
+            <div class="name" id="pv_name"></div>
+            <div class="motto" id="pv_motto" data-empty="1"></div>
+            <div class="meta" id="pv_meta"></div>
+          </div>
+
+          <div class="values">
+            <div class="vcell full" data-empty="1" id="v_vision"><div class="k">Our vision</div><div class="v"></div></div>
+            <div class="vcell full" data-empty="1" id="v_kind"><div class="k">What kindness means to us</div><div class="v"></div></div>
+          </div>
+
+          <div class="cblk" data-empty="1" id="b_recv"><div class="k">A kindness that helped us</div><div class="v"></div></div>
+          <div class="cblk" data-empty="1" id="b_give"><div class="k">A kindness we gave</div><div class="v"></div></div>
+          <div class="cblk" data-empty="1" id="b_why"><div class="k">Why we opened</div><div class="v"></div></div>
+          <div class="cblk" data-empty="1" id="b_who"><div class="k">Who taught us kindness</div><div class="v"></div></div>
+          <div class="cblk" data-empty="1" id="b_reg"><div class="k">A regular we'd miss<span class="peritag">refreshed ea. season</span></div><div class="v"></div></div>
+          <div class="cblk" data-empty="1" id="b_house"><div class="k">Our house move</div><div class="v"></div></div>
+
+          <!-- Kindness Pulse badges -->
+          <div class="pulse" data-empty="1" id="pv_pulse"><div class="k">Where we stand on kindness</div><div class="pbadges" id="pv_pbadges"></div></div>
+
+          <div class="cblk" data-empty="1" id="b_anon"><div class="k">An anonymous kindness</div><div class="v"></div></div>
+
+          <div class="cblk" data-empty="1" id="b_train"><div class="k">What we teach our people</div><div class="v"></div></div>
+          <div class="cblk" data-empty="1" id="b_do"><div class="k">Kindness we do, on the regular</div><div class="v"></div></div>
+          <div class="cblk" data-empty="1" id="b_event"><div class="k">Every year, we…<span class="peritag">refreshed ea. season</span></div><div class="v"></div></div>
+
+          <div class="spotwrap" data-empty="1" id="pv_spots"><div class="spots">
+            <div class="spot" data-empty="1" id="sp_emp"><div class="k">Employee of the month</div><div class="who"></div><div class="for"></div></div>
+            <div class="spot" data-empty="1" id="sp_cust"><div class="k">Customer of the month</div><div class="who"></div><div class="for"></div></div>
+          </div><div class="spotcap">the reason they'll tell their friends to look</div></div>
+
+          <div class="cblk" data-empty="1" id="b_host"><div class="k">We'll host</div><div class="v"></div></div>
+          <div class="cblk" data-empty="1" id="b_invite"><div class="k">We'd like you to see…</div><div class="v"></div></div>
+          <div class="cblk" data-empty="1" id="b_cohost"><div class="k">Open to a celebration</div><div class="v"></div></div>
+
+          <div class="actbar"><div><div class="n" id="pv_acts">0</div></div><div class="lb">acts logged<br>into the count</div><span class="cta">Log an act →</span></div>
+          <div class="gaz" data-empty="1" id="c_gaz"><b>Joining the Gazette:</b> <span></span></div>
+
+          <div class="cfoot"><span class="grow">the more you share, the more this page becomes.</span></div>
+          <div class="brandfoot">
+            <span class="mk">A²</span>
+            <div class="bt">Part of <b>A²OK World</b> · Anonymous Acts of Kindness<br><a id="pv_aok" href="https://aokinaction.com" style="color:inherit;text-decoration:none;">aokinaction.com</a></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
+<script src="https://upload-widget.cloudinary.com/global/all.js"></script>
 <script>
-function val(id){return document.getElementById(id).value.trim();}
-function set(id,v){var e=document.getElementById(id);if(v){e.textContent=v;e.classList.remove('empty');}else{e.textContent='—';e.classList.add('empty');}}
-function currentRung(){
-  var f=[val('org'),val('loc'),val('motto'),val('means'),val('act')].filter(Boolean).length;
-  var pct=[15,30,50,72,100][Math.min(Math.max(f,1),5)-1];
-  var names=['1 Free Flag','1 Free Flag','2 Starter','3 Dressed Up','4 All In'];
-  return {pct:pct, name:names[Math.min(Math.max(f,1),5)-1]};
-}
-function draw(){
-  document.getElementById('c_org').textContent = val('org')||'Your Organization';
-  document.getElementById('c_loc').textContent = val('loc')||'City, State';
-  set('c_motto', val('motto')); set('c_means', val('means')); set('c_act', val('act'));
-  var r=currentRung();
-  document.getElementById('rf').style.width=r.pct+'%';
-  document.getElementById('rl').textContent='Rung '+r.name;
-}
-async function save(){
-  var m=document.getElementById('msg'), btn=document.getElementById('save');
-  if(!val('org')){ m.className='msg err'; m.textContent='Please add your organization name first.'; return; }
-  btn.disabled=true; m.className='msg'; m.textContent='Saving…';
-  try{
-    var res=await fetch('/.netlify/functions/save-card',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({org:val('org'),loc:val('loc'),website:val('website'),motto:val('motto'),means:val('means'),act:val('act'),rung:currentRung().name})});
-    var j=await res.json();
-    if(!res.ok||!j.slug){ throw new Error(j.error||'save failed'); }
-    m.className='msg ok'; m.innerHTML='Saved! Your card is here → <a href="card.html?slug='+encodeURIComponent(j.slug)+'">view your card</a>';
-  }catch(e){ m.className='msg err'; m.textContent='Something went wrong saving — please try again.'; }
-  btn.disabled=false;
-}
-draw();
+(function(){
+  var $=function(id){return document.getElementById(id);};
+
+  // ============ QUESTIONNAIRE (tap chips) ============
+  // state: AOKQ[q]=selected value; AOKQO[q]=Other write-in; AOKMEM=anonymous memory
+  window.AOKQ={}; window.AOKQO={}; window.AOKMEM='';
+  var QDEFS=[
+    {q:'trend',  card:'q1', pulse:true, label:'Since you were born, has kindness gone up or down?', opts:['Up','Down']},
+    {q:'fourmin',card:'q1', pulse:true, label:'Would you give four minutes a day to intentional kindness if it could change the world?', opts:['Yes','No']},
+    {q:'devices',card:'q1', pulse:true, label:'Since smart devices arrived, is the world kinder for it?', opts:['Yes','No']},
+    {q:'means',  card:'q1', label:'What does kindness mean to your organization?', opts:['A regular practice','A neighborhood thing','Small everyday acts','Being there when someone struggles','Other'], other:true, mirror:'f_kind'},
+    {q:'visimp', card:'q1', label:'Is kindness part of your vision — or implied?', opts:['Stated in our vision','Implied / lived','Not yet','Other'], other:true},
+    {q:'locus',  card:'q1', label:'Where should kindness begin most?', opts:['Children','Schools','Businesses','Individuals','Community','Other'], other:true},
+    {q:'born',   card:'q1', label:'Is kindness born, learned, or a choice?', opts:['Born','Learned','A choice','A strategy','Other'], other:true},
+    {q:'audience',card:'q1',label:'Does kindness need an audience?', opts:['Yes','No','Sometimes','Other'], other:true},
+    {q:'anon',   card:'q1', label:'Have you given or received an anonymous kindness?', opts:['Given','Received','Both','Not that I know of','Other'], other:true, memory:true},
+    {q:'matters',card:'q2', label:'What kind of kindness matters most?', opts:['Everyday acts','Kind words','Grand gestures','Support in hardship','Being understood','Standing up for someone','Other'], other:true, head:'One more tap'},
+    {q:'cohost', card:'q3', pulse:true, label:'Open to an A²OK World presence — we co-host a celebration, at no charge?', opts:['Yes','Maybe','Not now'], head:'The open door'}
+  ];
+  function slugify(s){return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');}
+  QDEFS.forEach(function(d){
+    var wrap=$(d.card); if(!wrap) return;
+    if(d.head){var h=document.createElement('div');h.className='qhead';h.style.marginTop=(d.card==='q1'?'0':'0');h.textContent=d.head;wrap.appendChild(h);}
+    var g=document.createElement('div'); g.className='qgroup'+(d.pulse?' pulse':'');
+    var q=document.createElement('div'); q.className='qq'; q.textContent=d.label; g.appendChild(q);
+    var chips=document.createElement('div'); chips.className='chips';
+    d.opts.forEach(function(opt){
+      var c=document.createElement('div'); c.className='chip'; c.textContent=opt; c.setAttribute('data-v',opt);
+      c.addEventListener('click',function(){
+        var was=c.classList.contains('sel');
+        chips.querySelectorAll('.chip').forEach(function(x){x.classList.remove('sel');});
+        if(was){delete window.AOKQ[d.q];}
+        else{c.classList.add('sel');window.AOKQ[d.q]=opt;}
+        // Other reveal
+        if(d.other){var ob=$('ob_'+d.q); if(ob){ if(!was&&opt==='Other'){ob.classList.add('show');var oi=ob.querySelector('input');if(oi)oi.focus();}else{ob.classList.remove('show');window.AOKQO[d.q]='';var oi2=ob.querySelector('input');if(oi2)oi2.value='';} }}
+        // anonymous memory reveal
+        if(d.memory){var mm=$('mem_'+d.q); if(mm){ if(!was&&(opt==='Given'||opt==='Received'||opt==='Both'||opt==='Other')){mm.classList.add('show');}else{mm.classList.remove('show');window.AOKMEM='';var ta=mm.querySelector('textarea');if(ta)ta.value='';} }}
+        renderPulse(); score();
+      });
+      chips.appendChild(c);
+    });
+    g.appendChild(chips);
+    if(d.other){
+      var ob=document.createElement('div'); ob.className='otherbox'; ob.id='ob_'+d.q;
+      var oi=document.createElement('input'); oi.placeholder='In your own words…';
+      oi.addEventListener('input',function(){window.AOKQO[d.q]=oi.value.trim(); if(d.mirror){var mf=$(d.mirror); if(mf&&!mf.value.trim()){ /* leave typing to user */ }} renderPulse(); score();});
+      ob.appendChild(oi); g.appendChild(ob);
+    }
+    if(d.memory){
+      var mm=document.createElement('div'); mm.className='qmem'; mm.id='mem_'+d.q;
+      var mh=document.createElement('div'); mh.className='memhead';
+      var ml=document.createElement('label'); ml.textContent='Share it — it stays anonymous';
+      var sk=document.createElement('div'); sk.className='skip'; sk.textContent='Skip';
+      sk.addEventListener('click',function(){mm.classList.remove('show');window.AOKMEM='';var ta=mm.querySelector('textarea');if(ta)ta.value='';renderPulse();});
+      mh.appendChild(ml); mh.appendChild(sk); mm.appendChild(mh);
+      var mn=document.createElement('div'); mn.className='memnote'; mn.textContent='Optional. A good one may travel to the Wall or the Gazette — never with a name.'; mm.appendChild(mn);
+      var ta=document.createElement('textarea'); ta.rows=2; ta.placeholder='The kind thing that happened…';
+      ta.addEventListener('input',function(){window.AOKMEM=ta.value.trim();renderPulse();});
+      mm.appendChild(ta); g.appendChild(mm);
+    }
+    wrap.appendChild(g);
+  });
+  // short labels for the pulse badges on the card
+  var PBADGE={trend:'Kindness',fourmin:'4 min/day',devices:'Devices',means:'Means',visimp:'Vision',locus:'Begins with',born:'Kindness is',audience:'Audience',anon:'Anon act',matters:'Matters most',cohost:'Celebration'};
+  function renderPulse(){
+    var box=$('pv_pbadges'); var keys=Object.keys(window.AOKQ);
+    var html=[];
+    QDEFS.forEach(function(d){
+      var v=window.AOKQ[d.q]; if(!v) return;
+      if(v==='Other'&&window.AOKQO[d.q]) v=window.AOKQO[d.q];
+      html.push('<span class="pbadge">'+PBADGE[d.q]+': <b>'+esc(v)+'</b></span>');
+    });
+    box.innerHTML=html.join('');
+    $('pv_pulse').setAttribute('data-empty',html.length?'0':'1');
+    // anonymous act block
+    var ab=$('b_anon'); var av=window.AOKQ.anon;
+    if(av && av!=='Not that I know of'){
+      var txt = window.AOKMEM ? window.AOKMEM : (av==='Both'?'Given and received.':av+'.');
+      ab.querySelector('.v').textContent=txt; ab.setAttribute('data-empty','0');
+    } else { ab.setAttribute('data-empty','1'); }
+    // co-host block
+    var cb=$('b_cohost'); var cv=window.AOKQ.cohost;
+    if(cv && cv!=='Not now'){ cb.querySelector('.v').textContent=(cv==='Yes'?'Yes — we’d welcome an A²OK World celebration.':'Maybe — tell us more.'); cb.setAttribute('data-empty','0'); }
+    else { cb.setAttribute('data-empty','1'); }
+  }
+  function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+  // ============ identity + preview wiring ============
+  $('f_name').addEventListener('input',function(){var v=$('f_name').value.trim();$('pv_name').textContent=v;if(window.AOKUP&&window.AOKUP.logo){}else{$('pv_logo').textContent=v?v[0].toUpperCase():'·';}score();});
+  function setMeta(){var p=[];['f_owner','f_city','f_phone','f_web'].forEach(function(id){var v=$(id).value.trim();if(v)p.push(v);});$('pv_meta').textContent=p.join('  ·  ');score();}
+  ['f_owner','f_city','f_phone','f_web'].forEach(function(id){$(id).addEventListener('input',setMeta);});
+  $('f_state').addEventListener('input',function(){$('pv_state').textContent=$('f_state').value.trim();score();});
+  $('f_motto').addEventListener('input',function(){var v=$('f_motto').value.trim();var b=$('pv_motto');b.textContent=v?'“'+v+'”':'';b.setAttribute('data-empty',v?'0':'1');score();});
+  $('f_cat').addEventListener('change',function(){var o=$('f_cat').options[$('f_cat').selectedIndex];$('pv_emoji').textContent=o.getAttribute('data-e');$('pv_catlbl').textContent=o.textContent;});
+
+  // paragraph + value slots
+  var slots=['f_vision:v_vision','f_kind:v_kind','f_recv:b_recv','f_give:b_give','f_why:b_why','f_who:b_who','f_reg:b_reg','f_house:b_house','f_train:b_train','f_do:b_do','f_event:b_event','f_host:b_host','f_invite:b_invite'];
+  slots.forEach(function(pair){
+    var f=pair.split(':')[0],b=pair.split(':')[1];var inp=$(f),blk=$(b),val=blk.querySelector('.v');
+    function upd(){var v=inp.value.trim();val.textContent=v;if(!blk.classList.contains('hide'))blk.setAttribute('data-empty',v?'0':'1');score();}
+    inp.addEventListener('input',upd);
+    inp.addEventListener('focus',function(){blk.classList.add('lit');blk.scrollIntoView({block:'nearest'});});
+    inp.addEventListener('blur',function(){blk.classList.remove('lit');});
+  });
+
+  // gazette select
+  $('f_gaz').addEventListener('change',function(){var v=$('f_gaz').value;var g=$('c_gaz');g.querySelector('span').textContent=v;g.setAttribute('data-empty',v?'0':'1');score();});
+
+  // include/hide toggles
+  document.querySelectorAll('.tog').forEach(function(t){
+    t.addEventListener('click',function(){
+      t.classList.toggle('no');
+      var blk=$(t.getAttribute('data-tog'));if(!blk)return;
+      if(t.classList.contains('no')){blk.classList.add('hide');blk.setAttribute('data-empty','1');}
+      else{blk.classList.remove('hide');var val=blk.querySelector('.v');var has=val?val.textContent.trim().length>0:(blk.textContent.trim().length>0);blk.setAttribute('data-empty',has?'0':'1');}
+    });
+  });
+
+  // ---- photos: stock pickers + Cloudinary uploads ----
+  window.AOKUP = {logo:'', hero:'', gallery:[]};
+  function cld(url,t){ return (url||'').indexOf('/upload/')>-1 ? url.replace('/upload/','/upload/'+t+'/') : url; }
+
+  function renderGallery(){
+    var g=$('pv_gallery');var items=[];
+    window.AOKUP.gallery.forEach(function(u){items.push('<div class="g" style="background-image:url('+cld(u,'w_300,h_140,c_fill,f_auto,q_auto')+');background-size:cover;background-position:center;"></div>');});
+    if(items.length){g.classList.add('on');g.innerHTML=items.slice(0,3).join('');}else{g.classList.remove('on');g.innerHTML='';}
+  }
+  function setHero(url){
+    window.AOKUP.hero=url;$('pv_emoji').style.display='none';
+    var h=$('pv_hero');h.style.backgroundImage='url('+cld(url,'w_880,h_300,c_fill,f_auto,q_auto')+')';h.style.backgroundSize='cover';h.style.backgroundPosition='center';$('pv_stock').textContent='selected photo';
+  }
+  function stockTile(url){
+    var d=document.createElement('div');d.className='pk';d.setAttribute('data-url',url);d.textContent='';
+    d.style.backgroundImage='url('+cld(url,'w_150,h_112,c_fill,f_auto,q_auto')+')';d.style.backgroundSize='cover';d.style.backgroundPosition='center';
+    return d;
+  }
+  // stock photo → hero (choose one)
+  $('picks2').addEventListener('click',function(e){var t=e.target.closest('.pk');if(!t||t.classList.contains('up'))return;
+    $('picks2').querySelectorAll('.pk').forEach(function(x){x.classList.remove('sel');});t.classList.add('sel');setHero(t.getAttribute('data-url'));});
+  // stock photos → gallery (choose up to two)
+  $('picks3').addEventListener('click',function(e){var t=e.target.closest('.pk');if(!t||t.classList.contains('up'))return;
+    var url=t.getAttribute('data-url');var i=window.AOKUP.gallery.indexOf(url);
+    if(i>-1){window.AOKUP.gallery.splice(i,1);t.classList.remove('sel');}
+    else{if(window.AOKUP.gallery.length>=2){var first=window.AOKUP.gallery.shift();var pt=$('picks3').querySelector('.pk[data-url="'+first+'"]');if(pt)pt.classList.remove('sel');}window.AOKUP.gallery.push(url);t.classList.add('sel');}
+    renderGallery();});
+  // load the real stock gallery from Cloudinary (tag "stock") into both pickers
+  (function loadStock(){
+    fetch('https://res.cloudinary.com/aok-world/image/list/stock.json').then(function(r){return r.ok?r.json():null;}).then(function(j){
+      var res=(j&&j.resources)||[];if(!res.length)return;
+      ['picks2','picks3'].forEach(function(id){var wrap=$(id),up=wrap.querySelector('.pk.up');
+        res.forEach(function(rr){var url='https://res.cloudinary.com/aok-world/image/upload/'+rr.public_id+(rr.format?'.'+rr.format:'');wrap.insertBefore(stockTile(url),up);});});
+    }).catch(function(){});
+  })();
+
+  // Cloudinary upload widget → returns a hosted, optimizable image URL
+  function cldUpload(cb){
+    if(!window.cloudinary){alert('Upload is still loading — give it a second and try again.');return;}
+    var w=cloudinary.createUploadWidget({cloudName:'aok-world',uploadPreset:'AOK-Uploads',sources:['local','camera','url'],multiple:false,maxFiles:1,clientAllowedFormats:['image'],maxImageFileSize:10000000,folder:'org-uploads'},function(err,res){if(!err&&res&&res.event==='success'){cb(res.info.secure_url);}});
+    w.open();
+  }
+  var upLogo=$('up_logo'); if(upLogo) upLogo.addEventListener('click',function(){cldUpload(function(url){
+    window.AOKUP.logo=url;$('up_logo_ok').textContent='✓ logo added';
+    $('pv_logo').innerHTML='<img src="'+cld(url,'w_120,h_120,c_fill,g_auto,f_auto,q_auto')+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">';
+  });});
+  var up2=document.querySelector('#picks2 .pk.up'); if(up2) up2.addEventListener('click',function(){cldUpload(function(url){
+    window.AOKUP.hero=url;
+    document.querySelectorAll('#picks2 .pk').forEach(function(x){x.classList.remove('sel');});up2.classList.add('sel');
+    $('pv_emoji').style.display='none';
+    var h=$('pv_hero');h.style.backgroundImage='url('+cld(url,'w_880,h_300,c_fill,f_auto,q_auto')+')';h.style.backgroundSize='cover';h.style.backgroundPosition='center';
+    $('pv_stock').textContent='your photo';
+  });});
+  var up3=document.querySelector('#picks3 .pk.up'); if(up3) up3.addEventListener('click',function(){cldUpload(function(url){
+    if(window.AOKUP.gallery.length>=2){window.AOKUP.gallery.shift();}
+    window.AOKUP.gallery.push(url);up3.classList.add('sel');renderGallery();
+  });});
+
+  // month spotlights
+  function spot(whoId,forId,cellId){
+    function upd(){var w=$(whoId).value.trim(),f=$(forId).value.trim();var c=$(cellId);
+      c.querySelector('.who').textContent=w;c.querySelector('.for').textContent=f?'“'+f+'”':'';
+      c.setAttribute('data-empty',(w||f)?'0':'1');
+      var any=$('sp_emp').getAttribute('data-empty')==='0'||$('sp_cust').getAttribute('data-empty')==='0';
+      $('pv_spots').setAttribute('data-empty',any?'0':'1');score();}
+    $(whoId).addEventListener('input',upd);$(forId).addEventListener('input',upd);
+  }
+  spot('f_emp_who','f_emp_for','sp_emp');
+  spot('f_cust_who','f_cust_for','sp_cust');
+
+  // score / rung / freshness / nudge
+  function filled(id){return $(id).value.trim().length>0;}
+  function qCount(){return Object.keys(window.AOKQ).length;}
+  function score(){
+    var identity=filled('f_name');
+    var r2=['f_recv','f_give','f_why','f_who','f_reg','f_house'].filter(filled).length;
+    var r3=['f_train','f_do','f_event','f_host','f_invite','f_emp_who','f_cust_who'].filter(filled).length;
+    var all=['f_name','f_owner','f_city','f_phone','f_web','f_state','f_motto','f_vision','f_kind','f_recv','f_give','f_why','f_who','f_reg','f_house','f_train','f_do','f_event','f_host','f_invite','f_emp_who','f_cust_who'];
+    var n=all.filter(filled).length + Math.min(qCount(),6); // taps count toward the bar
+    var denom=all.length+6;
+    $('pv_bar').style.width=Math.max(8,Math.round(n/denom*100))+'%';
+    var flag='🏳️',label='Flag planted';
+    if(identity){flag='🚩';label='Flag planted';}
+    if(identity&&r2>=2){flag='🔥';label='Voice added';}
+    if(identity&&r2>=2&&r3>=2){flag='✨';label='Spark Royalty';}
+    $('pv_flag').textContent=flag;$('pv_rung').textContent=label;
+    var peri=filled('f_reg')||filled('f_event')||filled('f_emp_who')||filled('f_cust_who');
+    $('pv_fresh').textContent=peri?'Freshened Aug 2026':'';
+    var acts=(filled('f_do')?1:0)+(filled('f_host')?1:0)+($('f_gaz').value?1:0)+(filled('f_event')?1:0);
+    $('pv_acts').textContent=acts;
+    // playful climb nudge
+    var nd=$('nudge');
+    if(identity&&!(r2>=2&&r3>=2)){
+      nd.classList.add('show');
+      nd.innerHTML='Ahh, come on — five minutes, a couple of questions, a photo or two… and you’re <b>Spark Royalty.</b> Give the kindness world a moment; the whole page lights up.';
+    } else if(identity&&r2>=2&&r3>=2){
+      nd.classList.add('show');
+      nd.innerHTML='✨ Look at you — <b>Spark Royalty.</b> Your whole page is lit. Hit create and plant it in the civilization.';
+    } else { nd.classList.remove('show'); }
+  }
+  window.__score=score;
+  score(); renderPulse();
+})();
+
+// ---- Submit: save the card to Airtable via the Netlify function ----
+(function(){
+  function gv(id){var e=document.getElementById(id);return e?e.value.trim():'';}
+  function catText(){var s=document.getElementById('f_cat');return s?s.options[s.selectedIndex].textContent.trim():'';}
+  function photos(wrapId){return Array.prototype.slice.call(document.querySelectorAll('#'+wrapId+' .pk.sel:not(.up)')).map(function(t){return t.getAttribute('data-l');}).join(', ');}
+  function up(k){var u=window.AOKUP||{};return k==='gallery'?(u.gallery||[]).join(', '):(u[k]||'');}
+  function offList(){return Array.prototype.slice.call(document.querySelectorAll('.tog.no')).map(function(t){return t.getAttribute('data-tog');});}
+  function qv(k){return (window.AOKQ&&window.AOKQ[k])||'';}
+  function qOtherCompiled(){
+    var o=window.AOKQO||{}; var out=[];
+    Object.keys(o).forEach(function(k){ if(o[k]) out.push(k+': '+o[k]); });
+    return out.join('\n');
+  }
+  var btn=document.getElementById('save'), msg=document.getElementById('msg');
+  btn.addEventListener('click', async function(){
+    if(!gv('f_name')){ msg.className='msg err'; msg.textContent='Please add your organization name first.'; return; }
+    btn.disabled=true; msg.className='msg'; msg.textContent='Creating your card…';
+    // if "kindness means = Other" written, fall it into the Kindness statement when that's blank
+    var kind=gv('f_kind'); if(!kind && qv('means')==='Other' && window.AOKQO.means){ kind=window.AOKQO.means; }
+    var payload={
+      name:gv('f_name'), cat:catText(), owner:gv('f_owner'), city:gv('f_city'), phone:gv('f_phone'), web:gv('f_web'),
+      state:gv('f_state'), motto:gv('f_motto'), vision:gv('f_vision'), kind:kind,
+      photo2:photos('picks2'), recv:gv('f_recv'), give:gv('f_give'), why:gv('f_why'), who:gv('f_who'), reg:gv('f_reg'), house:gv('f_house'),
+      photos3:photos('picks3'), train:gv('f_train'), do:gv('f_do'), event:gv('f_event'),
+      emp_who:gv('f_emp_who'), emp_for:gv('f_emp_for'), cust_who:gv('f_cust_who'), cust_for:gv('f_cust_for'),
+      host:gv('f_host'), invite:gv('f_invite'), gaz:gv('f_gaz'), off:offList(),
+      logoUrl:up('logo'), heroUrl:up('hero'), galleryUrls:up('gallery'),
+      // questionnaire v2
+      qTrend:qv('trend'), qFourMin:qv('fourmin'), qDevices:qv('devices'),
+      qMeans:qv('means'), qVisImp:qv('visimp'), qLocus:qv('locus'), qBorn:qv('born'),
+      qAudience:qv('audience'), qAnon:qv('anon'), qMatters:qv('matters'), qCohost:qv('cohost'),
+      anonShared:(window.AOKMEM||''), qOther:qOtherCompiled()
+    };
+    try{
+      var res=await fetch('/.netlify/functions/save-card',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      var j=await res.json();
+      if(!res.ok||!j.slug){ throw new Error(j.error||'save failed'); }
+      var url=location.origin+'/'+encodeURIComponent(j.slug);
+      msg.className='msg ok'; msg.innerHTML='Your card is live → <a href="/'+encodeURIComponent(j.slug)+'">'+url+'</a>';
+    }catch(e){ msg.className='msg err'; msg.textContent='Something went wrong creating your card — please try again.'; }
+    btn.disabled=false;
+  });
+})();
 </script>
 </body></html>

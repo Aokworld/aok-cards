@@ -1,54 +1,205 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A Kindness Card — A²OK</title>
+<title>A²OK · A Kindness Card</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{--gold:#9A7B29;--gold-l:#C9B681;--dark:#1F2937;--grey:#6B7280;--cream:#FAF6EC;--paper:#fff;--line:#E7DCC2;--maroon:#5a1414;}
+  :root{--gold:#9A7B29;--gold-l:#C9B681;--dark:#1F2937;--grey:#6B7280;--cream:#FAF6EC;--paper:#FFFFFF;--line:#E4D9BE;--soft:#F3ECDA;--maroon:#5a1414;--ink:#2A1B0E;--field:#5B4A33;}
   *{margin:0;padding:0;box-sizing:border-box;}
-  body{background:var(--cream);color:var(--dark);font-family:'Crimson Pro',Georgia,serif;padding:40px 20px;}
-  .wrap{max-width:620px;margin:0 auto;}
-  .brand{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);font-weight:600;text-align:center;margin-bottom:14px;}
-  .card{border:1px solid var(--gold-l);border-radius:16px;overflow:hidden;background:var(--paper);box-shadow:0 8px 30px rgba(60,45,15,.10);}
-  .card .top{background:var(--dark);color:#F3E7C6;padding:22px 26px;}
-  .card .org{font-family:'Playfair Display',serif;font-weight:900;font-size:30px;color:#fff;line-height:1.1;}
-  .card .meta{font-family:'DM Mono',monospace;font-size:12px;color:var(--gold-l);margin-top:5px;}
-  .card .body{padding:22px 26px;}
-  .fieldline{margin-bottom:16px;}
-  .fieldline:last-child{margin-bottom:0;}
-  .fieldline .k{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;}
-  .fieldline .v{font-size:18px;color:var(--dark);line-height:1.4;}
-  .rung{font-family:'DM Mono',monospace;font-size:11px;color:var(--maroon);text-align:center;margin-top:14px;letter-spacing:.05em;}
-  .foot{text-align:center;color:var(--grey);font-size:13px;font-style:italic;margin-top:16px;}
-  .state{text-align:center;color:var(--grey);font-style:italic;padding:40px;}
+  body{background:var(--cream);color:var(--dark);font-family:'Crimson Pro',Georgia,serif;font-size:16px;line-height:1.5;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:26px 16px 46px;}
+  .wrap{width:100%;max-width:440px;}
+  .brand{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);text-align:center;margin-bottom:10px;}
+  .state{max-width:440px;text-align:center;color:var(--grey);font-style:italic;padding:60px 20px;}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 18px 44px rgba(60,45,15,.13);}
+  .meter{display:flex;align-items:center;gap:10px;padding:10px 16px;background:linear-gradient(90deg,#FFFDF7,#FBF4E2);border-bottom:1px solid var(--line);}
+  .flag{font-size:17px;}
+  .mtxt{font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--maroon);}
+  .bar{flex:1;height:6px;background:var(--soft);border-radius:99px;overflow:hidden;}
+  .bar i{display:block;height:100%;width:8%;background:linear-gradient(90deg,var(--gold-l),var(--gold));border-radius:99px;}
+  .chero{position:relative;height:150px;display:flex;align-items:center;justify-content:center;background:radial-gradient(120% 120% at 30% 20%,#F3E7C6,#E9D9Ae 60%,#DFC98F);}
+  .chero .emoji{font-size:56px;opacity:.92;}
+  .catlbl{position:absolute;top:9px;left:11px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:rgba(42,27,14,.55);padding:2px 7px;border-radius:6px;}
+  .frstamp{position:absolute;bottom:7px;left:9px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.04em;text-transform:uppercase;color:rgba(42,27,14,.5);}
+  .gallery{display:flex;gap:0;}
+  .gallery .g{flex:1;height:70px;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:26px;background:var(--soft);border-top:2px solid #fff;position:relative;}
+  .gallery .g small{position:absolute;bottom:3px;font-family:'DM Mono',monospace;font-size:7px;letter-spacing:.03em;text-transform:uppercase;color:#6b5836;}
+  .cstatement{padding:12px 18px 2px;text-align:center;font-family:'Playfair Display',serif;font-style:italic;font-size:18px;line-height:1.35;color:var(--maroon);}
+  .cbody{padding:6px 20px 22px;}
+  .cid{text-align:center;border-bottom:1px solid var(--soft);padding-bottom:10px;margin-bottom:2px;}
+  .cid .logo{display:inline-flex;align-items:center;justify-content:center;width:42px;height:42px;border-radius:50%;background:var(--soft);border:1px solid var(--gold-l);font-family:'Playfair Display',serif;font-weight:700;font-size:19px;color:var(--gold);margin-bottom:5px;}
+  .cid .name{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;color:var(--dark);}
+  .cid .motto{font-style:italic;color:var(--field);font-size:14.5px;margin-top:2px;}
+  .cid .meta{font-family:'DM Mono',monospace;font-size:11px;color:var(--grey);margin-top:5px;}
+  .values{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px;}
+  .values .vcell{background:#FCF7EA;border:1px solid var(--soft);border-radius:9px;padding:8px 10px;}
+  .k{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);margin-bottom:2px;}
+  .v{font-size:14.5px;color:var(--ink);line-height:1.42;}
+  .cblk{margin-top:12px;padding:2px 2px 2px 12px;border-left:3px solid var(--gold-l);border-radius:2px;}
+  .peritag{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.03em;text-transform:uppercase;color:#a06a1a;margin-left:6px;}
+  .spots{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;}
+  .spot{background:linear-gradient(180deg,#FFFDF6,#FBF3DE);border:1px solid var(--gold-l);border-radius:10px;padding:9px 11px;text-align:center;}
+  .spot .k{color:var(--maroon);}
+  .spot .who{font-family:'Playfair Display',serif;font-size:16px;font-weight:700;color:var(--dark);margin-top:2px;}
+  .spot .for{font-size:13px;color:var(--field);font-style:italic;margin-top:1px;line-height:1.3;}
+  .spotcap{text-align:center;font-family:'DM Mono',monospace;font-size:8.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--grey);margin-top:5px;}
+  .actbar{margin-top:15px;background:#241a0f;border-radius:11px;padding:11px 14px;display:flex;align-items:center;gap:11px;color:#F3E7C6;}
+  .actbar .n{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#E9C877;line-height:1;}
+  .actbar .lb{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;color:#cbb98f;}
+  .gaz{margin-top:12px;text-align:center;font-size:13.5px;color:var(--field);font-style:italic;}
+  .gaz b{font-style:normal;color:var(--maroon);font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;}
+  .cfoot{margin-top:14px;text-align:center;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--grey);border-top:1px solid var(--soft);padding-top:10px;}
+  .cfoot .grow{color:var(--gold);}
+  .pulse{margin-top:13px;background:#FBF7EC;border:1px solid var(--soft);border-radius:11px;padding:11px 13px;}
+  .pulse .k{margin-bottom:7px;}
+  .pbadges{display:flex;flex-wrap:wrap;gap:5px;}
+  .pbadge{font-family:'DM Mono',monospace;font-size:10px;background:#fff;border:1px solid var(--gold-l);border-radius:99px;padding:3px 9px;color:var(--field);line-height:1.35;}
+  .pbadge b{color:var(--maroon);font-weight:500;}
+  .brandfoot{margin-top:12px;display:flex;align-items:center;justify-content:center;gap:8px;padding-top:11px;border-top:1px solid var(--soft);}
+  .brandfoot .mk{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:var(--maroon);color:#F3E7C6;font-family:'Playfair Display',serif;font-weight:700;font-size:12px;flex:none;}
+  .brandfoot .bt{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--grey);line-height:1.4;text-align:left;}
+  .brandfoot .bt b{color:var(--maroon);font-weight:500;}
+  .brandfoot a{color:var(--gold);text-decoration:none;}
 </style></head>
-<body><div class="wrap">
-  <div class="brand">A²OK · Anonymous Acts of Kindness</div>
-  <div id="mount"><div class="state">Loading the card…</div></div>
-  <div class="foot" id="foot"></div>
-</div>
+<body>
+  <div class="wrap">
+    <div class="brand">A²OK in Action</div>
+    <div id="mount"><div class="state">Loading…</div></div>
+  </div>
 <script>
-function esc(s){return (s||'').replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c];});}
-function line(k,v){ if(!v) return ''; return '<div class="fieldline"><div class="k">'+k+'</div><div class="v">'+esc(v)+'</div></div>'; }
-function render(d){
-  var loc=[d.city,d.state].filter(Boolean).join(', ');
-  var html='<div class="card"><div class="top"><div class="org">'+esc(d.org||'A Kind Organization')+'</div>'+
-    (loc?'<div class="meta">'+esc(loc)+'</div>':'')+'</div><div class="body">'+
-    line('Motto',d.motto)+line('What kindness means to us',d.means)+line('An act of kindness',d.act)+
-    '</div></div>'+
-    (d.rung?'<div class="rung">'+esc(d.rung)+'</div>':'');
-  document.getElementById('mount').innerHTML=html;
-  document.getElementById('foot').textContent='A card in the A²OK community. Acts stay unsigned — that is the first law.';
-}
-(async function(){
-  var slug=new URLSearchParams(location.search).get('slug');
-  if(!slug){ document.getElementById('mount').innerHTML='<div class="state">No card specified.</div>'; return; }
-  try{
-    var res=await fetch('/.netlify/functions/get-card?slug='+encodeURIComponent(slug));
-    if(!res.ok) throw new Error('not found');
-    render(await res.json());
-  }catch(e){
-    document.getElementById('mount').innerHTML='<div class="state">We couldn’t find that card yet. If it was just created, give it a moment and refresh.</div>';
+(function(){
+  var slug=new URLSearchParams(location.search).get('slug') || location.pathname.replace(/^\/+|\/+$/g,'');
+  if(slug==='card.html'||slug==='index.html') slug='';
+  var mount=document.getElementById('mount');
+  if(!slug){ mount.innerHTML='<div class="state">No card specified.</div>'; return; }
+
+  var CAT={"Café / Coffee":"☕","Restaurant":"🍲","Salon / Barber":"✂️","Hardware / Trades":"🔧","Shop / Retail":"🛍️","Theater / Drama":"🎭","Senior care":"🌷","Faith community":"🕊️","Service business":"🤝"};
+  var PHOTO={"storefront":"🏠","the team":"👥","at work":"🫖","your photo":"🖼️","an event":"🎉","the crew":"🧑‍🤝‍🧑","the wall":"🧱","a moment":"🏆"};
+  var esc=function(t){var d=document.createElement('div');d.textContent=t==null?'':t;return d.innerHTML;};
+  var cld=function(url,t){ return (url||'').indexOf('/upload/')>-1 ? url.replace('/upload/','/upload/'+t+'/') : url; };
+
+  fetch('/.netlify/functions/get-card?slug='+encodeURIComponent(slug))
+    .then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function(d){ render(d); })
+    .catch(function(){ mount.innerHTML='<div class="state">We couldn’t find that card.</div>'; });
+
+  function render(d){
+    var off=(d.off||'').split(',').map(function(x){return x.trim();}).filter(Boolean);
+    var hidden=function(key){ return off.indexOf(key)>=0; };
+    // show a block only if it has content AND isn't switched off
+    function blk(key,label,val,peri){
+      if(hidden(key) || !val || !val.trim()) return '';
+      return '<div class="cblk"><div class="k">'+label+(peri?'<span class="peritag">refreshed ea. season</span>':'')+'</div><div class="v">'+esc(val)+'</div></div>';
+    }
+    function vcell(key,label,val){
+      if(hidden(key) || !val || !val.trim()) return '';
+      return '<div class="vcell"><div class="k">'+label+'</div><div class="v">'+esc(val)+'</div></div>';
+    }
+
+    // rung → flag + width
+    var rung=d.rung||'1 Free Flag';
+    var flag='🚩',rl='Flag planted',w=30;
+    if(/^2/.test(rung)){flag='🔥';rl='Voice added';w=60;}
+    else if(/^3/.test(rung)){flag='✨';rl='Spark Royalty';w=85;}
+    else if(/^4/.test(rung)){flag='🌟';rl='Star · All In';w=100;}
+
+    // hero — uploaded photo if present, else category emoji
+    var emoji=CAT[d.cat]||'🤝';
+    var catlbl=d.cat||'';
+    var heroStyle = d.heroUrl ? ' style="background-image:url('+cld(d.heroUrl,'w_880,h_300,c_fill,f_auto,q_auto')+');background-size:cover;background-position:center;"' : '';
+    var heroInner = d.heroUrl ? '' : '<span class="emoji">'+emoji+'</span>';
+
+    // gallery — uploaded photos first, then any stock labels
+    var gitems=[];
+    (d.gallery||'').split(',').forEach(function(u){u=u.trim();if(u)gitems.push('<div class="g" style="background-image:url('+cld(u,'w_320,h_150,c_fill,f_auto,q_auto')+');background-size:cover;background-position:center;"></div>');});
+    (d.photo2||'').split(',').forEach(function(x){x=x.trim();if(x)gitems.push('<div class="g">'+(PHOTO[x]||'📷')+'<small>'+esc(x)+'</small></div>');});
+    (d.photos3||'').split(',').forEach(function(x){x=x.trim();if(x)gitems.push('<div class="g">'+(PHOTO[x]||'📷')+'<small>'+esc(x)+'</small></div>');});
+    var gallery = gitems.length ? '<div class="gallery">'+gitems.slice(0,3).join('')+'</div>' : '';
+
+    // meta line
+    var meta=[d.owner,d.city,d.phone,d.web].map(function(x){return (x||'').trim();}).filter(Boolean).join('  ·  ');
+
+    // motto (toggle key v_motto)
+    var mottoHtml = (!hidden('v_motto') && d.motto && d.motto.trim()) ? '<div class="motto">“'+esc(d.motto)+'”</div>' : '';
+
+    // values
+    var values = vcell('v_vision','Our vision',d.vision) + vcell('v_kind','What kindness means to us',d.kind);
+    if(values) values='<div class="values">'+values+'</div>';
+
+    // story blocks
+    var blocks =
+      blk('b_recv','A kindness that helped us',d.recv) +
+      blk('b_give','A kindness we gave',d.give) +
+      blk('b_why','Why we opened',d.why) +
+      blk('b_who','Who taught us kindness',d.who) +
+      blk('b_reg','A regular we’d miss',d.reg,true) +
+      blk('b_house','Our house move',d.house) +
+      blk('b_train','What we teach our people',d.train) +
+      blk('b_do','Kindness we do, on the regular',d.do) +
+      blk('b_event','Every year, we…',d.event,true);
+
+    // spotlights
+    var spots='';
+    var emp=(d.emp_who||'').trim(), cust=(d.cust_who||'').trim();
+    if(emp||cust){
+      var s='';
+      if(emp) s+='<div class="spot"><div class="k">Employee of the month</div><div class="who">'+esc(emp)+'</div><div class="for">'+(d.emp_for?'“'+esc(d.emp_for)+'”':'')+'</div></div>';
+      if(cust) s+='<div class="spot"><div class="k">Customer of the month</div><div class="who">'+esc(cust)+'</div><div class="for">'+(d.cust_for?'“'+esc(d.cust_for)+'”':'')+'</div></div>';
+      spots='<div class="spots">'+s+'</div><div class="spotcap">the reason they’ll tell their friends to look</div>';
+    }
+
+    // Kindness Pulse badges (from the questionnaire taps)
+    var PB=[
+      ['qTrend','Kindness'],['qFourMin','4 min/day'],['qDevices','Devices'],
+      ['qMeans','Means'],['qVisImp','Vision'],['qLocus','Begins with'],
+      ['qBorn','Kindness is'],['qAudience','Audience'],['qAnon','Anon act'],
+      ['qMatters','Matters most'],['qCohost','Celebration']
+    ];
+    var pbadges=PB.map(function(p){var v=(d[p[0]]||'').trim();return v?'<span class="pbadge">'+p[1]+': <b>'+esc(v)+'</b></span>':'';}).filter(Boolean).join('');
+    var pulse = pbadges ? '<div class="pulse"><div class="k">Where we stand on kindness</div><div class="pbadges">'+pbadges+'</div></div>' : '';
+
+    // anonymous act (memory if shared, else the fact)
+    var anonBlk='';
+    var anonV=(d.qAnon||'').trim();
+    if(anonV && anonV!=='Not that I know of'){
+      var anonTxt=(d.anonShared&&d.anonShared.trim()) ? d.anonShared.trim() : (anonV==='Both'?'Given and received.':anonV+'.');
+      anonBlk='<div class="cblk"><div class="k">An anonymous kindness</div><div class="v">'+esc(anonTxt)+'</div></div>';
+    }
+
+    // co-host openness
+    var cohostBlk='';
+    var coV=(d.qCohost||'').trim();
+    if(coV && coV!=='Not now'){
+      cohostBlk='<div class="cblk"><div class="k">Open to a celebration</div><div class="v">'+esc(coV==='Yes'?'Yes — we’d welcome an A²OK World celebration.':'Maybe — tell us more.')+'</div></div>';
+    }
+
+    var blocks2 =
+      blk('b_host','We’ll host',d.host) +
+      blk('b_invite','We’d like you to see…',d.invite) +
+      cohostBlk;
+
+    // gazette
+    var gaz='';
+    if(!hidden('c_gaz') && d.gaz && d.gaz.trim()){
+      gaz='<div class="gaz"><b>Joining the Gazette:</b> '+esc(d.gaz)+'</div>';
+    }
+
+    mount.innerHTML =
+      '<div class="card">'+
+        '<div class="meter"><span class="flag">'+flag+'</span><div class="bar"><i style="width:'+w+'%"></i></div><span class="mtxt">'+rl+'</span></div>'+
+        '<div class="chero"'+heroStyle+'>'+(catlbl?'<span class="catlbl">'+esc(catlbl)+'</span>':'')+heroInner+'</div>'+
+        gallery+
+        (d.state?'<div class="cstatement">'+esc(d.state)+'</div>':'')+
+        '<div class="cbody">'+
+          '<div class="cid"><div class="logo">'+(d.logoUrl?'<img src="'+cld(d.logoUrl,'w_120,h_120,c_fill,g_auto,f_auto,q_auto')+'" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">':(d.name?esc(d.name.trim()[0].toUpperCase()):'·'))+'</div>'+
+            '<div class="name">'+esc(d.name||'')+'</div>'+ mottoHtml +
+            (meta?'<div class="meta">'+esc(meta)+'</div>':'')+'</div>'+
+          values + blocks + pulse + anonBlk + spots + blocks2 +
+          gaz +
+          '<div class="cfoot"><span class="grow">the more you share, the more this page becomes.</span></div>'+
+          '<div class="brandfoot"><span class="mk">A²</span><div class="bt">Part of <b>A²OK World</b> · Anonymous Acts of Kindness<br><a href="https://aokinaction.com" target="_blank" rel="noopener">aokinaction.com</a></div></div>'+
+        '</div>'+
+      '</div>';
+    document.title = (d.name? d.name+' · ' : '') + 'A Kindness Card';
   }
 })();
 </script>
