@@ -1,16 +1,1873 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>A²OK — Create your Kindness Card</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A²OK Kindness Card — Building Your Card</title>
 <style>
-:root{--paper:#fff;--ink:#1b1208;--field:#5B4A33;--gold:#9A7B29;--gold-l:#C9B681;--maroon:#5a1414;--grey:#8a7a5e;--cream:#FAF6EC;--soft:#F3ECDA;--line:#E4D9BE;}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--cream);color:var(--ink);font-family:'Crimson Pro',Georgia,serif;}
+:root{
+  --cream:#FBF8F2; --card:#FFFDF8; --ink:#2C2318; --ink2:#5B4A38; --muted:#8A7860;
+  --gold:#C08A2E; --gold-lt:#E5B95A; --brown:#6B3F1D; --maroon:#8A2222; --green:#2E5236;
+  --rule:#E4DACB; --rule2:#EFE7DA;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif;
+  --sans:"Inter","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --script:"Segoe Script","Bradley Hand","Brush Script MT",cursive;
+  --mini:0.385;
+}
+/* ---------------- the card ---------------- */
+.card{
+  width:100%;height:100%;background:var(--card);border-radius:12px;border:1px solid var(--rule);
+  overflow:hidden;position:relative;display:flex;flex-direction:column;
+  box-shadow:0 3px 12px rgba(100,75,35,.10);font-family:var(--serif);color:var(--ink);
+  transition:box-shadow .34s ease;
+}
+.cardtop{display:flex;align-items:center;justify-content:space-between;padding:9px 16px;border-bottom:1px solid var(--rule2);flex:0 0 auto;}
+.cardtop .lbl{font-family:var(--sans);font-size:8.5px;font-weight:800;letter-spacing:.19em;color:var(--gold);}
+.rbadge{font-family:var(--sans);font-size:8.5px;font-weight:800;letter-spacing:.15em;color:#fff;padding:4px 10px;border-radius:4px;}
+.b1{background:var(--gold);} .b2{background:var(--brown);} .b3{background:var(--maroon);} .b4{background:var(--green);}
+
+.idblock{padding:16px 22px 12px;text-align:center;flex:0 0 auto;}
+.idblock.left{text-align:left;display:flex;align-items:center;gap:13px;padding-bottom:9px;}
+.mono{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gold-lt);background:linear-gradient(160deg,#FDF6E7,#F6E9CE);display:grid;place-items:center;font-size:20px;color:var(--brown);margin:0 auto 9px;flex:0 0 auto;}
+.idblock.left .mono{margin:0;width:40px;height:40px;font-size:18px;}
+.orgname{font-size:26px;font-weight:600;letter-spacing:-.01em;line-height:1.1;}
+.idblock.left .orgname{font-size:22px;}
+.orgmeta{font-family:var(--sans);font-size:11px;color:var(--muted);letter-spacing:.04em;margin-top:5px;}
+.orgmeta .sep{opacity:.5;margin:0 7px;}
+.body{flex:1 1 auto;padding:0 22px;display:flex;flex-direction:column;min-height:0;}
+
+.kick{font-family:var(--sans);font-size:8.5px;font-weight:800;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
+.k-brown{color:var(--brown);} .k-maroon{color:var(--maroon);} .k-green{color:var(--green);}
+.line{font-size:14px;line-height:1.48;color:var(--ink);}
+.line.sm{font-size:12.5px;line-height:1.45;}
+.blk{padding:10px 0;border-top:1px solid var(--rule2);}
+.blk.noline{border-top:none;}
+
+.hero-statement{flex:1 1 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:8px 12px 18px;}
+.hero-statement .kick{margin-bottom:12px;}
+.hero-statement .big{font-size:25px;line-height:1.34;font-style:italic;max-width:430px;}
+.flagline{display:flex;align-items:center;gap:9px;justify-content:center;margin-top:26px;font-family:var(--sans);font-size:11.5px;color:var(--muted);}
+
+.vision .vtext{font-family:var(--script);font-size:17px;line-height:1.4;color:var(--brown);}
+.vision.rt{text-align:right;}
+
+/* the review A²OK brings them — they wrote none of it */
+.neighbor{
+  background:linear-gradient(180deg,#FDF7EA,#FBF2E0);border-left:2.5px solid var(--gold-lt);
+  padding:9px 13px;border-radius:0 6px 6px 0;
+}
+.neighbor .nq{font-size:13px;line-height:1.46;font-style:italic;color:var(--ink);}
+.neighbor .nattr{font-family:var(--sans);font-size:9px;color:var(--muted);letter-spacing:.05em;margin-top:5px;}
+.neighbor .nattr b{color:var(--brown);font-weight:700;}
+
+/* photo placeholders */
+.ph{border-radius:5px;position:relative;overflow:hidden;background:#E8DDCB;}
+.ph:after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);border-radius:5px;}
+.ph-store{background:radial-gradient(60px 40px at 22% 62%,rgba(255,206,120,.85),transparent 70%),radial-gradient(50px 34px at 52% 58%,rgba(255,190,105,.7),transparent 70%),radial-gradient(60px 40px at 80% 63%,rgba(255,206,120,.75),transparent 70%),linear-gradient(180deg,#4A3A28,#6A5238 45%,#3A2C1E);}
+.ph-latte{background:radial-gradient(closest-side at 50% 46%,#F3E2C4,#D9BE94 55%,#B08E60 78%,#8A6B45),linear-gradient(160deg,#5C4632,#3E2E20);}
+.ph-staff{background:radial-gradient(26px 42px at 18% 66%,#6E5B47,transparent 72%),radial-gradient(26px 42px at 36% 62%,#7C6850,transparent 72%),radial-gradient(26px 42px at 54% 65%,#6E5B47,transparent 72%),radial-gradient(26px 42px at 72% 62%,#7C6850,transparent 72%),radial-gradient(26px 42px at 88% 66%,#6E5B47,transparent 72%),linear-gradient(180deg,#3D3022,#2A2018);}
+.ph-two{background:radial-gradient(38px 54px at 33% 60%,#8A6E52,transparent 74%),radial-gradient(38px 54px at 68% 58%,#9C7E5E,transparent 74%),linear-gradient(180deg,#4A3A2A,#2C2118);}
+.ph-gather{background:radial-gradient(5px 5px at 14% 22%,#FFD98A,transparent 70%),radial-gradient(5px 5px at 32% 16%,#FFD98A,transparent 70%),radial-gradient(5px 5px at 50% 22%,#FFD98A,transparent 70%),radial-gradient(5px 5px at 68% 15%,#FFD98A,transparent 70%),radial-gradient(5px 5px at 86% 22%,#FFD98A,transparent 70%),radial-gradient(90px 60px at 50% 92%,rgba(255,190,110,.45),transparent 75%),linear-gradient(180deg,#3A2C20,#241B14);}
+.ph-crowd{background:radial-gradient(7px 7px at 12% 24%,#FFE0A0,transparent 70%),radial-gradient(7px 7px at 34% 18%,#FFE0A0,transparent 70%),radial-gradient(7px 7px at 58% 26%,#FFE0A0,transparent 70%),radial-gradient(7px 7px at 82% 17%,#FFE0A0,transparent 70%),radial-gradient(120px 70px at 30% 92%,rgba(210,150,90,.6),transparent 72%),radial-gradient(120px 70px at 74% 94%,rgba(210,150,90,.6),transparent 72%),linear-gradient(180deg,#5A4630,#7A6142 40%,#3A2C1E);}
+.ph-gaz{background:repeating-linear-gradient(180deg,rgba(90,70,45,.16) 0 1px,transparent 1px 5px),linear-gradient(160deg,#F5EEDF,#E3D6BE);}
+.phcap{position:absolute;left:0;right:0;bottom:0;z-index:2;background:linear-gradient(180deg,transparent,rgba(25,17,8,.82));color:#F6EEDF;font-size:10.5px;line-height:1.4;padding:15px 11px 8px;}
+
+.flow2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.stack{display:flex;flex-direction:column;gap:10px;min-height:0;}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+
+.recrow{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.rec{display:flex;gap:10px;align-items:flex-start;}
+.avatar{width:38px;height:38px;border-radius:50%;flex:0 0 auto;background:radial-gradient(closest-side at 50% 34%,#D9BC93,#A98457 70%,#7C6040);box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.5);}
+.nameonly{width:38px;height:38px;border-radius:50%;flex:0 0 auto;border:1.5px dashed var(--rule);display:grid;place-items:center;font-size:14px;color:var(--muted);background:#FCF8F0;}
+.recname{font-size:14.5px;font-weight:600;line-height:1.2;}
+.recwhy{font-size:11px;font-style:italic;color:var(--ink2);line-height:1.4;margin-top:3px;}
+
+.civ{display:grid;grid-template-columns:72px 1fr;gap:11px;align-items:center;}
+.datechip{border:1px solid var(--rule);border-radius:6px;overflow:hidden;text-align:center;background:#fff;}
+.datechip .m{background:var(--maroon);color:#fff;font-family:var(--sans);font-size:8.5px;font-weight:800;letter-spacing:.14em;padding:3px 0;}
+.datechip .d{font-size:21px;font-weight:600;padding:3px 0 5px;}
+.counter{display:flex;align-items:baseline;gap:9px;}
+.counter .n{font-size:36px;font-weight:600;color:var(--green);line-height:1;}
+.counter .t{font-size:12px;color:var(--ink2);line-height:1.35;}
+.starbadge{display:inline-flex;align-items:center;gap:7px;background:#F1F6F1;border:1px solid #CFE0D2;color:var(--green);font-family:var(--sans);font-size:9px;font-weight:800;letter-spacing:.13em;padding:5px 11px;border-radius:999px;}
+
+.contact{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--rule2);flex:0 0 auto;margin-top:auto;}
+.contact div{padding:10px;text-align:center;font-family:var(--sans);font-size:11px;color:var(--ink2);border-left:1px solid var(--rule2);}
+.contact div:first-child{border-left:none;}
+.contact .cl{display:block;font-size:8px;font-weight:800;letter-spacing:.14em;color:var(--muted);margin-bottom:3px;}
+
+
+
+/* ================= editor chrome ================= */
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{background:#F7F3EC;color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;}
+
+.topbar{
+  position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;gap:16px;padding:12px 26px;
+}
+.tb-brand{display:flex;align-items:center;gap:11px;padding-right:18px;border-right:1px solid var(--rule);}
+.tb-brand .bn{font-family:var(--serif);font-size:16px;font-weight:700;line-height:1.05;}
+.tb-brand .bs{font-size:8px;letter-spacing:.2em;color:var(--gold);font-weight:800;}
+.tb-title{font-family:var(--serif);font-size:17px;}
+.tb-title span{display:block;font-family:var(--sans);font-size:11.5px;color:var(--muted);margin-top:2px;}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.saved{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--green);font-weight:600;}
+.saved .tick{width:16px;height:16px;border-radius:50%;background:var(--green);color:#fff;font-size:10px;display:grid;place-items:center;}
+.tbtn{
+  font-family:var(--sans);font-size:12.5px;font-weight:650;padding:9px 16px;border-radius:7px;
+  border:1px solid var(--rule);background:#fff;color:var(--brown);cursor:pointer;
+}
+.tbtn.solid{background:var(--maroon);color:#fff;border-color:var(--maroon);}
+.tbtn:hover{border-color:var(--gold);}
+
+.shell{display:grid;grid-template-columns:186px minmax(0,1fr) calc(600px * var(--pvs,.62));gap:20px;max-width:1720px;margin:0 auto;padding:20px 24px 70px;align-items:start;}
+
+/* ---------- sidebar ---------- */
+.side{position:sticky;top:80px;display:grid;gap:14px;}
+.panel{background:#fff;border:1px solid var(--rule);border-radius:11px;padding:14px;}
+.ptitle{font-size:9.5px;font-weight:800;letter-spacing:.14em;color:var(--muted);margin-bottom:11px;}
+.steps{display:grid;gap:4px;}
+.step{
+  display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;cursor:pointer;
+  border:1px solid transparent;transition:background .15s ease;
+}
+.step:hover{background:#FBF6EC;}
+.step.active{background:#FCF2E2;border-color:#EBD7B4;}
+.step.locked{opacity:.55;cursor:default;}
+.step .num{width:22px;height:22px;border-radius:50%;background:#EDE4D5;color:var(--ink2);font-size:11px;font-weight:800;display:grid;place-items:center;flex:0 0 auto;}
+.step.done .num{background:var(--green);color:#fff;}
+.step.active .num{background:var(--maroon);color:#fff;}
+.step .lab{font-size:11.5px;font-weight:750;letter-spacing:.03em;line-height:1.25;}
+.step .st{font-size:10px;color:var(--muted);margin-top:2px;font-weight:400;letter-spacing:0;}
+.step.done .st{color:var(--green);}
+
+.linkrow{font-size:10.5px;color:var(--ink2);word-break:break-all;background:#FBF7F0;border:1px solid var(--rule2);border-radius:6px;padding:8px 9px;margin-bottom:7px;line-height:1.4;}
+.linkrow b{display:block;font-size:8.5px;letter-spacing:.13em;color:var(--muted);margin-bottom:3px;font-weight:800;}
+.copybtn{width:100%;font-size:11px;font-weight:650;padding:7px;border-radius:6px;border:1px solid var(--rule);background:#fff;color:var(--brown);cursor:pointer;}
+
+.foundlist{display:grid;gap:7px;}
+.found{display:flex;gap:7px;font-size:11px;line-height:1.4;color:var(--ink2);}
+.found .fk{color:var(--green);flex:0 0 auto;}
+
+/* ---------- preview column ---------- */
+.previewcol{position:sticky;top:80px;}
+.pvhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
+.pvtag{font-size:9.5px;font-weight:800;letter-spacing:.14em;color:#fff;background:var(--maroon);padding:5px 11px;border-radius:5px;}
+.pvnote{font-size:10.5px;color:var(--muted);font-style:italic;}
+.pvframe{width:calc(600px * var(--pvs,.62));height:calc(780px * var(--pvs,.62));position:relative;cursor:zoom-in;}
+.pvstage{position:absolute;top:0;left:0;width:600px;height:780px;transform-origin:top left;transform:scale(var(--pvs,.62));}
+
+/* ---- zoom bar + magnifier ---- */
+.zoombar{display:flex;align-items:center;gap:6px;margin-bottom:9px;}
+.zb{
+  width:26px;height:26px;border-radius:6px;border:1px solid var(--rule);background:#fff;
+  color:var(--brown);font-size:14px;font-weight:700;cursor:pointer;display:grid;place-items:center;line-height:1;
+}
+.zb:hover{border-color:var(--gold);background:#FDF8EE;}
+.zb[disabled]{opacity:.35;cursor:default;}
+.zpct{font-size:11px;font-weight:700;color:var(--ink2);min-width:38px;text-align:center;}
+.zmag{
+  margin-left:auto;display:inline-flex;align-items:center;gap:7px;border:1px solid var(--maroon);
+  background:var(--maroon);color:#fff;font-size:11.5px;font-weight:700;padding:6px 13px;
+  border-radius:7px;cursor:pointer;
+}
+.zmag:hover{filter:brightness(1.08);}
+.magwrap{
+  position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;
+  background:rgba(36,26,13,.72);backdrop-filter:blur(4px);cursor:zoom-out;
+}
+.magwrap.on{display:flex;}
+.maginner{width:600px;height:780px;transform-origin:center center;transform:scale(var(--ms,1));}
+.maginner .card{box-shadow:0 40px 100px -20px rgba(20,12,4,.7);}
+.maghint{
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);color:#E8DCC7;font-size:12px;
+  letter-spacing:.04em;background:rgba(0,0,0,.35);padding:7px 16px;border-radius:999px;
+}
+
+/* ---- density engine: the card gets DENSER, never longer ---- */
+.pvstage .card{--dz:1;}
+.pvstage .body{overflow:hidden;}
+.pvstage .line{font-size:calc(14px * var(--dz));line-height:1.46;}
+.pvstage .line.sm{font-size:calc(12.4px * var(--dz));line-height:1.42;}
+.pvstage .kick{font-size:calc(8.4px * var(--dz));margin-bottom:calc(5px * var(--dz));letter-spacing:calc(.15em * var(--dz));}
+.pvstage .stack{gap:calc(10px * var(--dz));}
+.pvstage .flow2{gap:calc(14px * var(--dz));}
+.pvstage .recrow{gap:calc(14px * var(--dz));}
+.pvstage .recname{font-size:calc(14.5px * var(--dz));}
+.pvstage .recwhy{font-size:calc(11px * var(--dz));}
+.pvstage .avatar,.pvstage .nameonly{width:calc(38px * var(--dz));height:calc(38px * var(--dz));}
+.pvstage .vtext{font-size:calc(17px * var(--dz));}
+.pvstage .idblock.left{padding-bottom:calc(9px * var(--dz));padding-top:calc(14px * var(--dz));}
+.pvstage .blk{padding:calc(10px * var(--dz)) 0;}
+.dmeter{display:flex;align-items:center;gap:8px;margin-top:9px;font-size:11px;color:var(--muted);}
+.dbar{flex:1;height:5px;border-radius:3px;background:#EBE2D3;overflow:hidden;}
+.dbar i{display:block;height:100%;background:var(--gold);transition:width .3s ease;}
+.dwarn{display:none;margin-top:9px;background:#FDF0E4;border:1px solid #E9C9A4;border-radius:7px;padding:9px 11px;font-size:11.5px;color:var(--brown);line-height:1.45;}
+.pvfoot{margin-top:14px;background:#fff;border:1px solid var(--rule);border-radius:10px;padding:12px 14px;font-size:11.5px;color:var(--ink2);line-height:1.5;}
+.pvfoot b{color:var(--ink);}
+
+/* the reflow flash */
+@keyframes land{0%{background:#FFF2CE;}100%{background:transparent;}}
+.landed{animation:land 1.1s ease-out;border-radius:5px;}
+
+/* ---------- questions ---------- */
+.qwrap{background:#fff;border:1px solid var(--rule);border-radius:13px;overflow:hidden;}
+.qtop{padding:16px 18px 14px;border-bottom:1px solid var(--rule2);background:linear-gradient(180deg,#FFFDF8,#FBF6EC);}
+.qtop h2{font-family:var(--serif);font-weight:400;font-size:20px;margin:0 0 4px;}
+.qtop p{margin:0;font-size:13px;color:var(--ink2);line-height:1.5;}
+.qtop .cnt{float:right;font-size:11px;color:var(--muted);font-weight:650;letter-spacing:.05em;}
+
+.q{display:grid;grid-template-columns:1fr 166px;gap:16px;padding:15px 18px;border-bottom:1px solid var(--rule2);}
+.q:last-of-type{border-bottom:none;}
+.qL .qn{display:flex;gap:9px;align-items:baseline;}
+.qL .qi{font-size:11px;font-weight:800;color:var(--gold);flex:0 0 auto;}
+.qL .qt{font-size:13px;font-weight:750;letter-spacing:.01em;line-height:1.35;}
+.qL .qh{font-size:11.5px;color:var(--muted);line-height:1.45;margin:4px 0 10px 20px;}
+.starter{
+  display:inline-block;font-family:var(--serif);font-size:11.5px;font-style:italic;color:var(--brown);
+  background:#FCF4E4;border:1px dashed #E3CFA6;border-radius:5px;padding:4px 9px;margin:0 0 7px 20px;
+}
+.fieldwrap{margin-left:20px;}
+textarea,input[type=text]{
+  width:100%;font-family:var(--serif);font-size:13.5px;line-height:1.5;color:var(--ink);
+  border:1px solid var(--rule);border-radius:7px;padding:10px 12px;background:#FEFCF8;resize:vertical;
+}
+textarea:focus,input:focus{outline:none;border-color:var(--gold);background:#fff;box-shadow:0 0 0 3px rgba(192,138,46,.12);}
+.meta{display:flex;align-items:center;gap:10px;margin-top:6px;font-size:10.5px;color:var(--muted);}
+.meta .count.over{color:var(--gold);font-weight:700;}
+.radios{display:flex;gap:14px;margin:2px 0 9px 20px;}
+.radios label{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink2);cursor:pointer;}
+
+/* right controls */
+.qR{display:grid;gap:12px;align-content:start;}
+.ctl .cl{font-size:8.5px;font-weight:800;letter-spacing:.13em;color:var(--muted);margin-bottom:6px;}
+.seg{display:flex;border:1px solid var(--rule);border-radius:7px;overflow:hidden;}
+.seg button{
+  flex:1;font-family:var(--sans);font-size:10.5px;font-weight:700;padding:7px 4px;border:none;
+  background:#fff;color:var(--ink2);cursor:pointer;border-left:1px solid var(--rule2);
+}
+.seg button:first-child{border-left:none;}
+.seg button.on{background:var(--brown);color:#fff;}
+.seg.rec button.on{background:var(--maroon);}
+.thumb{width:100%;height:56px;border-radius:6px;margin-top:7px;}
+.picklib{margin-top:6px;font-size:10.5px;color:var(--maroon);cursor:pointer;text-decoration:underline;text-underline-offset:2px;}
+
+.tog{display:flex;align-items:center;gap:9px;}
+.switch{width:38px;height:21px;border-radius:999px;background:#DED4C3;position:relative;cursor:pointer;transition:background .18s ease;flex:0 0 auto;}
+.switch:after{content:"";position:absolute;top:2.5px;left:2.5px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .18s ease;box-shadow:0 1px 3px rgba(0,0,0,.2);}
+.switch.on{background:var(--green);}
+.switch.on:after{transform:translateX(17px);}
+.tog .tl{font-size:11px;font-weight:650;color:var(--ink2);}
+.lockpill{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:700;color:var(--green);background:#F1F6F1;border:1px solid #CFE0D2;padding:6px 10px;border-radius:6px;}
+
+.qfooter{display:flex;align-items:center;gap:12px;padding:15px 18px;background:#FBF7F0;border-top:1px solid var(--rule2);}
+.qfooter .auto{font-size:11.5px;color:var(--green);display:flex;align-items:center;gap:7px;}
+.nextbtn{margin-left:auto;background:var(--maroon);color:#fff;border:none;border-radius:8px;padding:12px 22px;font-size:13px;font-weight:700;cursor:pointer;}
+.backbtn{background:#fff;border:1px solid var(--rule);border-radius:8px;padding:12px 18px;font-size:12.5px;font-weight:650;color:var(--brown);cursor:pointer;}
+
+/* editable identity — "fix anything we got wrong" */
+.idsec{border-bottom:1px solid var(--rule2);background:#FCFAF4;}
+.idhead{display:flex;align-items:center;gap:9px;padding:12px 18px;cursor:pointer;font-size:12px;font-weight:700;color:var(--brown);}
+.idhead .chev{transition:transform .2s ease;color:var(--muted);}
+.idsec.open .chev{transform:rotate(90deg);}
+.idgrid{display:none;grid-template-columns:1fr 1fr 1fr;gap:11px;padding:0 18px 16px;}
+.idsec.open .idgrid{display:grid;}
+.idf label{display:block;font-size:8.5px;font-weight:800;letter-spacing:.13em;color:var(--muted);margin-bottom:4px;}
+.idf input{font-size:12.5px;padding:8px 10px;}
+
+/* group divider when showing every rung at once */
+.gdiv{display:flex;align-items:center;gap:11px;padding:13px 18px;background:#F8F3EA;border-bottom:1px solid var(--rule2);}
+.gdiv .gn{width:20px;height:20px;border-radius:50%;color:#fff;font-size:10.5px;font-weight:800;display:grid;place-items:center;}
+.gdiv .gt{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;}
+.allrow{display:flex;align-items:center;gap:9px;padding:11px 18px;border-bottom:1px solid var(--rule2);background:#fff;font-size:12px;color:var(--ink2);}
+
+/* found-review approval block */
+.review{margin:0;padding:16px 18px;border-bottom:1px solid var(--rule2);background:#FCFAF4;}
+.review .rl{font-size:9.5px;font-weight:800;letter-spacing:.13em;color:var(--green);margin-bottom:8px;}
+.review .rq{font-family:var(--serif);font-size:15px;font-style:italic;line-height:1.55;color:var(--ink);border-left:2px solid var(--gold-lt);padding-left:14px;}
+.review .rs{font-size:11px;color:var(--muted);margin-top:8px;padding-left:14px;}
+.review .rrow{display:flex;align-items:center;gap:14px;margin-top:13px;}
+
+/* rung 4 conversation panel */
+.conv{padding:28px 26px;}
+.conv h3{font-family:var(--serif);font-weight:400;font-size:25px;margin:0 0 9px;}
+.conv p{font-size:14px;line-height:1.62;color:var(--ink2);font-family:var(--serif);margin:0 0 18px;max-width:620px;}
+.convgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:20px;}
+.convitem{border:1px solid var(--rule);border-radius:9px;padding:13px 15px;background:#FCFAF4;}
+.convitem .ct{font-size:9.5px;font-weight:800;letter-spacing:.12em;color:var(--green);margin-bottom:5px;}
+.convitem .cd{font-family:var(--serif);font-size:12.5px;line-height:1.5;color:var(--ink2);}
+
+/* private questionnaire */
+.privbanner{
+  background:#F3F6F3;border:1px solid #CFE0D2;border-radius:9px;padding:13px 16px;margin:0 24px 4px;
+  display:flex;gap:11px;align-items:flex-start;
+}
+.privbanner .pi{width:22px;height:22px;border-radius:50%;background:var(--green);color:#fff;display:grid;place-items:center;font-size:11px;flex:0 0 auto;}
+.privbanner .pt{font-size:12.5px;line-height:1.5;color:var(--ink2);}
+.privbanner .pt b{color:var(--green);}
+
+/* airtable payload */
+.airwrap{max-width:1520px;margin:0 auto;padding:0 26px 60px;}
+.airbox{background:#241C13;border-radius:13px;overflow:hidden;}
+.airhead{display:flex;align-items:center;gap:12px;padding:15px 22px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.09);}
+.airhead .at{font-size:12.5px;font-weight:750;color:#F0E6D4;letter-spacing:.03em;}
+.airhead .ad{font-size:11.5px;color:#A08F76;margin-left:auto;}
+.airhead .chev{color:#A08F76;transition:transform .2s ease;}
+.airbox.open .chev{transform:rotate(90deg);}
+.airbody{display:none;padding:18px 22px 22px;}
+.airbox.open .airbody{display:block;}
+pre{margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;line-height:1.6;color:#D8CBB4;white-space:pre-wrap;}
+pre .k{color:#E5B95A;} pre .s{color:#B6D3B9;} pre .n{color:#D98A8A;} pre .c{color:#7C6C56;font-style:italic;}
+
+@media (max-width:1280px){
+  .shell{grid-template-columns:190px minmax(0,1fr);}
+  .previewcol{grid-column:1/-1;position:static;}
+  .pvframe{margin:0 auto;}
+}
+
+/* toast */
+.notebar{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(14px);
+  background:var(--ink);color:#FFF9EC;font-family:var(--sans);font-size:12.5px;letter-spacing:.02em;
+  padding:11px 18px;border-radius:7px;box-shadow:0 8px 26px rgba(44,35,24,.28);
+  opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;z-index:120;}
+.notebar.on{opacity:1;transform:translateX(-50%) translateY(0);}
+.uplogo{margin-top:9px;width:100%;font-family:var(--sans);font-size:11px;font-weight:700;letter-spacing:.06em;
+  padding:8px;border-radius:6px;border:1px dashed var(--rule);background:#FFFDF8;color:var(--ink2);cursor:pointer;}
+.uplogo:hover{border-color:var(--gold-lt);color:var(--brown);}
+
+/* ============ SYMBOL DROPDOWN ============
+   Eight medallions, eight example answers. Tapping one answers the question;
+   the writing underneath stays optional. Glyphs come from aok-symbols.js.  */
+.symdrop{margin:0 0 10px 20px;}
+.symhead{display:flex;align-items:center;gap:10px;width:100%;text-align:left;font:inherit;color:inherit;
+  cursor:pointer;background:#FCF9F2;border:1px solid var(--rule);border-radius:8px;padding:7px 11px;}
+.symhead:hover{border-color:var(--gold-lt);}
+.symhead:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.symdrop.open .symhead{border-color:var(--gold);border-bottom-left-radius:0;border-bottom-right-radius:0;}
+.symhead .aok-sym{width:34px;height:34px;display:block;flex:0 0 auto;}
+.symhead .symnone{width:34px;height:34px;border-radius:50%;border:1.5px dashed var(--gold-lt);
+  flex:0 0 auto;display:grid;place-items:center;color:var(--gold-lt);font-size:15px;font-weight:700;}
+.symhead .st{flex:1;min-width:0;}
+.symhead .st b{display:block;font-size:12.5px;font-weight:750;line-height:1.25;}
+.symhead .st i{display:block;font-style:normal;font-size:10.5px;color:var(--muted);line-height:1.4;margin-top:2px;}
+.symhead .st .als{color:var(--gold);font-style:normal;}
+.symhead .cv{flex:0 0 auto;color:var(--gold);font-size:11px;transition:transform .18s;}
+.symdrop.open .symhead .cv{transform:rotate(180deg);}
+.symbody{display:none;border:1px solid var(--gold);border-top:0;border-radius:0 0 8px 8px;
+  background:#FFFDF8;padding:11px;}
+.symdrop.open .symbody{display:block;}
+.otherhead{margin:0 0 7px 20px;font-size:11.5px;font-weight:750;color:var(--brown);}
+.symcap{font-size:10.5px;color:var(--muted);margin:0 0 9px;line-height:1.45;}
+/* --- classes the module emits --- */
+.aok-picker{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;}
+.aok-tile{background:var(--cream);border:1.5px solid var(--rule);border-radius:9px;padding:10px 6px 7px;
+  text-align:center;position:relative;display:flex;flex-direction:column;}
+.aok-tile:hover{border-color:var(--gold-lt);}
+.aok-tile.is-answer{border-color:var(--maroon);background:#FBF1EC;}
+.aok-tile.is-also{border-color:var(--gold);}
+.aok-hit{background:none;border:0;padding:0;font:inherit;color:inherit;cursor:pointer;display:block;width:100%;flex:1;}
+.aok-hit:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:6px;}
+.aok-hit .aok-sym{width:100%;height:auto;max-width:52px;display:block;margin:0 auto;}
+.aok-name{font-family:var(--serif);font-size:12px;font-weight:700;margin-top:7px;line-height:1.2;display:block;}
+.aok-cat{font-size:9.5px;color:var(--muted);line-height:1.4;margin-top:3px;display:block;}
+.aok-badge{position:absolute;top:-7px;left:50%;transform:translateX(-50%);font-size:6.5px;font-weight:800;
+  letter-spacing:.09em;padding:2px 6px;border-radius:3px;color:#fff;white-space:nowrap;background:var(--maroon);}
+.aok-tile.is-also .aok-badge{background:var(--gold);}
+.aok-foot{display:flex;align-items:center;justify-content:center;gap:6px;margin-top:6px;padding-top:5px;
+  border-top:1px solid var(--rule2);flex-wrap:wrap;}
+.aok-form{font-size:7px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#BCAA90;}
+.aok-form.is-spark{color:var(--gold);}
+.aok-also{font-size:7px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;
+  border-radius:3px;border:1px solid var(--rule);background:#fff;color:var(--muted);cursor:pointer;}
+.aok-also:hover{border-color:var(--gold);color:var(--gold);}
+.aok-also.on{background:var(--gold);border-color:var(--gold);color:#fff;}
+@media(max-width:1080px){.aok-picker{grid-template-columns:repeat(3,1fr);}}
+@media(max-width:700px){.aok-picker{grid-template-columns:repeat(2,1fr);}}
 </style>
-</head><body>
-<!-- NOTE: this is a controlled two-phase push. Phase 1 lands a short valid
-     stub so the repo never has invalid HTML mid-transfer. Phase 2 (the very
-     next call) replaces this with the full verified file. -->
-<div id="root">loading…</div>
-</body></html>
+<script src="https://upload-widget.cloudinary.com/global/all.js" defer></script>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-brand">
+    <svg width="26" height="26" viewBox="0 0 40 40" fill="none">
+      <path d="M11 4v33" stroke="#C08A2E" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M11 6h19l-4.5 6.5L30 19H11z" fill="#E5B95A" stroke="#C08A2E" stroke-width="1.6" stroke-linejoin="round"/>
+    </svg>
+    <div><div class="bn">A²OK</div><div class="bs">KINDNESS CARD</div></div>
+  </div>
+  <div class="tb-title">You're building <b id="orgTitle">your organization</b>'s Kindness Card
+    <span id="stepNote">Rung 3 — every answer lands on the card as you go.</span></div>
+  <div class="tb-right">
+    <div class="saved"><span class="tick">✓</span> All changes saved</div>
+    <button class="tbtn" onclick="viewPublic()">View public card ↗</button>
+    <button class="tbtn solid" onclick="sendForReview()">Send to A²OK for review</button>
+  </div>
+</div>
+
+<div class="shell">
+
+  <!-- ================= SIDEBAR ================= -->
+  <div class="side">
+    <div class="panel">
+      <div class="ptitle">YOUR PROGRESS</div>
+      <div class="steps" id="steps"></div>
+    </div>
+
+    <div class="panel">
+      <div class="ptitle">YOUR LINKS</div>
+      <div class="linkrow"><b>PUBLIC CARD</b><span id="lnk_pub">— after your first save</span></div>
+      <div class="linkrow"><b>PRIVATE EDIT LINK</b><span id="lnk_prv">— after your first save</span></div>
+      <button class="copybtn" onclick="copyPrivate(this)">Copy private link</button>
+      <button class="uplogo" onclick="uploadLogo()">⬆︎ Upload your logo</button>
+      <button class="uplogo" onclick="uploadHero()">⬆︎ Upload a photo of your place</button>
+    </div>
+
+    <div class="panel" style="background:#FCFAF4;">
+      <div class="ptitle">FREE*</div>
+      <div style="font-size:11px;line-height:1.55;color:var(--ink2);font-family:var(--serif);">
+        Every rung is free and meant to stay that way. Like a library or Wikipedia, this only stays
+        standing because the people inside it hold it up. <b>One day we'll ask you to help carry it.</b>
+        We'll ask — we won't gate.
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="ptitle">WHAT WE FOUND FOR YOU</div>
+      <div class="foundlist">
+        <div class="found"><span class="fk">✓</span> Name, category, neighbourhood</div>
+        <div class="found"><span class="fk">✓</span> Phone, website, hours</div>
+        <div class="found"><span class="fk">✓</span> Storefront photograph</div>
+        <div class="found"><span class="fk">✓</span> A neighbour's public review</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= QUESTIONS ================= -->
+  <div><div class="qwrap" id="qwrap"></div></div>
+
+  <!-- ================= LIVE PREVIEW ================= -->
+  <div class="previewcol">
+    <div class="pvhead">
+      <div class="pvtag" id="pvtag">RUNG 1 PREVIEW</div>
+      <div class="pvnote">This is the card itself, not a mock-up.</div>
+    </div>
+    <div class="zoombar">
+      <button class="zb" id="zout" onclick="zoom(-1)" title="Smaller">−</button>
+      <span class="zpct" id="zpct">62%</span>
+      <button class="zb" id="zin" onclick="zoom(1)" title="Larger">+</button>
+      <button class="zmag" onclick="magnify()">⤢ Magnify to read</button>
+    </div>
+    <div class="pvframe" onclick="magnify()" title="Click to magnify"><div class="pvstage" id="pvstage"></div></div>
+    <div class="pvfoot">
+      <b>One screen, always.</b> As you add more, the card gets denser rather than longer — the type,
+      the photos and the spacing tighten together.
+      <div class="dmeter"><span>Room left</span><span class="dbar"><i id="dbar" style="width:100%"></i></span><b id="dlab">Roomy</b></div>
+      <div class="dwarn" id="dwarn">This card is as tight as it goes. Switch a block off, or shorten a
+        long answer, and everything will breathe again.</div>
+    </div>
+  </div>
+</div>
+
+<div class="magwrap" id="magwrap" onclick="closeMag()">
+  <div class="maginner" id="maginner"></div>
+  <div class="maghint">Click anywhere, or press Esc, to go back</div>
+</div>
+
+<div class="notebar" id="notebar"></div>
+
+<!-- ================= AIRTABLE PAYLOAD ================= -->
+<div class="airwrap">
+  <div class="airbox">
+    <div class="airhead" onclick="this.parentNode.classList.toggle('open')">
+      <span class="chev">▶</span>
+      <span class="at">What gets written to Airtable</span>
+      <span class="ad">Developer view · table <b>Organizations</b> · one record per organization</span>
+    </div>
+    <div class="airbody"><pre id="air"></pre></div>
+  </div>
+</div>
+
+<script>
+/* ===== aok-symbols.js, inlined =====================================
+   Inlined on purpose: this page must work as a single file, opened from
+   anywhere, with no network and no sibling file. To update the symbols,
+   replace everything between this comment and the END marker with the
+   current aok-symbols.js.                                                */
+/* ==========================================================================
+   AOK SYMBOLS — drop-in module for the A²OK Kindness Card builder
+   PUBLIC API
+     AOKSymbols.mount()                 inject the <defs>. Call once, on load.
+     AOKSymbols.list(fieldId)           -> array of the 8 categories
+     AOKSymbols.get(fieldId, catId)     -> one category object
+     AOKSymbols.medal(fieldId, catId)   -> markup for one medallion
+     AOKSymbols.picker(fieldId, state)  -> markup for the picker control
+     AOKSymbols.defaultFor(fieldId)     -> the pre-selected category id
+   STATE SHAPE: { symbol: "on-the-house", also: ["the-extra"] }
+   RUNGS: 1-2 inline SVG. 3+ <img src="/symbols/<fieldId>/<catId>.webp">.
+   ========================================================================== */
+(function (root) {
+'use strict';
+/* RASTER_FROM: first rung that swaps inline SVG for generated .webp artwork.
+   Held at 99 (= never) until the 48 Rung 3 images exist in RASTER_PATH.
+   Set it to 3 the day they land, or at runtime: AOKSymbols.config({rasterFrom:3}). */
+var RASTER_FROM = 99, RASTER_PATH = '/symbols';
+/* SPARK_MARK: 'ring'  the anonymous ring - ANONYMOUS over the top, A SPARK
+                      ACCRUES under the bottom, a struck bolt each side (default)
+              'bolt'  the bolt alone, for wherever the ring is too small to read */
+var SPARK_MARK = 'ring';
+
+var DEFS = '<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>' +
+'<linearGradient id="aokAu" x1=".12" y1="0" x2=".88" y2="1"><stop offset="0" stop-color="#FFFCEE"/><stop offset=".08" stop-color="#F9E1A6"/><stop offset=".2" stop-color="#DCA93E"/><stop offset=".3" stop-color="#A0700C"/><stop offset=".42" stop-color="#EFCE7E"/><stop offset=".52" stop-color="#FFF8E2"/><stop offset=".64" stop-color="#E3B44E"/><stop offset=".76" stop-color="#8C6109"/><stop offset=".88" stop-color="#DCA93E"/><stop offset="1" stop-color="#FDF2CE"/></linearGradient>' +
+'<linearGradient id="aokBv" x1=".85" y1="0" x2=".15" y2="1"><stop offset="0" stop-color="#FFFDF2" stop-opacity=".95"/><stop offset=".45" stop-color="#C89323" stop-opacity=".2"/><stop offset="1" stop-color="#6B4A05" stop-opacity=".85"/></linearGradient>' +
+'<linearGradient id="aokG" x1=".2" y1="0" x2=".8" y2="1"><stop offset="0" stop-color="#FFF9E0"/><stop offset=".35" stop-color="#F0C868"/><stop offset=".62" stop-color="#C08A2E"/><stop offset="1" stop-color="#8A5E14"/></linearGradient>' +
+'<radialGradient id="aokR" cx=".36" cy=".3" r=".85"><stop offset="0" stop-color="#F2515A"/><stop offset=".6" stop-color="#C8121C"/><stop offset="1" stop-color="#73060F"/></radialGradient>' +
+'<radialGradient id="nav" cx=".34" cy=".26" r=".95"><stop offset="0" stop-color="#2E67A8"/><stop offset=".5" stop-color="#143B70"/><stop offset="1" stop-color="#050E28"/></radialGradient>' +
+'<radialGradient id="ox" cx=".34" cy=".26" r=".95"><stop offset="0" stop-color="#8A2418"/><stop offset=".5" stop-color="#521108"/><stop offset="1" stop-color="#240502"/></radialGradient>' +
+'<radialGradient id="mar" cx=".34" cy=".26" r=".95"><stop offset="0" stop-color="#96202C"/><stop offset=".5" stop-color="#5E0D16"/><stop offset="1" stop-color="#2A0308"/></radialGradient>' +
+'<radialGradient id="for" cx=".34" cy=".26" r=".95"><stop offset="0" stop-color="#26794A"/><stop offset=".5" stop-color="#11512C"/><stop offset="1" stop-color="#04220F"/></radialGradient>' +
+'<radialGradient id="plum" cx=".34" cy=".26" r=".95"><stop offset="0" stop-color="#6E2AA0"/><stop offset=".5" stop-color="#3C126A"/><stop offset="1" stop-color="#170424"/></radialGradient>' +
+'<radialGradient id="teal" cx=".34" cy=".26" r=".95"><stop offset="0" stop-color="#13767F"/><stop offset=".5" stop-color="#0A4A53"/><stop offset="1" stop-color="#02191D"/></radialGradient>' +
+'<radialGradient id="ind" cx=".34" cy=".26" r=".95"><stop offset="0" stop-color="#3A3B96"/><stop offset=".5" stop-color="#232468"/><stop offset="1" stop-color="#0A0922"/></radialGradient>' +
+'<radialGradient id="sie" cx=".34" cy=".26" r=".95"><stop offset="0" stop-color="#A5441A"/><stop offset=".5" stop-color="#6E2A0C"/><stop offset="1" stop-color="#2A0D00"/></radialGradient>' +
+'<filter id="aokSf" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="3.4"/></filter>' +
+'<filter id="aokD" x="-30%" y="-30%" width="160%" height="160%"><feDropShadow dx="0" dy="1.8" stdDeviation="1.4" flood-color="#0A0600" flood-opacity=".6"/></filter>' +
+'<clipPath id="aokC"><circle cx="50" cy="50" r="41.5"/></clipPath>' +
+'<g id="aokF"><circle cx="50" cy="51.5" r="49" fill="#2A1C06" opacity=".28" filter="url(#aokSf)"/><circle cx="50" cy="50" r="49" fill="url(#aokAu)"/><circle cx="50" cy="50" r="46" fill="none" stroke="url(#aokBv)" stroke-width="4.4"/></g>' +
+'<circle id="aokS" cx="50" cy="45" r="41.5" fill="none" stroke="#000" stroke-width="12" opacity=".46" filter="url(#aokSf)"/>' +
+'<ellipse id="aokDM" cx="36" cy="29" rx="27" ry="17" fill="#fff" opacity=".13" filter="url(#aokSf)" transform="rotate(-22 36 29)"/>' +
+'<g id="aokE"><circle cx="50" cy="50" r="41.5" fill="none" stroke="#3A2600" stroke-width="1.8" opacity=".75"/><circle cx="50" cy="50" r="48.4" fill="none" stroke="#6B4A05" stroke-width="1.1" opacity=".45"/></g>' +
+'<path id="aokRIMTOP" d="M16.5,50 a33.5,33.5 0 0,1 67,0"/>' +
+'<path id="aokRIMBOT" d="M11.5,50 a38.5,38.5 0 0,0 77,0"/>' +
+'<path id="aokBOLT" d="M68 6 L24 54 L47 54 L34 94 L78 44 L55 44 Z"/>' +
+'</defs></svg>';
+
+var G = {
+heart_rays:'<g stroke="url(#aokG)" stroke-width="3.2" stroke-linecap="round"><path d="M50 11v9"/><path d="M50 11v9" transform="rotate(40 50 50)"/><path d="M50 11v9" transform="rotate(80 50 50)"/><path d="M50 11v9" transform="rotate(-40 50 50)"/><path d="M50 11v9" transform="rotate(-80 50 50)"/></g><g filter="url(#aokD)"><path d="M50 78L28 56a15.56 15.56 0 0 1 22-22 15.56 15.56 0 0 1 22 22z" fill="url(#aokR)" stroke="url(#aokG)" stroke-width="2.8"/></g>',
+bulb_heart:'<g filter="url(#aokD)"><path d="M50 14a22 22 0 0 1 13 39.7V62H37v-8.3A22 22 0 0 1 50 14z" fill="url(#aokG)"/><path d="M37 66h26v6H37zM41 76h18v5H41z" fill="url(#aokG)"/><path d="M50 50L43 43a4.95 4.95 0 0 1 7-7 4.95 4.95 0 0 1 7 7z" fill="url(#aokR)"/></g>',
+bubble_heart:'<g filter="url(#aokD)"><path d="M13 21h74v40H53L35 79V61H13z" fill="url(#aokG)"/><path d="M50 55L38 43a8.49 8.49 0 0 1 12-12 8.49 8.49 0 0 1 12 12z" fill="url(#aokR)"/></g>',
+gift:'<g filter="url(#aokD)"><path d="M20 36h60v12H20z" fill="url(#aokG)"/><path d="M24 48h52v34H24z" fill="url(#aokG)"/><path d="M44 36h12v46H44z" fill="url(#aokR)"/><path d="M45 36c-13-2-16-14-6-16 6-1 9 8 6 16z" fill="url(#aokR)"/><path d="M55 36c13-2 16-14 6-16-6-1-9 8-6 16z" fill="url(#aokR)"/></g>',
+globe_heart:'<g filter="url(#aokD)"><circle cx="50" cy="50" r="28" fill="none" stroke="url(#aokG)" stroke-width="5"/><path d="M50 22c-9 8-9 48 0 56M50 22c9 8 9 48 0 56M22 50h56M25 36h50M25 64h50" fill="none" stroke="url(#aokG)" stroke-width="2.6"/><path d="M50 68L37 55a9.2 9.2 0 0 1 13-13 9.2 9.2 0 0 1 13 13z" fill="url(#aokR)" stroke="url(#aokG)" stroke-width="2.4"/></g>',
+sunrise:'<g stroke="url(#aokG)" stroke-width="3" stroke-linecap="round"><path d="M50 34V22"/><path d="M50 34V22" transform="rotate(30 50 62)"/><path d="M50 34V22" transform="rotate(-30 50 62)"/><path d="M50 34V22" transform="rotate(62 50 62)"/><path d="M50 34V22" transform="rotate(-62 50 62)"/></g><g filter="url(#aokD)"><path d="M30 62a20 20 0 0 1 40 0z" fill="url(#aokG)"/><path d="M12 62h76" stroke="url(#aokG)" stroke-width="4" stroke-linecap="round"/></g>',
+sprout:'<path d="M12.5 70A42.5 42.5 0 0 0 87.5 70z" fill="#2B1A0C"/><g filter="url(#aokD)"><path d="M50 72V40" stroke="url(#aokG)" stroke-width="4" stroke-linecap="round"/><path d="M49 57c-13 .4-20.5-5.4-22-15 11.6-2.6 20.6 3.4 22 15z" fill="url(#aokG)"/><path d="M51 57c13 .4 20.5-5.4 22-15-11.6-2.6-20.6 3.4-22 15z" fill="url(#aokG)"/><path d="M50 41L41 32a6.36 6.36 0 0 1 9-9 6.36 6.36 0 0 1 9 9z" fill="url(#aokR)"/></g>',
+nib:'<g filter="url(#aokD)"><path d="M62 20l12 12-36 36-15 3 3-15z" fill="url(#aokG)"/><path d="M62 20l12 12 7-7-12-12z" fill="url(#aokR)"/><path d="M24 82h52" stroke="url(#aokG)" stroke-width="3.4" stroke-linecap="round" opacity=".85"/></g>',
+banknote:'<g filter="url(#aokD)"><path d="M16 32h68v36H16z" fill="url(#aokG)"/><circle cx="50" cy="50" r="12" fill="#000" opacity=".35"/><path d="M50 57l-6-6a3.4 3.4 0 0 1 6-3.4 3.4 3.4 0 0 1 6 3.4z" fill="url(#aokR)"/><path d="M24 40h6M70 60h6" stroke="#000" stroke-width="2.6" opacity=".35"/></g>',
+bubble_star:'<g filter="url(#aokD)"><path d="M14 24h72v40H52L34 82V64H14z" fill="url(#aokG)"/><path d="M50 30l5 11 12 1.6-8.8 8.2 2.4 12L50 57l-10.6 5.8 2.4-12L33 42.6 45 41z" fill="url(#aokR)"/></g>',
+hourglass:'<g filter="url(#aokD)"><path d="M26 14h48v7H26zM26 79h48v7H26z" fill="url(#aokG)"/><path d="M32 21h36L50 50l18 29H32l18-29z" fill="none" stroke="url(#aokG)" stroke-width="4"/><path d="M37 25h26L50 46z" fill="url(#aokR)"/><path d="M40 74h20l-10-12z" fill="url(#aokR)"/></g>',
+toolbox:'<g filter="url(#aokD)"><path d="M16 40h68v40H16z" fill="url(#aokG)"/><path d="M38 40V30a12 12 0 0 1 24 0v10" fill="none" stroke="url(#aokG)" stroke-width="5"/><path d="M16 56h68" stroke="#000" stroke-width="3" opacity=".35"/><path d="M50 54L44 48a3.4 3.4 0 0 1 6-3.4 3.4 3.4 0 0 1 6 3.4z" fill="url(#aokR)"/></g>',
+umbrella:'<g filter="url(#aokD)"><path d="M14 52a36 36 0 0 1 72 0z" fill="url(#aokG)"/><path d="M50 52v22a8 8 0 0 1-16 0" fill="none" stroke="url(#aokG)" stroke-width="5" stroke-linecap="round"/><path d="M50 12v8" stroke="url(#aokG)" stroke-width="4" stroke-linecap="round"/><path d="M14 52c6-8 12-8 18 0s12 8 18 0 12-8 18 0 12 8 18 0" fill="none" stroke="#000" stroke-width="3" opacity=".4"/></g>',
+envelope_seal:'<g filter="url(#aokD)"><path d="M22 32h56v36H22z" fill="url(#aokG)"/><path d="M22 32l28 21 28-21" fill="none" stroke="#000" stroke-width="3.2" opacity=".5"/><circle cx="50" cy="62" r="9" fill="url(#aokR)"/></g>',
+stool_worn:'<g filter="url(#aokD)"><path d="M32 86V52h10v34zM58 86V52h10v34z" fill="url(#aokG)"/><path d="M26 44h48v10H26z" fill="url(#aokG)"/><path d="M30 44V20h40v24z" fill="url(#aokG)"/><path d="M36 26h28v12H36z" fill="#000" opacity=".35"/></g>',
+tag_struck:'<g filter="url(#aokD)"><path d="M52 14h30v30L46 80 16 50z" fill="url(#aokG)"/><circle cx="69" cy="27" r="6" fill="#000" opacity=".5"/><path d="M18 20l64 62" stroke="url(#aokR)" stroke-width="9" stroke-linecap="round"/></g>',
+cup_heart:'<g filter="url(#aokD)"><path d="M26 44h44v22a14 14 0 0 1-14 14H40a14 14 0 0 1-14-14z" fill="url(#aokG)"/><path d="M70 50h7a8 8 0 0 1 0 16h-7" fill="none" stroke="url(#aokG)" stroke-width="4.6"/><path d="M44 34c6-5 6-9 0-14M56 34c6-5 6-9 0-14" fill="none" stroke="url(#aokR)" stroke-width="4" stroke-linecap="round"/></g>',
+box_string:'<g filter="url(#aokD)"><path d="M20 32h60v12H20z" fill="url(#aokG)"/><path d="M24 44h52v38H24z" fill="url(#aokG)"/><path d="M45 32h10v50H45z" fill="url(#aokR)"/><path d="M46 32c-13-2-15-13-6-15 6-1 9 7 6 15z" fill="url(#aokR)"/><path d="M54 32c13-2 15-13 6-15-6-1-9 7-6 15z" fill="url(#aokR)"/></g>',
+clock_late:'<g filter="url(#aokD)"><circle cx="50" cy="46" r="24" fill="none" stroke="url(#aokG)" stroke-width="7"/><path d="M50 46V30M50 46l12 8" stroke="url(#aokG)" stroke-width="4" stroke-linecap="round"/><path d="M28 82h44l-6-14H34z" fill="url(#aokR)"/></g>',
+two_chairs:'<g filter="url(#aokD)"><path d="M14 84V56h8v28zM38 84V56h8v28z" fill="url(#aokG)"/><path d="M10 48h40v9H10z" fill="url(#aokG)"/><path d="M14 48V24h32v24z" fill="url(#aokG)"/><path d="M54 84V56h8v28zM78 84V56h8v28z" fill="url(#aokG)"/><path d="M50 48h40v9H50z" fill="url(#aokG)"/><path d="M54 48V24h32v24z" fill="url(#aokG)"/></g>',
+knot_untied:'<g filter="url(#aokD)" fill="none" stroke="url(#aokG)" stroke-width="7" stroke-linecap="round"><path d="M18 62c12-16 22 12 34-4"/><path d="M56 56c8-11 18 4 26-6"/></g><path d="M50 22l3.4 8.4 8.4 3.4-8.4 3.4L50 46l-3.4-8.8-8.4-3.4 8.4-3.4z" fill="url(#aokR)"/>',
+ledger_closed:'<g filter="url(#aokD)"><path d="M22 20h56v56H22z" fill="url(#aokG)"/><path d="M28 26h44v44H28z" fill="#000" opacity=".45"/><path d="M22 20h56v8H22z" fill="url(#aokG)"/><path d="M46 20h8v16l-4-4-4 4z" fill="url(#aokR)"/></g>',
+door_light:'<g filter="url(#aokD)"><path d="M34 18h34v66H34z" fill="#FBEFC8"/><path d="M74 50h14M72 38l14-8M72 62l14 8" stroke="url(#aokG)" stroke-width="3.4" stroke-linecap="round"/><path d="M30 14h42v70H30z" fill="none" stroke="url(#aokG)" stroke-width="4"/><path d="M30 84V14L14 8v82z" fill="url(#aokG)"/><circle cx="25" cy="50" r="2.6" fill="#000" opacity=".6"/></g>',
+gap_filled:'<g filter="url(#aokD)"><path d="M8 84V52h16v32zM76 84V52h16v32z" fill="url(#aokG)" opacity=".5"/><path d="M30 84V34h40v50z" fill="url(#aokG)"/><path d="M38 44h10v12H38zM52 44h10v12H52z" fill="#000" opacity=".4"/><path d="M44 84V66h12v18z" fill="#000" opacity=".4"/><path d="M50 24L48 34h4z" fill="url(#aokR)"/></g>',
+key_fob:'<g filter="url(#aokD)" transform="rotate(-30 50 50)"><path d="M44 46h38v9H44z" fill="url(#aokG)"/><path d="M70 55h6v10h-6zM79 55h5v7h-5z" fill="url(#aokG)"/><path d="M32 66L18.6 52.6a9.48 9.48 0 0 1 13.4-13.4 9.48 9.48 0 0 1 13.4 13.4z" fill="url(#aokR)" stroke="url(#aokG)" stroke-width="2.6"/><circle cx="32" cy="48" r="4.6" fill="#000" opacity=".55"/></g>',
+tools_crossed:'<g filter="url(#aokD)"><path d="M22 78L62 26" stroke="url(#aokG)" stroke-width="8" stroke-linecap="round"/><path d="M60 20l10 8-8 10-10-8z" fill="url(#aokG)"/><path d="M78 78L38 26" stroke="url(#aokG)" stroke-width="8" stroke-linecap="round"/><circle cx="38" cy="22" r="9" fill="none" stroke="url(#aokG)" stroke-width="6"/><circle cx="50" cy="60" r="7" fill="url(#aokR)"/></g>',
+match:'<g filter="url(#aokD)" transform="rotate(20 50 56)"><path d="M45 86V36h10v50z" fill="url(#aokG)"/><path d="M56 36C64 26 63 18 56 10c-7 8-8 16 0 26z" fill="url(#aokR)" transform="translate(-6,0)"/></g><path d="M18 84h64" stroke="url(#aokG)" stroke-width="3.4" stroke-linecap="round"/>',
+punchcard:'<g filter="url(#aokD)"><path d="M24 16h52v68H24z" fill="url(#aokG)"/><path d="M32 28h36M32 40h36M32 52h24" stroke="#000" stroke-width="3" stroke-linecap="round" opacity=".4"/><path d="M36 66l8 9 18-19" fill="none" stroke="url(#aokR)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></g>',
+sunrise_building:'<g stroke="url(#aokG)" stroke-width="2.6" stroke-linecap="round" opacity=".85"><path d="M50 30V18"/><path d="M50 30V18" transform="rotate(38 50 58)"/><path d="M50 30V18" transform="rotate(-38 50 58)"/></g><g filter="url(#aokD)"><circle cx="50" cy="46" r="15" fill="url(#aokR)"/><path d="M30 84V56h40v28z" fill="url(#aokG)"/><path d="M26 56L50 40l24 16z" fill="url(#aokG)"/><path d="M44 84V70h12v14z" fill="#000" opacity=".4"/></g><path d="M12 84h76" stroke="url(#aokG)" stroke-width="3.4" stroke-linecap="round"/>',
+table_set:'<g filter="url(#aokD)"><path d="M14 58h72v8H14z" fill="url(#aokG)"/><path d="M22 66v18M78 66v18" stroke="url(#aokG)" stroke-width="5" stroke-linecap="round"/><circle cx="34" cy="48" r="8" fill="url(#aokG)"/><circle cx="66" cy="48" r="8" fill="url(#aokG)"/><path d="M50 52L42 44a5.66 5.66 0 0 1 8-8 5.66 5.66 0 0 1 8 8z" fill="url(#aokR)"/></g>',
+key_pass:'<g filter="url(#aokD)"><circle cx="26" cy="50" r="14" fill="none" stroke="url(#aokG)" stroke-width="7"/><path d="M38 46h34v9H38z" fill="url(#aokG)"/><path d="M60 55h6v10h-6zM70 55h5v7h-5z" fill="url(#aokG)"/><circle cx="80" cy="50" r="9" fill="none" stroke="url(#aokR)" stroke-width="5"/></g>',
+book_heart:'<g filter="url(#aokD)"><path d="M50 34c-8-8-20-10-32-8v44c12-2 24 0 32 8z" fill="url(#aokG)"/><path d="M50 34c8-8 20-10 32-8v44c-12-2-24 0-32 8z" fill="url(#aokG)"/><path d="M50 34v44" stroke="#000" stroke-width="2.6" opacity=".4"/><path d="M50 28L42 20a5.66 5.66 0 0 1 8-8 5.66 5.66 0 0 1 8 8z" fill="url(#aokR)"/></g>',
+candles_two:'<g filter="url(#aokD)"><path d="M14 80h60" stroke="url(#aokG)" stroke-width="4" stroke-linecap="round"/><path d="M20 80V44h13v36zM54 80V56h13v24z" fill="url(#aokG)"/><path d="M26.5 22c7 10 7 15.5 0 18.5-7-3-7-8.5 0-18.5z" fill="url(#aokR)"/><path d="M60.5 40c5 7 5 11 0 13-5-2-5-6 0-13z" fill="url(#aokR)"/><path d="M34 32q10-6 18 4" fill="none" stroke="url(#aokG)" stroke-width="2.6" stroke-linecap="round"/></g>',
+mountain_path:'<g filter="url(#aokD)"><path d="M8 84L40 30l14 23 9-13 29 44z" fill="url(#aokG)"/><path d="M40 30l8 13-5 2-4-4-5 3z" fill="#FFF9E6"/><path d="M44 84c2-14 8-22 4-34" fill="none" stroke="url(#aokR)" stroke-width="4" stroke-linecap="round" stroke-dasharray="5 6"/></g>',
+counter_till:'<g filter="url(#aokD)"><path d="M16 56h68v28H16z" fill="url(#aokG)"/><path d="M26 40h48v16H26z" fill="url(#aokG)"/><path d="M32 46h16v6H32z" fill="#000" opacity=".45"/><path d="M24 66h30v10H24z" fill="#000" opacity=".3"/><path d="M66 26l3 8 8 3-8 3-3 8-3-8-8-3 8-3z" fill="url(#aokR)"/></g>',
+chair_empty:'<g filter="url(#aokD)"><path d="M30 86V50h9v36zM61 86V50h9v36z" fill="url(#aokG)"/><path d="M24 42h52v9H24z" fill="url(#aokG)"/><path d="M28 42V16h44v26z" fill="none" stroke="url(#aokG)" stroke-width="5"/><path d="M36 24h28M36 32h28" stroke="url(#aokG)" stroke-width="3.4"/></g>',
+cup_name:'<g filter="url(#aokD)"><path d="M26 44h44v22a14 14 0 0 1-14 14H40a14 14 0 0 1-14-14z" fill="url(#aokG)"/><path d="M70 50h7a8 8 0 0 1 0 16h-7" fill="none" stroke="url(#aokG)" stroke-width="4.6"/><path d="M28 20h34v16H28z" fill="url(#aokR)"/><path d="M34 28h22" stroke="#FBEFC8" stroke-width="2.6" stroke-linecap="round"/></g>',
+stool_one:'<g filter="url(#aokD)"><path d="M36 84V54h8v30zM56 84V54h8v30z" fill="url(#aokG)"/><path d="M30 84h40" stroke="url(#aokG)" stroke-width="4" stroke-linecap="round"/><ellipse cx="50" cy="46" rx="24" ry="9" fill="url(#aokG)"/><path d="M32 62h36" stroke="url(#aokG)" stroke-width="4"/></g>',
+cal_ticked:'<g stroke="url(#aokG)" stroke-width="3.2" stroke-linecap="round"><path d="M34 16v10"/><path d="M66 16v10"/></g><g filter="url(#aokD)"><path d="M18 26h64v56H18z" fill="url(#aokG)"/><path d="M18 26h64v12H18z" fill="url(#aokR)"/><g stroke="#000" stroke-width="3" stroke-linecap="round" opacity=".45"><path d="M27 47l4 4 7-8M45 47l4 4 7-8M63 47l4 4 7-8M27 64l4 4 7-8M45 64l4 4 7-8M63 64l4 4 7-8"/></g></g>',
+parcel_small:'<g filter="url(#aokD)"><path d="M26 46h48v34H26z" fill="url(#aokG)"/><path d="M46 46h8v34h-8z" fill="url(#aokR)"/><path d="M47 46c-10-2-12-11-4-13 5-1 7 6 4 13z" fill="url(#aokR)"/><path d="M53 46c10-2 12-11 4-13-5-1-7 6-4 13z" fill="url(#aokR)"/><path d="M16 80h68" stroke="url(#aokG)" stroke-width="3.4" stroke-linecap="round"/></g>',
+lamp_on:'<g stroke="url(#aokG)" stroke-width="2.8" stroke-linecap="round" opacity=".8"><path d="M22 34l-8-8M78 34l8-8M50 20V10"/></g><g filter="url(#aokD)"><path d="M30 30h40l10 26H20z" fill="url(#aokG)"/><path d="M46 56h8v22h-8z" fill="url(#aokG)"/><path d="M34 78h32v6H34z" fill="url(#aokG)"/><circle cx="50" cy="44" r="7" fill="url(#aokR)"/></g>',
+window_lit:'<g filter="url(#aokD)"><path d="M22 20h56v58H22z" fill="#FBEFC8"/><path d="M22 20h56v58H22z" fill="none" stroke="url(#aokG)" stroke-width="6"/><path d="M50 20v58M22 49h56" stroke="url(#aokG)" stroke-width="5"/><path d="M16 82h68" stroke="url(#aokG)" stroke-width="4" stroke-linecap="round"/><path d="M50 64L42 56a5.66 5.66 0 0 1 8-8 5.66 5.66 0 0 1 8 8z" fill="url(#aokR)"/></g>',
+cups_tray:'<g filter="url(#aokD)"><ellipse cx="50" cy="66" rx="36" ry="13" fill="url(#aokG)"/><ellipse cx="50" cy="63" rx="30" ry="9" fill="#000" opacity=".3"/><path d="M26 44h16v12a8 8 0 0 1-16 0z" fill="url(#aokG)"/><path d="M42 44h16v12a8 8 0 0 1-16 0z" fill="url(#aokG)"/><path d="M58 44h16v12a8 8 0 0 1-16 0z" fill="url(#aokG)"/><path d="M50 34l2.6 6 6 2.6-6 2.6L50 51l-2.6-5.8-6-2.6 6-2.6z" fill="url(#aokR)"/></g>',
+phone_bolt:'<g filter="url(#aokD)"><rect x="30" y="12" width="40" height="76" rx="7" fill="url(#aokG)"/><rect x="35" y="20" width="30" height="56" rx="3" fill="#000" opacity=".55"/><path d="M53 28l-12 20h8l-4 16 14-22h-9z" fill="url(#aokR)"/></g>',
+restroom_door:'<g filter="url(#aokD)"><path d="M24 12h52v76H24z" fill="url(#aokG)"/><path d="M30 18h40v64H30z" fill="#000" opacity=".45"/><circle cx="40" cy="34" r="6" fill="url(#aokG)"/><path d="M40 42h3l5 18h-5v18h-6V60h-5l5-18z" fill="url(#aokG)"/><circle cx="62" cy="34" r="6" fill="url(#aokG)"/><path d="M62 42h4l6 18h-6v18h-8V60h-6l6-18z" fill="url(#aokG)"/></g>',
+wifi:'<g filter="url(#aokD)"><circle cx="50" cy="76" r="7" fill="url(#aokG)"/><path d="M32 58a26 26 0 0 1 36 0" fill="none" stroke="url(#aokG)" stroke-width="8" stroke-linecap="round"/><path d="M22 44a40 40 0 0 1 56 0" fill="none" stroke="url(#aokG)" stroke-width="8" stroke-linecap="round"/><path d="M13 31a54 54 0 0 1 74 0" fill="none" stroke="url(#aokG)" stroke-width="8" stroke-linecap="round"/></g>',
+tap_glass:'<g filter="url(#aokD)"><path d="M34 18h10v26H34z" fill="url(#aokG)"/><path d="M38 24h30v10H38z" fill="url(#aokG)"/><path d="M60 24h9v22h-9z" fill="url(#aokG)"/><path d="M56 50c0 10 8 13 8 21a8 8 0 0 1-16 0c0-8 8-11 8-21z" fill="#7BD4E8"/><path d="M18 86h64" stroke="url(#aokG)" stroke-width="4" stroke-linecap="round"/></g>',
+chair_alone:'<g filter="url(#aokD)"><path d="M30 88V52h9v36zM61 88V52h9v36z" fill="url(#aokG)"/><path d="M24 44h52v9H24z" fill="url(#aokG)"/><path d="M28 44V14h44v30z" fill="url(#aokG)"/><path d="M34 22h32v14H34z" fill="#000" opacity=".4"/></g>',
+umbrella_door:'<g filter="url(#aokD)"><path d="M52 16h34v72H52z" fill="url(#aokG)"/><path d="M58 22h22v60H58z" fill="#000" opacity=".45"/><path d="M6 50a20 20 0 0 1 40 0z" fill="url(#aokG)"/><path d="M26 50v26a7 7 0 0 1-14 0" fill="none" stroke="url(#aokG)" stroke-width="4.6" stroke-linecap="round"/><path d="M26 18v10" stroke="url(#aokG)" stroke-width="3.4" stroke-linecap="round"/></g>',
+bell_ask:'<g filter="url(#aokD)"><path d="M20 70h60v9H20z" fill="url(#aokG)"/><path d="M50 26a26 26 0 0 1 26 26v18H24V52a26 26 0 0 1 26-26z" fill="url(#aokG)"/><circle cx="50" cy="20" r="6" fill="url(#aokR)"/><path d="M32 56h36" stroke="#000" stroke-width="2.6" opacity=".3"/></g>',
+namecards_wall:'<g filter="url(#aokD)"><rect x="12" y="18" width="34" height="22" rx="3" fill="url(#aokG)"/><rect x="54" y="18" width="34" height="22" rx="3" fill="url(#aokG)"/><rect x="12" y="48" width="34" height="22" rx="3" fill="url(#aokG)"/><rect x="54" y="48" width="34" height="22" rx="3" fill="url(#aokR)"/><g stroke="#000" stroke-width="2.6" stroke-linecap="round" opacity=".4"><path d="M18 28h20M60 28h20M18 58h20"/></g><g stroke="#FBEFC8" stroke-width="2.6" stroke-linecap="round"><path d="M60 58h20"/></g></g>',
+door_nolock:'<g filter="url(#aokD)"><path d="M24 88V26a16 16 0 0 1 16-16h20a16 16 0 0 1 16 16v62" fill="none" stroke="url(#aokG)" stroke-width="6"/><path d="M24 88L8 94V32l16-6z" fill="url(#aokG)"/><path d="M52 62l4-14h-8z" fill="url(#aokR)"/></g>',
+house_lit:'<g filter="url(#aokD)"><path d="M50 14L88 46H12z" fill="url(#aokG)"/><path d="M22 46h56v38H22z" fill="url(#aokG)"/><path d="M34 54h14v14H34zM58 54h14v14H58z" fill="#FBEFC8"/><path d="M44 84V70h12v14z" fill="#000" opacity=".45"/></g>',
+bridge:'<g filter="url(#aokD)"><path d="M14 56a36 18 0 0 1 72 0" fill="none" stroke="url(#aokG)" stroke-width="3"/><g stroke="url(#aokG)" stroke-width="2"><path d="M26 56v-7"/><path d="M38 56v-11"/><path d="M50 56v-13"/><path d="M62 56v-11"/><path d="M74 56v-7"/></g><path d="M8 56h84" stroke="url(#aokG)" stroke-width="4.4" stroke-linecap="round"/><g stroke="url(#aokG)" stroke-width="3.6" stroke-linecap="round"><path d="M16 56v20"/><path d="M84 56v20"/></g><path d="M50 40L44 34a3.96 3.96 0 0 1 6-6 3.96 3.96 0 0 1 6 6z" fill="url(#aokR)"/></g>',
+tree_rings:'<g filter="url(#aokD)"><circle cx="50" cy="50" r="36" fill="none" stroke="url(#aokR)" stroke-width="5"/><circle cx="50" cy="50" r="28" fill="none" stroke="url(#aokG)" stroke-width="3.6" opacity=".9"/><circle cx="50" cy="50" r="20" fill="none" stroke="url(#aokG)" stroke-width="3.4" opacity=".75"/><circle cx="50" cy="50" r="12" fill="none" stroke="url(#aokG)" stroke-width="3.2" opacity=".6"/><circle cx="50" cy="50" r="5" fill="url(#aokG)"/></g>',
+lamps_four:'<g filter="url(#aokD)">' +
+  '<g transform="translate(34,36)"><path d="M-9-10h18l4 10h-26z" fill="url(#aokG)"/><circle cx="0" cy="-4" r="3.4" fill="url(#aokR)"/><path d="M-2 0h4v12h-4z" fill="url(#aokG)"/><path d="M-8 12h16v4h-16z" fill="url(#aokG)"/></g>' +
+  '<g transform="translate(66,36)"><path d="M-9-10h18l4 10h-26z" fill="url(#aokG)"/><circle cx="0" cy="-4" r="3.4" fill="url(#aokR)"/><path d="M-2 0h4v12h-4z" fill="url(#aokG)"/><path d="M-8 12h16v4h-16z" fill="url(#aokG)"/></g>' +
+  '<g transform="translate(34,64)"><path d="M-9-10h18l4 10h-26z" fill="url(#aokG)"/><circle cx="0" cy="-4" r="3.4" fill="url(#aokR)"/><path d="M-2 0h4v12h-4z" fill="url(#aokG)"/><path d="M-8 12h16v4h-16z" fill="url(#aokG)"/></g>' +
+  '<g transform="translate(66,64)"><path d="M-9-10h18l4 10h-26z" fill="url(#aokG)"/><circle cx="0" cy="-4" r="3.4" fill="url(#aokR)"/><path d="M-2 0h4v12h-4z" fill="url(#aokG)"/><path d="M-8 12h16v4h-16z" fill="url(#aokG)"/></g>' +
+'</g>',
+scales:'<g filter="url(#aokD)">' +
+  '<path d="M46 24h8v52h-8z" fill="url(#aokG)"/><path d="M30 76h40v6H30z" fill="url(#aokG)"/>' +
+  '<path d="M20 30h60" stroke="url(#aokG)" stroke-width="4.6" stroke-linecap="round"/>' +
+  '<g stroke="url(#aokG)" stroke-width="2"><path d="M26 31v10"/><path d="M74 31v10"/></g>' +
+  '<path d="M14 41h24a12 12 0 0 1-24 0z" fill="url(#aokG)"/><path d="M62 41h24a12 12 0 0 1-24 0z" fill="url(#aokG)"/>' +
+  '<circle cx="50" cy="26" r="6" fill="url(#aokR)"/></g>',
+badge_till:'<g filter="url(#aokD)"><path d="M52 40h34v34H52z" fill="url(#aokG)" opacity=".45"/><rect x="14" y="26" width="48" height="34" rx="4" fill="url(#aokG)"/><path d="M14 26h48v11H14z" fill="url(#aokR)"/><g stroke="#000" stroke-width="3" stroke-linecap="round" opacity=".4"><path d="M22 46h26M22 54h16"/></g><path d="M32 18h12v8H32z" fill="url(#aokG)"/></g>',
+aprons_two:'<g filter="url(#aokD)"><path d="M16 26h68v6H16z" fill="url(#aokG)"/><path d="M22 32c0 4 14 4 14 0 6 2 8 6 8 12v32a7 7 0 0 1-7 7H21a7 7 0 0 1-7-7V44c0-6 2-10 8-12z" fill="url(#aokG)"/><path d="M62 32c0 4 14 4 14 0 6 2 8 6 8 12v32a7 7 0 0 1-7 7H61a7 7 0 0 1-7-7V44c0-6 2-10 8-12z" fill="url(#aokG)" opacity=".75"/><path d="M22 58h16v12H22z" fill="#000" opacity=".35"/></g>',
+padlock_open:'<g filter="url(#aokD)"><path d="M24 46h52v38H24z" fill="url(#aokG)"/><path d="M34 46V32a16 16 0 0 1 32 0" fill="none" stroke="url(#aokG)" stroke-width="7" stroke-linecap="round"/><circle cx="50" cy="62" r="7" fill="url(#aokR)"/><path d="M50 68v8" stroke="url(#aokR)" stroke-width="5" stroke-linecap="round"/></g>',
+ear_arcs:'<g filter="url(#aokD)">' +
+  '<path d="M57 20a21 21 0 0 0-21 21c0 8 2 11 2 17a9.5 9.5 0 0 0 19 0c0-5 4-6 8-9a19 19 0 0 0-8-29z" fill="url(#aokG)"/>' +
+  '<path d="M55 33a10 10 0 0 0-10 10c0 5 3 6 3 10" fill="none" stroke="#000" stroke-width="3.4" stroke-linecap="round" opacity=".45"/>' +
+'</g><g fill="none" stroke="url(#aokG)" stroke-width="3.2" stroke-linecap="round">' +
+  '<path d="M25 40a16 16 0 0 0 0 20"/><path d="M17 33a26 26 0 0 0 0 34"/></g>',
+floorplan_ring:'<g filter="url(#aokD)"><circle cx="50" cy="50" r="32" fill="none" stroke="url(#aokG)" stroke-width="4"/><circle cx="50" cy="22" r="7" fill="url(#aokG)"/><circle cx="70" cy="30" r="7" fill="url(#aokG)"/><circle cx="78" cy="50" r="7" fill="url(#aokG)"/><circle cx="70" cy="70" r="7" fill="url(#aokG)"/><circle cx="50" cy="78" r="7" fill="url(#aokG)"/><circle cx="30" cy="70" r="7" fill="url(#aokG)"/><circle cx="22" cy="50" r="7" fill="url(#aokG)"/><circle cx="30" cy="30" r="7" fill="url(#aokG)"/><circle cx="50" cy="50" r="8" fill="url(#aokR)"/></g>',
+cup_mended:'<g filter="url(#aokD)"><path d="M26 40h44v26a14 14 0 0 1-14 14H40a14 14 0 0 1-14-14z" fill="url(#aokG)"/><path d="M70 46h7a8 8 0 0 1 0 16h-7" fill="none" stroke="url(#aokG)" stroke-width="4.6"/><path d="M44 40l6 14-5 12 8 14" fill="none" stroke="url(#aokR)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>',
+blank_page:'<g filter="url(#aokD)"><path d="M26 12h38l12 12v64H26z" fill="url(#aokG)"/><path d="M64 12v12h12z" fill="#000" opacity=".35"/><path d="M50 62l2.8 6.6 6.6 2.8-6.6 2.8L50 81l-2.8-6.8-6.6-2.8 6.6-2.8z" fill="url(#aokR)"/></g>',
+urn_tap:'<g filter="url(#aokD)"><path d="M30 24h40v10H30z" fill="url(#aokG)"/><path d="M34 34h32v40a10 10 0 0 1-10 10H44a10 10 0 0 1-10-10z" fill="url(#aokG)"/><path d="M66 52h10v8H66z" fill="url(#aokG)"/><path d="M50 62L43 55a4.95 4.95 0 0 1 7-7 4.95 4.95 0 0 1 7 7z" fill="url(#aokR)"/><path d="M20 88h60" stroke="url(#aokG)" stroke-width="3.4" stroke-linecap="round"/></g>',
+arrows_heart:'<g filter="url(#aokD)" fill="none" stroke="url(#aokG)" stroke-width="6"><path d="M21.8 39.7A30 30 0 0 1 78.2 39.7"/><path d="M78.2 60.3A30 30 0 0 1 21.8 60.3"/></g><path d="M84 38l-4 14-12-7zM16 62l4-14 12 7z" fill="url(#aokG)"/><path d="M50 62L39 51a7.78 7.78 0 0 1 11-11 7.78 7.78 0 0 1 11 11z" fill="url(#aokR)"/>',
+clock_nohands:'<g filter="url(#aokD)"><circle cx="50" cy="50" r="32" fill="none" stroke="url(#aokG)" stroke-width="7"/><g stroke="url(#aokG)" stroke-width="3.4" stroke-linecap="round"><path d="M50 22v6"/><path d="M78 50h-6"/><path d="M50 78v-6"/><path d="M22 50h6"/></g><circle cx="50" cy="50" r="6" fill="url(#aokR)"/></g>',
+rota_heart:'<g filter="url(#aokD)"><path d="M20 14h60v72H20z" fill="url(#aokG)"/><g stroke="#000" stroke-width="2.6" opacity=".35"><path d="M20 32h60M20 50h60M20 68h60M50 14v72"/></g><path d="M65 62L57 54a5.66 5.66 0 0 1 8-8 5.66 5.66 0 0 1 8 8z" fill="url(#aokR)"/></g>',
+noticeboard:'<g filter="url(#aokD)"><path d="M14 18h72v62H14z" fill="url(#aokG)"/><path d="M20 24h60v50H20z" fill="#000" opacity=".38"/><rect x="26" y="30" width="22" height="18" fill="url(#aokG)"/><rect x="54" y="34" width="22" height="18" fill="url(#aokG)"/><rect x="34" y="54" width="22" height="16" fill="url(#aokR)"/><circle cx="37" cy="30" r="2.6" fill="url(#aokR)"/><circle cx="65" cy="34" r="2.6" fill="url(#aokR)"/></g>',
+bench_lamp:'<g filter="url(#aokD)"><path d="M70 84V28h5v56z" fill="url(#aokG)"/><path d="M62 28h21l-4-10H66z" fill="url(#aokG)"/><rect x="10" y="52" width="46" height="7" rx="2" fill="url(#aokG)"/><rect x="10" y="42" width="46" height="7" rx="2" fill="url(#aokG)"/><rect x="8" y="62" width="50" height="8" rx="2.5" fill="url(#aokG)"/><g stroke="url(#aokG)" stroke-width="4" stroke-linecap="round"><path d="M16 42v28M50 42v28"/></g><path d="M72 20l2.4 5.6 5.6 2.4-5.6 2.4L72 36l-2.4-5.6-5.6-2.4 5.6-2.4z" fill="url(#aokR)" opacity=".9"/></g>',
+jar_coins:'<g filter="url(#aokD)"><path d="M32 26h36v8H32z" fill="url(#aokG)"/><path d="M34 34h32v40a10 10 0 0 1-10 10H44a10 10 0 0 1-10-10z" fill="none" stroke="url(#aokG)" stroke-width="4"/><circle cx="44" cy="62" r="7" fill="url(#aokG)"/><circle cx="58" cy="66" r="7" fill="url(#aokG)"/><circle cx="50" cy="74" r="7" fill="url(#aokG)"/><path d="M50 20l2.6 6 6 2.6-6 2.6L50 37l-2.6-5.8-6-2.6 6-2.6z" fill="url(#aokR)"/></g>',
+till_open:'<g filter="url(#aokD)"><path d="M18 44h64v34H18z" fill="url(#aokG)"/><path d="M22 20h56v24H22z" fill="url(#aokG)" opacity=".8"/><path d="M28 26h44v12H28z" fill="#000" opacity=".45"/><path d="M30 54h40v14H30z" fill="#000" opacity=".3"/><path d="M44 58h12v6H44z" fill="url(#aokR)"/></g>',
+festoon:'<g filter="url(#aokD)"><path d="M8 22c20 26 64 26 84 0" fill="none" stroke="url(#aokG)" stroke-width="3"/><g fill="url(#aokR)"><circle cx="20" cy="34" r="7"/><circle cx="38" cy="42" r="7"/><circle cx="56" cy="42" r="7"/><circle cx="74" cy="33" r="7"/></g><g fill="url(#aokG)"><circle cx="29" cy="56" r="6"/><circle cx="50" cy="60" r="6"/><circle cx="68" cy="55" r="6"/></g></g>',
+rosette:'<g filter="url(#aokD)"><path d="M40 60h20l-4 30-6-5-6 5z" fill="url(#aokR)"/><circle cx="50" cy="40" r="26" fill="url(#aokG)"/><circle cx="50" cy="40" r="17" fill="#000" opacity=".35"/><path d="M50 28l3 7.4 7.4 3-7.4 3L50 52l-3-7.6-7.4-3 7.4-3z" fill="url(#aokG)"/></g>',
+tin_heart:'<g filter="url(#aokD)"><path d="M26 36h48v48H26z" fill="url(#aokG)"/><path d="M22 26h56v10H22z" fill="url(#aokG)"/><path d="M40 30h20v3H40z" fill="#000" opacity=".55"/><path d="M50 68L40 58a7.07 7.07 0 0 1 10-10 7.07 7.07 0 0 1 10 10z" fill="url(#aokR)"/></g>',
+wreath:'<g filter="url(#aokD)"><circle cx="50" cy="50" r="30" fill="none" stroke="url(#aokG)" stroke-width="9" stroke-dasharray="9 5" stroke-linecap="round"/><path d="M42 74h16l-3 18-5-4-5 4z" fill="url(#aokR)"/><path d="M50 56L42 48a5.66 5.66 0 0 1 8-8 5.66 5.66 0 0 1 8 8z" fill="url(#aokR)"/></g>',
+closed_sign:'<g filter="url(#aokD)"><path d="M18 30h64v40H18z" fill="url(#aokG)"/><path d="M24 36h52v28H24z" fill="#000" opacity=".45"/><path d="M50 62L40 52a7.07 7.07 0 0 1 10-10 7.07 7.07 0 0 1 10 10z" fill="url(#aokR)"/><path d="M34 20l16 10 16-10" fill="none" stroke="url(#aokG)" stroke-width="3.4" stroke-linecap="round"/></g>',
+trestle_long:'<g filter="url(#aokD)"><path d="M6 48h88v9H6z" fill="url(#aokG)"/><g stroke="url(#aokG)" stroke-width="5" stroke-linecap="round"><path d="M16 57v26M50 57v26M84 57v26"/></g><g fill="url(#aokG)"><rect x="16" y="34" width="14" height="10" rx="2"/><rect x="43" y="34" width="14" height="10" rx="2"/><rect x="70" y="34" width="14" height="10" rx="2"/></g><path d="M50 28l2.4 5.6 5.6 2.4-5.6 2.4L50 44l-2.4-5.6-5.6-2.4 5.6-2.4z" fill="url(#aokR)"/></g>',
+room_empty:'<g filter="url(#aokD)"><path d="M10 24h80v52H10z" fill="url(#aokG)" opacity=".35"/><path d="M10 24h80v52H10z" fill="none" stroke="url(#aokG)" stroke-width="4"/><path d="M56 76V32h26v44z" fill="#FBEFC8"/><path d="M56 76V32h26v44z" fill="none" stroke="url(#aokG)" stroke-width="4"/><path d="M10 82h80" stroke="url(#aokG)" stroke-width="4" stroke-linecap="round"/></g>',
+chairs_ring:'<g filter="url(#aokD)"><ellipse cx="50" cy="52" rx="34" ry="20" fill="none" stroke="url(#aokG)" stroke-width="3" stroke-dasharray="4 6"/><g fill="url(#aokG)"><rect x="44" y="22" width="12" height="12" rx="2"/><rect x="68" y="32" width="12" height="12" rx="2"/><rect x="76" y="52" width="12" height="12" rx="2"/><rect x="62" y="66" width="12" height="12" rx="2"/><rect x="44" y="72" width="12" height="12" rx="2"/><rect x="26" y="66" width="12" height="12" rx="2"/><rect x="12" y="52" width="12" height="12" rx="2"/><rect x="20" y="32" width="12" height="12" rx="2"/></g><path d="M50 46l2.6 6 6 2.6-6 2.6L50 63l-2.6-5.8-6-2.6 6-2.6z" fill="url(#aokR)"/></g>',
+platter:'<g filter="url(#aokD)"><ellipse cx="50" cy="70" rx="38" ry="10" fill="url(#aokG)"/><path d="M16 68a34 26 0 0 1 68 0z" fill="url(#aokG)"/><path d="M16 68a34 26 0 0 1 68 0z" fill="#000" opacity=".18"/><circle cx="50" cy="38" r="6" fill="url(#aokR)"/></g>',
+awning:'<g filter="url(#aokD)"><path d="M12 42h76l-8-20H20z" fill="url(#aokG)"/><path d="M30 22l-4 20M46 22l-2 20M62 22l2 20M78 22l4 20" stroke="#000" stroke-width="4" opacity=".3"/><path d="M12 42c6 8 12 8 19 0s13 8 19 0 13 8 19 0 13 8 19 0" fill="none" stroke="url(#aokG)" stroke-width="4"/><g stroke="url(#aokG)" stroke-width="5" stroke-linecap="round"><path d="M18 48v34M82 48v34"/></g><path d="M50 56L44 50a3.96 3.96 0 0 1 6-6 3.96 3.96 0 0 1 6 6z" fill="url(#aokR)"/></g>',
+ribbon_pin:'<g filter="url(#aokD)"><path d="M50 26c14 14 22 30 22 40a22 22 0 0 1-44 0c0-10 8-26 22-40z" fill="none" stroke="url(#aokR)" stroke-width="10" stroke-linejoin="round"/><path d="M50 26c14 14 22 30 22 40a22 22 0 0 1-44 0c0-10 8-26 22-40z" fill="none" stroke="url(#aokG)" stroke-width="3.4" stroke-linejoin="round"/></g>',
+music_stand:'<g filter="url(#aokD)"><path d="M22 24h56v30H22z" fill="url(#aokG)" transform="rotate(-8 50 39)"/><path d="M47 50h6v30h-6z" fill="url(#aokG)"/><path d="M30 86h40" stroke="url(#aokG)" stroke-width="5" stroke-linecap="round"/><path d="M38 78l24 8M62 78l-24 8" stroke="url(#aokG)" stroke-width="3.4" stroke-linecap="round"/><circle cx="50" cy="36" r="7" fill="url(#aokR)" transform="rotate(-8 50 39)"/></g>',
+bookmark:'<g filter="url(#aokD)"><path d="M24 14h52v72H24z" fill="url(#aokG)"/><path d="M30 20h40v60H30z" fill="#000" opacity=".35"/><path d="M46 14h14v44l-7-6-7 6z" fill="url(#aokR)"/></g>',
+shopfronts_two:'<g filter="url(#aokD)"><path d="M8 84V44h36v40z" fill="url(#aokG)" opacity=".4"/><path d="M14 54h10v12H14zM30 54h10v12H30z" fill="#000" opacity=".3"/><path d="M52 84V36h40v48z" fill="url(#aokG)"/><path d="M58 46h12v14H58zM76 46h12v14H76z" fill="#FBEFC8"/><path d="M66 84V68h12v16z" fill="#000" opacity=".4"/><path d="M72 26l2.4 5.6 5.6 2.4-5.6 2.4L72 42l-2.4-5.6-5.6-2.4 5.6-2.4z" fill="url(#aokR)"/></g>',
+clipboard:'<g filter="url(#aokD)"><path d="M22 18h56v68H22z" fill="url(#aokG)"/><path d="M38 12h24v12H38z" fill="url(#aokG)"/><path d="M38 12h24v12H38z" fill="#000" opacity=".3"/><g stroke="#000" stroke-width="3" stroke-linecap="round" opacity=".4"><path d="M32 40h36M32 52h36M32 64h22"/></g><path d="M62 70L56 64a3.96 3.96 0 0 1 6-6 3.96 3.96 0 0 1 6 6z" fill="url(#aokR)"/></g>',
+schoolhouse:'<g filter="url(#aokD)"><path d="M50 20L86 48H14z" fill="url(#aokG)"/><path d="M22 48h56v36H22z" fill="url(#aokG)"/><path d="M30 56h14v14H30zM56 56h14v14H56z" fill="#000" opacity=".4"/><path d="M44 84V70h12v14z" fill="#000" opacity=".4"/><path d="M46 6h8v14h-8z" fill="url(#aokG)"/><circle cx="50" cy="10" r="5" fill="url(#aokR)"/></g>',
+doors_plain:'<g filter="url(#aokD)"><path d="M22 26h56v52H22z" fill="url(#aokG)"/>' +
+  '<path d="M36 78V46a14 14 0 0 1 28 0v32z" fill="#FBEFC8"/>' +
+  '<path d="M36 78V46a14 14 0 0 1 28 0v32z" fill="none" stroke="#3A2600" stroke-width="2.6" opacity=".55"/>' +
+  '<path d="M50 46v32" stroke="#3A2600" stroke-width="2.6" opacity=".55"/>' +
+  '<path d="M22 20h56v6H22z" fill="url(#aokG)"/></g>',
+map_pin:'<g filter="url(#aokD)"><path d="M50 88C50 66 70 58 70 42a20 20 0 1 0-40 0c0 16 20 24 20 46z" fill="url(#aokG)"/><circle cx="50" cy="42" r="10" fill="url(#aokR)"/></g>',
+wrench:'<g filter="url(#aokD)" transform="rotate(-38 50 50)"><path d="M44 34h12v50H44z" fill="url(#aokG)"/><path d="M50 12a16 16 0 0 1 12 26l-4 4H42l-4-4A16 16 0 0 1 50 12z" fill="url(#aokG)"/><circle cx="50" cy="26" r="7" fill="#000" opacity=".5"/></g>',
+street_row:'<g filter="url(#aokD)"><path d="M6 84V50h18v34z" fill="url(#aokG)"/><path d="M26 84V38h20v46z" fill="url(#aokG)"/><path d="M48 84V56h18v28z" fill="url(#aokG)"/><path d="M68 84V44h22v40z" fill="url(#aokG)"/><g fill="#FBEFC8"><rect x="10" y="58" width="8" height="9"/><rect x="31" y="46" width="8" height="9"/><rect x="52" y="64" width="8" height="9"/><rect x="74" y="52" width="8" height="9"/></g><path d="M4 86h92" stroke="url(#aokG)" stroke-width="3.4" stroke-linecap="round"/></g>'
+};
+
+var OTHER = ['Other', 'None of these. Tell us in your own words.', 'Free text', 0, 'nav', 'nib'];
+var RAW = {
+kindness_meaning: [1, [
+['Heart & Light',"Kindness as feeling. It starts in the chest, and it doesn't stay there.",'Addition',0,'mar','heart_rays'],
+['Open Mind',"Kindness as a way of thinking - a default we already have, not a mood we're in.",'Example',0,'ind','bulb_heart'],
+['Kind Words','Kindness as language. What we say to people, and how we say it.','Attention',0,'plum','bubble_heart'],
+['What We Do','Kindness as action. Not a feeling at all - a thing you hand over.','Addition',0,'sie','gift'],
+['A Better World','Kindness as something bigger than one address. What we do here reaches past here.','Propagation',0,'teal','globe_heart'],
+['Brighter Tomorrow',"Kindness as direction. About what comes next, not what's already done.",'Example',0,'ind','sunrise'],
+['Growth','Kindness as something that compounds. One turn becomes ten without us doing anything.','Propagation',0,'for','sprout'], OTHER]],
+k_helped: [2, [
+['Someone Paid','Money arrived when it was needed. A bill, a tab, an invoice, quietly settled.','Addition',0,'for','banknote'],
+['They Told Everyone','Somebody talked us up. Word of mouth, a review, a recommendation we never asked for.','Propagation',0,'plum','bubble_star'],
+['We Got Time','Patience instead of money. A deadline moved, rent deferred, credit extended.','Subtraction',1,'teal','hourglass'],
+['Free Hands',"Unpaid labour. Somebody did the work for us and wouldn't take money for it.",'Addition',0,'sie','toolbox'],
+['When It Was Bad','Help that arrived during a crisis - a flood, a fire, an illness, a closure.','Interruption',0,'ox','umbrella'],
+['No Name On It',"Anonymous. We still don't know who it was, and not knowing was the whole point.",'Addition',1,'nav','envelope_seal'],
+['They Kept Coming','Simple loyalty. Nothing dramatic happened - people just never stopped showing up.','Attention',1,'mar','stool_worn'], OTHER]],
+k_gave: [2, [
+['On the House',"We didn't charge. The most common kindness a business gives, and the least mentioned.",'Subtraction',0,'ox','tag_struck'],
+['The Extra','More than they paid for. A top-up, a second one, a bigger portion, no mention of it.','Addition',0,'nav','cup_heart'],
+['We Kept It Back',"Held, reserved, set aside for one particular person who'd never have asked.",'Attention',0,'for','box_string'],
+['We Stayed','Time given outside our hours. Opened early, closed late, came back in for someone.','Addition',0,'sie','clock_late'],
+['We Listened','The kindness was attention, not a product. We gave them the time instead.','Attention',1,'teal','two_chairs'],
+['We Sorted It','A problem fixed that was never ours to fix, and nobody else was going to.','Subtraction',0,'plum','knot_untied'],
+['We Never Said','Done, and deliberately never mentioned to anyone - including the person it was for.','Release',1,'ind','ledger_closed'], OTHER]],
+why_open: [2, [
+['Somewhere to Belong',"To make a place where people feel they're allowed to be, whoever they are.",'Addition',0,'ind','door_light'],
+['Nobody Else Would','The neighbourhood needed it and no one was providing it, so we did.','Addition',0,'sie','gap_filled'],
+['For the Family',"Built for, or handed down by, the people closest to us. We weren't letting it close.",'Propagation',0,'nav','key_fob'],
+['We Loved the Craft','The work itself was the reason. We wanted to make the thing properly.','Example',0,'ox','tools_crossed'],
+['To Fix Something','Anger or loss started it. Something was wrong somewhere and we answered it.','Interruption',0,'mar','match'],
+['To Give Work','Jobs. We opened so that people would have somewhere to be employed.','Addition',0,'teal','punchcard'],
+['A Second Start','This was a fresh beginning after something in our lives ended.','Example',0,'plum','sunrise_building'], OTHER]],
+who_taught: [2, [
+['At Her Table','Family. A parent or grandparent who fed and housed everyone who turned up.','Addition',0,'sie','table_set'],
+['A Good Boss','Work. Somebody ran a place well, and we copied what they did.','Example',0,'nav','key_pass'],
+['A Teacher','Formal teaching - a school, a mentor, a text, a faith we were raised in.','Example',0,'for','book_heart'],
+['A Stranger','Someone we never saw again, who set the whole thing off without knowing it.','Propagation',1,'ox','candles_two'],
+['The Hard Years','Not a person at all. Difficulty itself did the teaching, and it stuck.','Attention',0,'plum','mountain_path'],
+['Our Customers','The people who walk in taught us, not the other way round. We just paid attention.','Attention',0,'mar','counter_till'],
+['Nobody Did',"It wasn't modelled for us. We chose it against the example we were given.",'Interruption',1,'ind','chair_empty'], OTHER]],
+regular_miss: [2, [
+['Their Usual',"We start making it before they reach the counter. We've never had to ask.",'Attention',0,'nav','cup_name'],
+['Their Seat','They have a spot, and everyone here knows not to take it.','Attention',0,'ox','stool_one'],
+['Every Single Day','Reliability. Same time, same door, without fail, for years.','Example',0,'for','cal_ticked'],
+['They Bring Things','They give to us - cards, cake, cuttings, things nobody asked them for.','Addition',0,'plum','parcel_small'],
+['They Fix the Room',"The place is different when they're in it. It's mood, not transaction.",'Interruption',0,'sie','lamp_on'],
+['We Worry About Them',"They're alone, or unwell, and we watch the door for them without saying so.",'Attention',1,'teal','window_lit'],
+['All of Them',"We won't single one out, and that refusal is the actual answer.",'Attention',0,'mar','cups_tray'], OTHER]],
+house_move: [2, [
+['Charge Your Phone','Power, a socket, a cable behind the counter. No purchase, no asking.','Addition',1,'teal','phone_bolt'],
+['Use the Restroom','The one thing everybody else makes you buy something for first.','Subtraction',1,'nav','restroom_door'],
+['Free Wifi','Connection, no password, no time limit, no minimum spend.','Addition',1,'ind','wifi'],
+['Free Water','Water, ice, a bowl for the dog, out front where nobody has to ask.','Addition',1,'teal','tap_glass'],
+['Sit as Long as You Like','Space and time. Nobody will ever move you on, however long you stay.','Release',1,'mar','chair_alone'],
+['Come In Out of It',"Shelter - warmth, cool, somewhere to stand that isn't the weather.",'Addition',1,'ox','umbrella_door'],
+['Just Ask',"Directions, a pen, a plaster, a phone call, the time. Worst case we haven't got it.",'Attention',0,'sie','bell_ask'], OTHER]],
+vision: [3, [
+['Everyone Is Known','Recognition. Nobody comes in and leaves again still a stranger.','Attention',0,'nav','namecards_wall'],
+['Nobody Is Turned Away',"Access. What's in your pocket stops mattering at the threshold.",'Subtraction',1,'plum','door_nolock'],
+['A Second Home',"Belonging. People treat it as theirs, and come on days they don't need anything.",'Addition',0,'mar','house_lit'],
+['The Street Is Better',"Outward. The whole neighbourhood is different because we're in it.",'Propagation',0,'teal','bridge'],
+['It Outlives Us','Permanence. Still standing and still like this when none of us are here.','Propagation',0,'sie','tree_rings'],
+['Others Copy It','Spread. The model matters more than this one building ever will.','Example',0,'ind','lamps_four'],
+['Good Work, Fairly Paid','Staff first. The people behind the counter can afford to live near it.','Addition',0,'for','scales'], OTHER]],
+teach_new: [3, [
+['Names First','Learn the person before the process. The register can wait.','Attention',0,'nav','badge_till'],
+['Watch, Then Do','Apprenticeship. Nobody learns this from a document or a slide.','Example',0,'sie','aprons_two'],
+['You Can Say Yes','Authority. Staff can fix things without checking upward first.','Release',0,'for','padlock_open'],
+['Listen First','Attention as the actual core skill of the job. Let people finish.','Attention',1,'plum','ear_arcs'],
+['No One Is Beneath It','No sections, no hierarchy, nobody passing a problem along to someone else.','Example',0,'teal','floorplan_ring'],
+["You'll Get It Wrong",'Mistakes are expected and safe here. Nobody gets shouted at for one.','Release',1,'ox','cup_mended'],
+['Assume the Best','Give people the benefit of the doubt as the default, every time.','Release',1,'ind','blank_page'], OTHER]],
+regular_kindness: [3, [
+['We Feed People','Food and drink given away on a standing basis, not as an occasional gesture.','Addition',0,'ox','urn_tap'],
+['We Pay It Forward','A suspended system. Customers fund the next person through the door.','Propagation',1,'for','arrows_heart'],
+['We Make Time','The kindness is time and attention rather than goods. We stop and talk.','Attention',1,'teal','clock_nohands'],
+['We Look After Our Own','Inward. The regular kindness is aimed at the people who work here.','Addition',0,'plum','rota_heart'],
+['We Give Space','The room itself is the gift - meetings, groups, study, shelter, storage.','Addition',0,'nav','noticeboard'],
+['We Keep the Street','Outward and civic. Litter, planting, lighting, watching out for people.','Example',0,'ind','bench_lamp'],
+['We Give a Cut','A standing share of what we take goes somewhere else, every week.','Addition',1,'sie','jar_coins'], OTHER]],
+annual_event: [3, [
+['The Free Day','One day a year, the till stays shut and everything is on us.','Addition',0,'for','till_open'],
+['The Party',"A gathering. Food, music, the doors open late and nobody's counting.",'Addition',0,'ind','festoon'],
+['We Give an Award','Somebody gets named and honoured publicly, the same time every year.','Attention',0,'mar','rosette'],
+['The Big Collection','A yearly fundraise, drive or appeal that we run ourselves.','Propagation',0,'ox','tin_heart'],
+['We Remember','A memorial or anniversary for somebody we lost, marked the same way each time.','Attention',1,'plum','wreath'],
+['Staff Day','We close, and the whole thank-you is aimed at the people who work here.','Subtraction',0,'teal','closed_sign'],
+['The Long Table','A shared meal. One table, and whoever turns up eats at it.','Addition',0,'sie','trestle_long'], OTHER]],
+host_small: [3, [
+['A Room to Borrow','Space is what we have. Somebody else brings the actual content.','Addition',0,'nav','room_empty'],
+['Coffee and Chairs','Small, regular, conversational. No stage, no programme, no head of the table.','Attention',0,'ox','chairs_ring'],
+['Something to Eat',"We'd feed it. Catering is our contribution and somebody else organises it.",'Addition',0,'for','platter'],
+['For the Neighbours','Outward and local. A street thing rather than an invite list.','Propagation',0,'sie','awning'],
+['For a Cause','Fundraising or awareness for something specific and usually local.','Propagation',0,'mar','ribbon_pin'],
+['Something Creative','Music, readings, exhibitions, workshops, walls for local artists.','Example',0,'plum','music_stand'],
+['Not Yet',"An honest no that isn't a never. Ask us again when we've got the staff.",'Release',0,'ind','bookmark'], OTHER]],
+who_else: [3, [
+['Another Shop','A business on the same street doing the same quiet thing we do.','Propagation',0,'nav','shopfronts_two'],
+['A Charity','An organised cause - a food bank, a shelter, a hospice, a rescue.','Propagation',0,'for','clipboard'],
+['A School','Education - a school, a college, a youth club, a library.','Propagation',0,'sie','schoolhouse'],
+['A Faith Group','A congregation of any kind, doing community work beyond its own doors.','Propagation',0,'plum','doors_plain'],
+['One Person','Not an organization at all. An individual who simply does it, alone.','Propagation',0,'mar','map_pin'],
+['A Service','Trades and services - a garage, a barber, a repair cafe.','Propagation',0,'teal','wrench'],
+['A Whole Street','Not one organization. The area itself is the answer to this question.','Propagation',0,'ox','street_row'], OTHER]]
+};
+
+var M = {};
+Object.keys(RAW).forEach(function (fid) {
+  M[fid] = { rung: RAW[fid][0], cats: RAW[fid][1].map(function (a) {
+    return { id: a[0].toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+             name: a[0], category: a[1], form: a[2], spark: !!a[3], bg: a[4], glyph: a[5] };
+  })};
+});
+
+var mounted = false;
+function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+  return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+function mount() {
+  if (mounted || typeof document === 'undefined') return;
+  var d = document.createElement('div');
+  d.innerHTML = DEFS;
+  document.body.insertBefore(d.firstChild, document.body.firstChild);
+  mounted = true;
+}
+function list(fid)      { return M[fid] ? M[fid].cats : []; }
+function get(fid, cid)  { var c = list(fid); for (var i = 0; i < c.length; i++) if (c[i].id === cid) return c[i]; return c[0]; }
+/* Q1 is the only question the organization does not answer - its flag is
+   fixed. Naming it here means a reorder of the rows can no longer change it
+   silently. Any field absent from FLAG falls back to its first row. */
+var FLAG = { kindness_meaning: 'heart-light' };
+function defaultFor(fid){
+  if (FLAG[fid] && get(fid, FLAG[fid]).id === FLAG[fid]) return FLAG[fid];
+  var c = list(fid); return c.length ? c[0].id : '';
+}
+function rungOf(fid)    { return M[fid] ? M[fid].rung : 1; }
+
+function medal(fid, cid) {
+  var c = get(fid, cid);
+  if (!c) return '';
+  if (rungOf(fid) >= RASTER_FROM) {
+    return '<img class="aok-sym" src="' + RASTER_PATH + '/' + fid + '/' + c.id +
+           '.webp" alt="' + esc(c.name) + '" loading="lazy">';
+  }
+  /* The rim legend ran the full circle, so its lower half rendered upside
+     down, and at 22px it was mud. The bolt is what the physical tablet
+     carries anyway. 'legend' keeps lettering, but only across the top arc
+     where it stays upright and fits. */
+  /* THE ANONYMOUS RING
+     An act nobody signed gets a ring that says so. The organization never
+     chooses this - it follows from the answer, which is how the anonymity
+     doctrine reaches a card without anybody being sold it.
+     Two arcs, not one: a single full circle renders its lower half upside
+     down, which is what broke the first version. ANONYMOUS reads across the
+     top, A SPARK ACCRUES across the bottom, both upright, a struck bolt each
+     side.                                                                   */
+  var rim = '';
+  if (c.spark) {
+    if (SPARK_MARK === 'bolt') {
+      rim = '<g><circle cx="68" cy="68" r="14" fill="#160F04" opacity=".94"/>' +
+        '<circle cx="68" cy="68" r="14" fill="none" stroke="url(#aokG)" stroke-width="2.2"/>' +
+        '<g transform="translate(68,68) scale(.215) translate(-51,-50)">' +
+        '<use href="#aokBOLT" fill="url(#aokG)"/></g></g>';
+    } else {
+      var bolt = function (x) {
+        return '<g transform="translate(' + x + ',50) scale(.115) translate(-51,-50)">' +
+               '<use href="#aokBOLT" fill="#F7E7BC" opacity=".95"/></g>';
+      };
+      rim =
+        '<circle cx="50" cy="50" r="29.5" fill="none" stroke="#E0B559" stroke-width=".9" opacity=".55"/>' +
+        '<text font-family="IBM Plex Mono,ui-monospace,monospace" font-size="6.4" letter-spacing="2.6" fill="#F7E7BC" opacity=".92">' +
+        '<textPath href="#aokRIMTOP" startOffset="50%" text-anchor="middle">ANONYMOUS</textPath></text>' +
+        '<text font-family="IBM Plex Mono,ui-monospace,monospace" font-size="5.6" letter-spacing="2.2" fill="#F7E7BC" opacity=".8">' +
+        '<textPath href="#aokRIMBOT" startOffset="50%" text-anchor="middle">A SPARK ACCRUES</textPath></text>' +
+        bolt(16) + bolt(84);
+    }
+  }
+  var gl = c.spark
+    ? '<g transform="translate(50,50) scale(' + (SPARK_MARK === 'ring' ? '.60' : '.78') + ') translate(-50,-50)">' + G[c.glyph] + '</g>'
+    : G[c.glyph];
+  return '<svg class="aok-sym" viewBox="0 0 100 100" role="img" aria-label="' + esc(c.name) + '">' +
+    '<use href="#aokF"/><g clip-path="url(#aokC)"><circle cx="50" cy="50" r="41.5" fill="url(#' + c.bg + ')"/>' +
+    '<use href="#aokS"/>' + rim + gl + '<use href="#aokDM"/></g><use href="#aokE"/></svg>';
+}
+
+function picker(fid, state) {
+  state = state || {};
+  var sym = state.symbol || defaultFor(fid), also = state.also || [];
+  return '<div class="aok-picker" data-field="' + fid + '">' + list(fid).map(function (c) {
+    var isP = sym === c.id, isA = also.indexOf(c.id) > -1;
+    return '<div class="aok-tile' + (isP ? ' is-answer' : '') + (isA ? ' is-also' : '') + '">' +
+      (isP ? '<span class="aok-badge">YOUR ANSWER</span>' : isA ? '<span class="aok-badge">ALSO TRUE</span>' : '') +
+      '<button type="button" class="aok-hit" data-pick="' + c.id + '" aria-label="Choose ' + esc(c.name) + '">' +
+        medal(fid, c.id) +
+        '<span class="aok-name">' + esc(c.name) + '</span>' +
+        '<span class="aok-cat">' + esc(c.category) + '</span>' +
+      '</button>' +
+      '<div class="aok-foot"><span class="aok-form' + (c.spark ? ' is-spark' : '') + '">' +
+        esc(c.form) + (c.spark ? ' &#183; Spark' : '') + '</span>' +
+        (isP ? '' : '<button type="button" class="aok-also' + (isA ? ' on' : '') +
+          '" data-also="' + c.id + '">' + (isA ? '&#10003; also' : '+ also') + '</button>') +
+      '</div></div>';
+  }).join('') + '</div>';
+}
+
+root.AOKSymbols = {
+  mount: mount, list: list, get: get, medal: medal, picker: picker,
+  defaultFor: defaultFor, rungOf: rungOf, flags: FLAG,
+  fields: Object.keys(M),
+  config: function (o) {
+    if (o) {
+      if (typeof o.rasterFrom === 'number') RASTER_FROM = o.rasterFrom;
+      if (typeof o.rasterPath === 'string') RASTER_PATH = o.rasterPath;
+      if (o.sparkMark === 'ring' || o.sparkMark === 'bolt') SPARK_MARK = o.sparkMark;
+      else if (o.sparkMark) throw new Error('AOKSymbols: sparkMark must be "ring" or "bolt", got ' + o.sparkMark);
+    }
+    return { rasterFrom: RASTER_FROM, rasterPath: RASTER_PATH, sparkMark: SPARK_MARK };
+  }
+};
+})(typeof window !== 'undefined' ? window : this);
+
+/* ===== END aok-symbols.js ======================================== */
+</script>
+<script>/* =========================================================================
+   A²OK KINDNESS CARD — BUILDER
+   The editor design, wired to the live Airtable schema.
+
+   ONE data object. The card renders FROM it, the form writes INTO it, and
+   Airtable receives it under its real field names. No second source of truth.
+
+   Boot modes:
+     ?edit=<token>   the org's private edit link — loads their record, PATCHes it
+     ?slug=<slug>    loads a published card for editing (A²OK side)
+     ?start=<1-4>    front door hand-off; opens the builder at that rung
+     (none)          a fresh card
+   ========================================================================= */
+
+const FN_GET  = "/.netlify/functions/get-card";
+const FN_SAVE = "/.netlify/functions/save-card";
+
+const CLOUD = { name:"aok-world", preset:"AOK-Uploads", folder:"org-uploads", stockTag:"stock" };
+
+/* Fields Airtable does not have yet. Add them to Organizations and flip these
+   to the real names; everything below picks them up with no other change. */
+const PENDING = { hours:null, reviewText:null, reviewShow:null, publicRung:null,
+                  symbolChoices:null };  /* add "Symbol choices" (long text) and name it here */
+
+const D = {
+  recordId:"", editToken:"", slug:"",
+  org:{ name:"", initial:"?", category:"", city:"", state:"", owner:"",
+        phone:"", web:"", motto:"", kicker:"", hours:"" },
+  workingRung:1, publishedRung:0, showAll:false, idOpen:false,
+  review:{ text:"", src:"Public review · shown with permission", on:false },
+  q:{}, media:{ logo:"", hero:"", gallery:[], found:"", useFound:false },
+  f:{}, dirty:false, saving:false, loaded:false
+};
+
+/* --------- field inventory: rung, question, helper, starter, kicker, Airtable name --------- */
+const FIELDS = [
+ {id:"kindness_meaning",rung:1,at:"Kindness statement",
+  q:"What does kindness mean to your organization?",
+  h:"One sentence. This is the line most people will read first.",
+  starter:"To us, kindness means…", kick:"What kindness means to us",
+  eg:"Treating everyone who walks in like they were expected.", req:true, photo:null, max:120},
+
+ {id:"k_helped",rung:2,at:"Kindness received",
+  q:"A kindness that helped this place",
+  h:"A time somebody was kind to you — a customer, a neighbour, a stranger.",
+  starter:"A kindness that helped us was when…", kick:"A kindness that helped us",
+  eg:"A regular quietly paid our overdue bill and never said a word about it.", photo:"ph-store", max:200},
+ {id:"k_gave",rung:2,at:"Kindness given",
+  q:"A kindness you gave a customer",
+  h:"Something you did that you'd never have mentioned otherwise.",
+  starter:"We…", kick:"A kindness we give",
+  eg:"We keep a no-questions cup of coffee behind the counter for anyone having a rough day.", photo:null, max:180},
+ {id:"why_open",rung:2,at:"Why we opened",
+  q:"Why did you open your doors?",
+  h:"Not the business reason. The real one.",
+  starter:"We opened this place to…", kick:"Why we opened our doors",
+  eg:"To build somewhere everyone feels seen — even on the days they don't feel like talking.", photo:null, max:200},
+ {id:"who_taught",rung:2,at:"Who taught us kindness",
+  q:"Who taught you kindness?",
+  h:"A parent, a boss, a teacher, a stranger.",
+  starter:"Kindness was taught to us by…", kick:"Who taught us kindness",
+  eg:"My grandmother, who never let anyone leave her house hungry.", photo:"ph-latte", max:200},
+ {id:"regular_miss",rung:2,at:"A regular we'd miss",
+  q:"A regular you'd genuinely miss",
+  h:"You don't have to name them.",
+  starter:"We'd miss…", kick:"A regular we'd miss",
+  eg:"We know most of our regulars by name, because every person who walks in matters.", photo:null, max:160},
+ {id:"house_move",rung:2,at:"House move",
+  q:"Your “house move”",
+  h:"The thing anyone can do here without asking or buying.",
+  starter:"Anyone can…", kick:"Our house move",
+  eg:"Phone charge and the bathroom, no purchase needed and no need to ask.", photo:null, max:140},
+
+ {id:"vision",rung:3,at:"Vision",
+  q:"Your vision",
+  h:"If this place worked exactly the way you want, what would be true?",
+  starter:"A place where…", kick:"Our vision", vision:true,
+  eg:"A place where everyone who walks in is known and cared for.", photo:null, max:120},
+ {id:"teach_new",rung:3,at:"What we teach",
+  q:"What do you teach new employees?",
+  h:"About kindness, your culture, how you treat people.",
+  starter:"The first thing we teach a new hire is…", kick:"What we teach our people",
+  eg:"That you learn names before you learn the register.", photo:"ph-staff", max:200},
+ {id:"regular_kindness",rung:3,at:"Kindness we do",
+  q:"Do you already do something kind regularly?",
+  h:"For customers, staff, or the neighbourhood.",
+  starter:"Every day we…", kick:"What we do every day",
+  eg:"We pay it forward with coffee, listening, and encouragement — mostly the listening.", photo:"ph-two", max:180},
+ {id:"annual_event",rung:3,at:"Yearly event",
+  q:"A yearly appreciation or acknowledgment?",
+  h:"Anything you do once a year to say thank you.",
+  starter:"Every year we…", kick:"Every year",
+  eg:"Every February we throw a Thank-You Morning — free pour for anyone through the door before nine.", photo:null, max:180},
+ {id:"employee_month",rung:3,at:"Employee of the month",atFor:"Employee of the month — for",
+  q:"Employee of the month",
+  h:"Who'd you like to recognise, and why?", person:true,
+  starter:"", kick:"Employee of the month",
+  eg:"Remembers every regular's order, and every regular's kid's name.", photo:"avatar", photoState:"name", max:140},
+ {id:"customer_month",rung:3,at:"Customer of the month",atFor:"Customer of the month — for",
+  q:"Customer of the month",
+  h:"Somebody who makes this place better by walking in.", person:true,
+  starter:"", kick:"Customer of the month",
+  eg:"Brings the staff birthday cards nobody asked her to bring.", photo:"avatar", photoState:"name", max:140},
+ {id:"host_small",rung:3,at:"Would host",
+  q:"Would you host something small?",
+  h:"A gathering, a meetup, a kindness event.", choice:["Yes, we'd love to","Maybe","Not right now"],
+  starter:"We'd host…", kick:"We'd host",
+  eg:"Small gatherings for neighbours, local artists, and causes that matter.", photo:"ph-gather", max:150},
+ {id:"who_else",rung:3,at:"Invite to the map",
+  q:"Who else deserves to be seen?",
+  h:"Another organization in your community doing quiet good.",
+  starter:"", kick:"Who else deserves to be seen",
+  eg:"The hardware store two doors down has fixed more things for free than we've poured coffee.", photo:null, max:170},
+ {id:"gazette",rung:3,at:"Gazette interest",
+  q:"Would you write for the Kindness Gazette?",
+  h:"A short story from your corner of the world.", choice:["Yes, please","Maybe later","Not this time"],
+  starter:"", kick:"", internal:true,
+  eg:"About the night of the outage, when the block ate here for free.", photo:null, max:150}
+];
+
+FIELDS.forEach(f=>{
+  D.f[f.id]={v:"", name:"", on:true, photo:f.photo, photoState:f.photoState||"off", chosen:"",
+             symbol:"", also:[]};
+});
+
+/* ---- the private questionnaire — the live Questionnaire v2 fields ---- */
+const QSPINE = [
+ {at:"Kindness trend",      q:"Since you were born, has kindness gone up or down?", opts:["Up","Down"]},
+ {at:"Four minutes a day",  q:"Would you give four minutes a day to intentional kindness if it could change the world?", opts:["Yes","No"]},
+ {at:"Devices kinder",      q:"Since smart devices arrived, is the world kinder for it?", opts:["Yes","No"]}
+];
+const QSNAP = [
+ {at:"Kindness means (tap)",       q:"What does kindness mean to your organization?", opts:["A regular practice","A neighborhood thing","Small everyday acts","Being there when someone struggles","Other"]},
+ {at:"Vision stated or implied",   q:"Is kindness part of your vision, or implied?", opts:["Stated in our vision","Implied / lived","Not yet","Other"]},
+ {at:"Kindness locus",             q:"Where should kindness begin most?", opts:["Children","Schools","Businesses","Individuals","Community","Other"]},
+ {at:"Kindness born or learned",   q:"Is kindness born, learned, or a choice?", opts:["Born","Learned","A choice","A strategy","Other"]},
+ {at:"Kindness needs audience",    q:"Does kindness need an audience?", opts:["Yes","No","Sometimes","Other"]},
+ {at:"What matters most",          q:"What kind of kindness matters most?", opts:["Everyday acts","Kind words","Grand gestures","Support in hardship","Being understood","Standing up for someone","Other"]},
+ {at:"Anonymous act",              q:"Have you given or received an anonymous kindness?", opts:["Given","Received","Both","Not that I know of","Other"]},
+ {at:"Co-host presence",           q:"Open to an A²OK World presence — we co-host a celebration at no charge?", opts:["Yes","Maybe","Not now"]}
+];
+const QWRITE = [
+ {at:"Anonymous act shared", q:"The anonymous kindness itself", h:"It stays anonymous. It may reach the Wall without your name or your business."},
+ {at:"Questionnaire other",  q:"Anything you answered “Other” to", h:"In your own words."}
+];
+
+/* ---- the stock library: real photographs, pulled from Cloudinary by tag ----
+   Requires "Resource list" enabled under Cloudinary → Settings → Security.
+   If the list endpoint is unreachable we fall back to the CSS placeholders so
+   the editor still works, just without photographs.                        */
+let LIB = [];
+const LIB_FALLBACK = ["ph-store","ph-latte","ph-staff","ph-two","ph-gather","ph-crowd"];
+const CLD = (id,w) => `https://res.cloudinary.com/${CLOUD.name}/image/upload/f_auto,q_auto,c_fill,w_${w||900}/${id}`;
+
+async function loadStock(){
+  try{
+    const r = await fetch(`https://res.cloudinary.com/${CLOUD.name}/image/list/${CLOUD.stockTag}.json`);
+    if(!r.ok) throw new Error("list unavailable");
+    const j = await r.json();
+    LIB = (j.resources||[]).map(x=>({ id:`${x.public_id}.${x.format||"jpg"}`, css:"" }));
+    if(!LIB.length) throw new Error("empty");
+  }catch(e){
+    LIB = LIB_FALLBACK.map(c=>({ id:c, css:c }));
+  }
+}
+const libEntry = id => LIB.find(x=>x.id===id) || (LIB_FALLBACK.includes(id) ? {id,css:id} : null);
+const RUNGS = [
+ {n:1,label:"Rung 1",name:"Free Flag",note:"One question. Your flag is planted."},
+ {n:2,label:"Rung 2",name:"Starter",note:"Six questions. Your card starts to sound like you."},
+ {n:3,label:"Rung 3",name:"Dressed Up",note:"Nine more. Your people are on the page."},
+ {n:4,label:"Rung 4",name:"All In",note:"A conversation, not a form."}
+];
+
+const esc = s => (s||"").replace(/[&<>]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
+const $ = id => document.getElementById(id);
+
+/* ============================ CARD RENDERER ============================
+   The same renderer that publishes. Collects every ON field, distributes it
+   across two editorial columns, and closes gaps automatically.        */
+function renderCard(flashId){
+  const r = D.workingRung || 1;
+  const on = f => D.f[f.id].on && (D.f[f.id].v||"").trim() && !f.internal;
+  const live = FIELDS.filter(f => f.rung <= r && on(f));
+  const vision = live.find(f=>f.vision);
+  const people = live.filter(f=>f.person);
+  const body   = live.filter(f=>!f.vision && !f.person && f.id!=="kindness_meaning");
+  const meaning= live.find(f=>f.id==="kindness_meaning");
+  const kc = {1:"",2:"k-brown",3:"k-maroon",4:"k-green"}[r];
+
+  const blk = f => {
+    const d = D.f[f.id];
+    const src = photoSrc(d);
+    const ph = src
+      ? `<div class="ph ${src.cls}" style="height:calc(104px * var(--dz));margin-bottom:calc(8px * var(--dz));${src.url?`background-image:url('${src.url}');background-size:cover;background-position:center;`:""}"></div>` : "";
+    return `<div data-fid="${f.id}">${ph}<div class="kick ${kc}">${f.kick}</div>
+            <div class="line sm">${esc(d.v)}</div></div>`;
+  };
+
+  /* balance the two columns by rendered weight, not by count */
+  const w = f => (D.f[f.id].v.length/55) + (photoSrc(D.f[f.id]) ? 2.1 : 0);
+  let a=[],b=[],wa=0,wb=0;
+  body.forEach(f=>{ if(wa<=wb){a.push(f);wa+=w(f);} else {b.push(f);wb+=w(f);} });
+
+  const person = f=>{
+    const d=D.f[f.id];
+    const av = (d.photoState==="photo" || d.photoState==="upload")
+      ? `<div class="avatar" ${d.uploadUrl?`style="background-image:url('${d.uploadUrl}');background-size:cover;"`:""}></div>`
+      : `<div class="nameonly">${esc(d.name||"?").charAt(0)}</div>`;
+    return `<div data-fid="${f.id}"><div class="kick ${kc}">${f.kick}</div>
+      <div class="rec" style="margin-top:6px;">${av}
+        <div><div class="recname">${esc(d.name)}</div><div class="recwhy">${esc(d.v)}</div></div>
+      </div></div>`;
+  };
+
+  const rev = (D.review.on && D.review.text && r>=2)
+    ? `<div data-fid="review" style="padding:11px 0;border-top:1px solid var(--rule2);">
+         <div class="kick ${kc}">Found by A²OK · a neighbour's public review</div>
+         <div class="line sm" style="font-style:italic;">"${esc(D.review.text)}"</div></div>` : "";
+
+  const sparse = r===1;
+  const nm = D.org.name || "Your organization";
+  const meta = [D.org.category, [D.org.city,D.org.state].filter(Boolean).join(", ")].filter(Boolean);
+
+  $("pvstage").innerHTML = `
+  <div class="card">
+    <div class="cardtop">
+      <div class="lbl">✦ A²OK KINDNESS CARD</div>
+      <div class="rbadge b${r}">RUNG ${r}</div>
+    </div>
+
+    <div class="idblock ${sparse?"":"left"}" style="${sparse?"":"align-items:flex-start;padding-bottom:8px;"}">
+      <div class="mono" ${shownLogo()?`style="background-image:url('${shownLogo()}');background-size:cover;"`:""}>${shownLogo()?"":esc(D.org.initial)}</div>
+      <div style="flex:1;">
+        <div class="orgname">${esc(nm)}</div>
+        <div class="orgmeta">${meta.map(esc).join('<span class="sep">•</span>')}</div>
+      </div>
+      ${vision && !sparse ? `<div class="vision rt" data-fid="vision" style="max-width:205px;">
+         <div class="vtext">${esc(D.f.vision.v)}</div></div>` : ""}
+    </div>
+
+    <div class="body">
+      ${sparse ? `
+        <div class="hero-statement" data-fid="kindness_meaning">
+          <div class="kick">${meaning?meaning.kick:"What kindness means to us"}</div>
+          <div class="big">"${meaning?esc(D.f.kindness_meaning.v):""}"</div>
+          <div class="flagline">We support anonymous acts of kindness.</div>
+        </div>`
+      : `
+        ${meaning?`<div class="blk noline" data-fid="kindness_meaning" style="padding-top:2px;">
+           <div class="kick ${kc}">${meaning.kick}</div>
+           <div class="line" style="font-size:15px;font-style:italic;">"${esc(D.f.kindness_meaning.v)}"</div>
+         </div>`:""}
+        ${rev}
+        <div class="flow2" style="margin-top:6px;">
+          <div class="stack">${a.map(blk).join("")}</div>
+          <div class="stack">${b.map(blk).join("")}</div>
+        </div>
+        ${people.length?`<div class="recrow" style="padding:12px 0;border-top:1px solid var(--rule2);margin-top:10px;">
+           ${people.map(person).join("")}</div>`:""}
+      `}
+    </div>
+
+    <div class="contact">
+      <div><span class="cl">PHONE</span>${esc(D.org.phone)}</div>
+      <div><span class="cl">WEBSITE</span>${esc(D.org.web)}</div>
+      <div><span class="cl">${D.org.hours?"HOURS":"CITY"}</span>${esc(D.org.hours || D.org.city)}</div>
+    </div>
+  </div>`;
+
+  fitCard();
+
+  if(flashId){
+    const el = document.querySelector(`#pvstage [data-fid="${flashId}"]`);
+    if(el){ el.classList.remove("landed"); void el.offsetWidth; el.classList.add("landed"); }
+  }
+  paintAir();
+}
+
+/* The logo A²OK found is shown to the organization so their card looks ready
+   on the warm call. It is never published until they say it is theirs. */
+function shownLogo(){ return D.media.logo || D.media.found || ""; }
+function publishedLogo(){ return D.media.logo || (D.media.useFound ? D.media.found : ""); }
+function keepFound(yes){
+  D.media.useFound = !!yes;
+  if(!yes) D.media.found = "";
+  renderQuestions(); renderCard("org"); queueSave();
+}
+
+function photoSrc(d){
+  if(d.photoState==="upload" && d.uploadUrl) return {cls:"",url:d.uploadUrl};
+  if(d.photoState==="photo" && d.photo && d.photo!=="avatar"){
+    const e = libEntry(d.photo);
+    if(e && e.css) return {cls:e.css,url:""};            /* placeholder fallback */
+    return {cls:"",url:CLD(d.photo,900)};                /* real photograph      */
+  }
+  return null;
+}
+const thumbStyle = d => {
+  const s = photoSrc(d); if(!s) return "";
+  return s.url ? `background-image:url('${s.url.replace("w_900","w_260")}');background-size:cover;background-position:center;` : "";
+};
+
+/* ---- DENSITY ENGINE -------------------------------------------------
+   The one-screen rule, enforced. Content never makes the card longer;
+   it makes the card tighter. Type, photos and gaps shrink together
+   until everything fits, down to a floor of 66%. Below that we stop
+   and tell the organization to switch something off instead.        */
+const DZ_FLOOR = 0.66;
+function fitCard(){
+  const card = document.querySelector("#pvstage .card"); if(!card) return;
+  const body = card.querySelector(".body");             if(!body) return;
+  let dz = 1, guard = 0;
+  card.style.setProperty("--dz", dz);
+  while(body.scrollHeight > body.clientHeight + 1 && dz > DZ_FLOOR && guard++ < 40){
+    dz = Math.round((dz - 0.02) * 100) / 100;
+    card.style.setProperty("--dz", dz);
+  }
+  const over = body.scrollHeight > body.clientHeight + 1;
+  const bar = $("dbar"), lab = $("dlab"), warn = $("dwarn");
+  if(bar) bar.style.width = Math.round(dz*100) + "%";
+  if(lab) lab.textContent = dz >= 1 ? "Roomy" : dz > 0.85 ? "Comfortable" : dz > 0.72 ? "Tight" : "Very tight";
+  if(warn) warn.style.display = over ? "block" : "none";
+}
+
+/* ---- PREVIEW ZOOM ---- */
+const ZMIN = 0.45, ZMAX = 1.00, ZSTEP = 0.06;
+let zLevel = 0.62;
+function applyZoom(){
+  const cap = Math.min(ZMAX, (innerHeight - 190) / 780);
+  const z = Math.min(zLevel, Math.max(ZMIN, cap));
+  document.documentElement.style.setProperty("--pvs", Math.round(z*1000)/1000);
+  const p = $("zpct"); if(p) p.textContent = Math.round(z*100) + "%";
+  const i = $("zin"), o = $("zout");
+  if(i) i.disabled = zLevel >= ZMAX - 0.001;
+  if(o) o.disabled = zLevel <= ZMIN + 0.001;
+  fitCard();
+}
+function zoom(dir){
+  zLevel = Math.min(ZMAX, Math.max(ZMIN, Math.round((zLevel + dir*ZSTEP)*100)/100));
+  applyZoom();
+}
+addEventListener("resize", applyZoom);
+
+/* ---- MAGNIFIER ---- */
+function magnify(){
+  const card = document.querySelector("#pvstage .card"); if(!card) return;
+  const clone = card.cloneNode(true);
+  clone.style.setProperty("--dz", getComputedStyle(card).getPropertyValue("--dz") || 1);
+  const inner = $("maginner");
+  inner.replaceChildren(clone);
+  const S = Math.min((innerHeight - 90) / 780, (innerWidth - 80) / 600, 1.75);
+  inner.style.setProperty("--ms", S);
+  $("magwrap").classList.add("on");
+}
+function closeMag(){ $("magwrap").classList.remove("on"); }
+addEventListener("keydown", e => { if(e.key === "Escape") closeMag(); });
+
+/* ============================ SIDEBAR ============================ */
+function renderSteps(){
+  $("steps").innerHTML = RUNGS.map(r=>{
+    const done = r.n < D.workingRung, active = r.n===D.workingRung, locked = r.n===4;
+    const st = locked ? "By invitation" : done ? "Completed" : active ? "In progress" : "Not started";
+    return `<div class="step ${done?"done":""} ${active?"active":""} ${locked&&!active?"locked":""}" onclick="goRung(${r.n})">
+      <div class="num">${locked?"★":r.n}</div>
+      <div><div class="lab">${r.label} — ${r.name}</div><div class="st">${st}</div></div></div>`;
+  }).join("") + `
+    <div class="step" style="margin-top:8px;border-top:1px solid var(--rule2);padding-top:13px;" onclick="goRung(0)">
+      <div class="num" style="background:#DCE7DD;color:var(--green);">?</div>
+      <div><div class="lab">The private questions</div><div class="st">Never on your card</div></div></div>`;
+}
+
+function renderLinks(){
+  const pub = $("lnk_pub"), prv = $("lnk_prv");
+  if(pub) pub.textContent = D.slug ? `aokinaction.com/${D.slug}` : "— after your first save";
+  if(prv) prv.textContent = D.editToken ? `aokinaction.com/?edit=${D.editToken}` : "— after your first save";
+}
+
+/* ============================ QUESTION FORM ============================ */
+
+/* =========================================================================
+   SYMBOL DROPDOWN
+   Eight medallions with eight worked answers, so an organization can finish
+   a question by tapping rather than by writing. Every glyph lives in
+   aok-symbols.js - nothing is drawn in this file, and the same module serves
+   every card. Three fields take no symbol: the two person fields render a
+   face, and the Gazette question never reaches the card.
+   ========================================================================= */
+let symOpen = null;
+let focusOther = null;       /* field whose Other box should take the cursor */
+
+function hasSym(id){
+  if(typeof AOKSymbols === "undefined"){ symWarn(); return false; }
+  return AOKSymbols.fields.indexOf(id) > -1;
+}
+/* a missing module used to render nothing at all, which looks exactly like
+   "the symbols were never built". Never fail quietly again. */
+let symWarned = false;
+function symWarn(){
+  if(symWarned) return; symWarned = true;
+  const d = document.createElement("div");
+  d.style.cssText = "position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#8A2222;"
+    + "color:#FFF6E8;font:600 13px/1.5 var(--sans);padding:11px 18px;text-align:center";
+  d.textContent = "The symbol module did not load, so the answer dropdowns are missing. "
+    + "aok-symbols.js must sit in the same folder as this page.";
+  document.body.appendChild(d);
+}
+
+function symDrop(f, d){
+  if(!hasSym(f.id)) return "";
+  const open   = symOpen === f.id;
+  const fixed  = !!AOKSymbols.flags[f.id];
+  const picked = d.symbol && AOKSymbols.get(f.id, d.symbol).id === d.symbol;
+  if(fixed && !d.symbol) d.symbol = AOKSymbols.defaultFor(f.id);
+
+  const c    = d.symbol ? AOKSymbols.get(f.id, d.symbol) : null;
+  const head = c
+    ? AOKSymbols.medal(f.id, d.symbol)
+    : `<div class="symnone">?</div>`;
+  const title = c
+    ? `<b>${esc(c.name)}${fixed ? " &middot; your flag" : ""}</b><i>${esc(c.category)}` +
+      (d.also.length ? ` <span class="als">+ ${d.also.length} also true</span>` : "") + `</i>`
+    : `<b>Pick the answer that fits</b><i>Eight to choose from. Tap one and this question is answered &mdash; writing is optional.</i>`;
+
+  if(fixed){
+    return `<div class="symdrop"><div class="symhead" style="cursor:default">
+      ${head}<span class="st">${title}</span></div></div>`;
+  }
+  return `<div class="symdrop${open ? " open" : ""}">
+    <button type="button" class="symhead" onclick="toggleSym('${f.id}')" aria-expanded="${open}">
+      ${head}<span class="st">${title}</span><span class="cv">&#9660;</span></button>
+    <div class="symbody">
+      <p class="symcap">Pick the one that best represents you. If more than one is true, mark the
+      others <b>+ also</b> &mdash; they ride along on the card. Nothing here is a grade.</p>
+      ${AOKSymbols.picker(f.id, d)}
+    </div></div>`;
+}
+
+function toggleSym(id){ symOpen = (symOpen === id) ? null : id; renderQuestions(); }
+
+/* after a render, put the cursor in the box that "Other" just opened */
+function applyOtherFocus(){
+  if(!focusOther) return;
+  const q = document.getElementById("qrow_" + focusOther);
+  const t = q && q.querySelector("textarea");
+  if(t){ t.focus(); t.setSelectionRange(t.value.length, t.value.length); }
+  focusOther = null;
+}
+
+/* one delegated listener drives every dropdown on the page */
+document.addEventListener("click", function(e){
+  const wrap = e.target.closest(".aok-picker"); if(!wrap) return;
+  const pick = e.target.closest("[data-pick]"), also = e.target.closest("[data-also]");
+  const id = wrap.dataset.field, d = D.f[id]; if(!d) return;
+  if(pick){
+    d.also = d.also.filter(x => x !== pick.dataset.pick);
+    d.symbol = pick.dataset.pick;
+    symOpen = null;                      /* answered - fold it back up */
+    if(d.symbol === "other") focusOther = id;   /* and open the box for them */
+  } else if(also){
+    const a = also.dataset.also; if(a === d.symbol) return;
+    d.also = d.also.indexOf(a) > -1 ? d.also.filter(x => x !== a) : d.also.concat([a]);
+  } else return;
+  renderQuestions(); renderCard(id); queueSave();
+});
+
+/* the compact string the base stores, e.g.
+   house_move:free-wifi+free-water k_gave:the-extra                        */
+function symbolString(){
+  return FIELDS.filter(f => hasSym(f.id) && D.f[f.id].symbol)
+    .map(f => { const d = D.f[f.id];
+      return f.id + ":" + d.symbol + (d.also.length ? "+" + d.also.join("+") : ""); })
+    .join(" ");
+}
+function readSymbolString(str){
+  (str || "").split(/\s+/).filter(Boolean).forEach(tok => {
+    const [id, rest] = tok.split(":"); if(!D.f[id] || !rest) return;
+    const parts = rest.split("+");
+    D.f[id].symbol = parts[0];
+    D.f[id].also   = parts.slice(1);
+  });
+}
+
+function renderQuestions(){
+  const r = D.workingRung;
+  $("pvtag").textContent = r===0 ? "YOUR CARD (UNCHANGED)" : `RUNG ${r} PREVIEW`;
+  $("stepNote").textContent =
+    r===0 ? "The private questionnaire — none of this reaches your card."
+          : r===4 ? "Rung 4 — this one we do together."
+          : `${RUNGS[r-1].label} — every answer lands on the card as you go.`;
+
+  if(r===4) return renderConversation();
+  if(r===0) return renderPrivate();
+
+  const set = D.showAll ? FIELDS.filter(f=>f.rung<=r) : FIELDS.filter(f=>f.rung===r);
+  const R = RUNGS[r-1];
+  let h = `<div class="qtop">
+    <span class="cnt">${set.length} QUESTION${set.length>1?"S":""}</span>
+    <h2>${R.label} — ${R.name}</h2>
+    <p>${R.note} Answer what you like, switch off what you don't. Nothing publishes until we've read it.</p>
+  </div>
+
+  <div class="idsec ${D.idOpen?"open":""}">
+    <div class="idhead" onclick="D.idOpen=!D.idOpen;renderQuestions();">
+      <span class="chev">▶</span> ✎ What we found for you — fix anything we got wrong
+    </div>
+    ${(D.media.found && !D.media.logo) ? `
+      <div class="review" style="margin:0 0 14px;">
+        <div class="rl">✦ WE FOUND THIS LOGO — IS IT YOURS?</div>
+        <div style="display:flex;align-items:center;gap:14px;margin-top:9px;">
+          <div class="mono" style="width:52px;height:52px;margin:0;background-image:url('${D.media.found}');background-size:cover;"></div>
+          <div style="flex:1;">
+            <div class="rs">Found on your own website. It shows here so you can see how your card looks —
+              it doesn't go on the public card until you say it's yours.</div>
+            <div class="rrow" style="margin-top:9px;">
+              <button class="tbtn solid" style="padding:6px 13px;" onclick="keepFound(true)">Yes, that's ours</button>
+              <button class="tbtn" style="padding:6px 13px;margin-left:8px;" onclick="keepFound(false)">No — remove it</button>
+              ${D.media.useFound?`<span style="font-size:11px;color:var(--green);margin-left:10px;">✓ on your card</span>`:""}
+            </div>
+          </div>
+        </div>
+      </div>` : ""}
+    <div class="idgrid">
+      ${[["name","ORGANIZATION"],["category","CATEGORY"],["city","CITY / NEIGHBOURHOOD"],
+         ["state","STATE"],["owner","OWNER / MANAGER"],["phone","PHONE"],
+         ["web","WEBSITE"],["motto","MOTTO"],["kicker","YOUR ONE LINE"]].map(([k,l])=>
+        `<div class="idf"><label>${l}</label>
+         <input type="text" value="${esc(D.org[k])}" oninput="setOrg('${k}',this.value)"></div>`).join("")}
+    </div>
+  </div>
+
+  <div class="allrow">
+    <div class="switch ${D.showAll?"on":""}" onclick="D.showAll=!D.showAll;renderQuestions();"></div>
+    <span>Show every answer so far, not just this rung${D.showAll?"":" — earlier rungs stay editable either way"}</span>
+  </div>`;
+
+  let lastRung = 0;
+
+  if(r===2 && D.review.text){
+    h += `<div class="review">
+      <div class="rl">✦ WE FOUND THIS — MAY WE SHOW IT?</div>
+      <div class="rq">"${esc(D.review.text)}"</div>
+      <div class="rs">${esc(D.review.src)}</div>
+      <div class="rrow">
+        <div class="tog"><div class="switch ${D.review.on?"on":""}" onclick="toggleReview(this)"></div>
+        <span class="tl">Show on our card</span></div>
+        <span style="font-size:11px;color:var(--muted);font-style:italic;">You didn't write it. That's the point.</span>
+      </div></div>`;
+  }
+
+  set.forEach((f,i)=>{
+    const d = D.f[f.id];
+    if(D.showAll && f.rung!==lastRung){
+      lastRung = f.rung;
+      const c = {1:"var(--gold)",2:"var(--brown)",3:"var(--maroon)"}[f.rung];
+      h += `<div class="gdiv"><span class="gn" style="background:${c}">${f.rung}</span>
+            <span class="gt" style="color:${c}">${RUNGS[f.rung-1].label} — ${RUNGS[f.rung-1].name}</span></div>`;
+    }
+    h += `<div class="q" id="qrow_${f.id}"><div class="qL">
+      <div class="qn"><span class="qi">${i+1}.</span><span class="qt">${f.q}</span></div>
+      <div class="qh">${f.h}</div>` + symDrop(f, d);
+
+    if(f.choice){
+      h += `<div class="radios">` + f.choice.map(c=>
+        `<label><input type="radio" name="${f.id}" ${d.chosen===c?"checked":""}
+          onchange="setChoice('${f.id}','${c}')"> ${c}</label>`).join("") + `</div>`;
+    }
+    if(f.person){
+      h += `<div class="fieldwrap" style="margin-bottom:9px;">
+        <input type="text" value="${esc(d.name)}" placeholder="Their name"
+          oninput="setName('${f.id}',this.value)"></div>`;
+    }
+    /* Writing is optional wherever a symbol can answer the question. A blank box
+       sitting open under a finished answer reads as unfinished work, so it stays
+       shut until asked for. Fields with no symbol have no other way in, so their
+       box is always open. */
+    const mustWrite = !hasSym(f.id);
+    const isOther   = d.symbol === "other";
+    /* "Other" already means "none of these - tell us in your own words", so it
+       IS the request for a writing box. Nothing else opens one, and a box the
+       org never asked for never sits there looking unfinished. Text already
+       written always keeps its box, whatever they pick afterwards. */
+    const isOpen    = mustWrite || isOther || d.v;
+
+    if(isOpen){
+      if(isOther) h += `<div class="otherhead">Your own words &mdash; this is the one we most want to read.</div>`;
+      if(f.starter) h += `<div class="starter">Starts with: "${f.starter}"</div>`;
+      h += `<div class="fieldwrap">
+        <textarea rows="${f.person?2:3}" oninput="setVal('${f.id}',this.value,this)"
+          placeholder="${esc(f.starter||f.eg||"Type your answer here…")}">${esc(d.v)}</textarea>
+        <div class="meta">
+          <span>${isOther ? "a sentence or two &mdash; whatever the eight did not cover"
+                                : "a sentence or two"}</span>
+          <span class="count ${d.v.length>f.max?"over":""}" id="c_${f.id}">${d.v.length} / ${f.max}</span></div>
+      </div>`;
+    }
+    h += `</div>`;
+
+    /* right-hand controls */
+    h += `<div class="qR">`;
+    if(f.person){
+      h += `<div class="ctl"><div class="cl">HOW TO SHOW THEM</div>
+        <div class="seg rec">
+          <button class="${d.photoState==="upload"?"on":""}" onclick="uploadFor('${f.id}')">Photo + name</button>
+          <button class="${d.photoState!=="upload"?"on":""}" onclick="setPhotoState('${f.id}','name')">Name only</button>
+        </div>
+        <div style="font-size:10px;color:var(--muted);margin-top:6px;line-height:1.4;">
+          Their photo must be yours — never ours.</div></div>`;
+    } else if(f.vision || f.internal){
+      h += `<div class="ctl"><div class="cl">PHOTO</div>
+        <div style="font-size:10.5px;color:var(--muted);line-height:1.45;">
+          ${f.internal?"Not shown on your card — this one is just for us.":"Your vision is set in handwriting. No photo needed."}</div></div>`;
+    } else {
+      h += `<div class="ctl"><div class="cl">PHOTO</div>
+        <div class="seg">
+          <button class="${d.photoState==="photo"?"on":""}" onclick="setPhotoState('${f.id}','photo')">Ours</button>
+          <button class="${d.photoState==="upload"?"on":""}" onclick="uploadFor('${f.id}')">Upload</button>
+          <button class="${d.photoState==="off"?"on":""}" onclick="setPhotoState('${f.id}','off')">None</button>
+        </div>
+        ${d.photoState==="photo"&&d.photo?`<div class="thumb ${(libEntry(d.photo)||{}).css||""}" style="${thumbStyle(d)}"></div>
+          <div class="picklib" onclick="cyclePhoto('${f.id}')">Choose a different one</div>`:""}
+        ${d.photoState==="upload"&&d.uploadUrl?`<div class="thumb" style="${thumbStyle(d)}"></div>`:""}
+      </div>`;
+    }
+
+    h += `<div class="ctl"><div class="cl">ON THE CARD</div>` +
+      (f.internal
+        ? `<div style="font-size:10.5px;color:var(--muted);line-height:1.45;">Never — this answer is only for A²OK.</div>`
+        : f.req
+        ? `<div class="lockpill">🔒 Always on</div>`
+        : `<div class="tog"><div class="switch ${d.on?"on":""}" onclick="toggleOn('${f.id}',this)"></div>
+           <span class="tl">${d.on?"Showing":"Hidden"}</span></div>`) +
+      `</div></div></div>`;
+  });
+
+  h += `<div class="qfooter">
+    ${r>1?`<button class="backbtn" onclick="goRung(${r-1})">← Rung ${r-1}</button>`:""}
+    <div class="auto" id="autonote">✓ Saved automatically as you type</div>
+    <button class="nextbtn" onclick="goRung(${r+1})">
+      ${r===3?"I'd like to talk about Rung 4 →":`Save and continue to Rung ${r+1} →`}</button>
+  </div>`;
+
+  $("qwrap").innerHTML = h;
+  applyOtherFocus();
+}
+
+function renderConversation(){
+  $("qwrap").innerHTML = `
+  <div class="qtop"><h2>Rung 4 — All In</h2>
+    <p>This one isn't a form. It's a conversation, because by now we're working together.</p></div>
+  <div class="conv">
+    <h3>Here's what we'd bring.</h3>
+    <p>Nothing on this list is something you type. Every one of them is something A²OK does with you —
+       which is why it starts with a phone call and not a text box.</p>
+    <div class="convgrid">
+      <div class="convitem"><div class="ct">AN INTERVIEW</div>
+        <div class="cd">We sit down with you about kindness in your corner of the community, and we write it up.</div></div>
+      <div class="convitem"><div class="ct">THE GAZETTE</div>
+        <div class="cd">Your story runs in The Kindness Gazette and links straight from your card.</div></div>
+      <div class="convitem"><div class="ct">AN EVENT</div>
+        <div class="cd">We help you host something small and put it in front of a kindness-minded audience.</div></div>
+      <div class="convitem"><div class="ct">SHARE AN ACT</div>
+        <div class="cd">A code on your counter. Customers add their own acts, anonymously. Your card keeps the count.</div></div>
+    </div>
+    <button class="nextbtn" style="margin:0;" onclick="askRung4()">Yes — let's talk →</button>
+    <button class="backbtn" style="margin-left:10px;" onclick="goRung(3)">← Back to Rung 3</button>
+  </div>`;
+}
+
+/* ---- the private questionnaire, on the live Questionnaire v2 fields ---- */
+function renderPrivate(){
+  const chip = (g) => `
+    <div class="q" style="grid-template-columns:1fr;">
+      <div class="qL">
+        <div class="qn"><span class="qt">${g.q}</span></div>
+        <div class="radios" style="margin-top:8px;">
+          ${g.opts.map(o=>`<label><input type="radio" name="${esc(g.at)}" ${D.q[g.at]===o?"checked":""}
+             onchange="setQ('${esc(g.at)}','${esc(o)}')"> ${o}</label>`).join("")}
+        </div>
+      </div>
+    </div>`;
+
+  const write = (g) => `
+    <div class="q" style="grid-template-columns:1fr;">
+      <div class="qL">
+        <div class="qn"><span class="qt">${g.q}</span></div>
+        <div class="qh">${g.h}</div>
+        <div class="fieldwrap"><textarea rows="3" oninput="setQ('${esc(g.at)}',this.value)"
+          placeholder="Only if you'd like to.">${esc(D.q[g.at]||"")}</textarea></div>
+      </div>
+    </div>`;
+
+  const answered = [...QSPINE,...QSNAP].filter(g=>D.q[g.at]).length;
+
+  $("qwrap").innerHTML = `
+  <div class="qtop"><span class="cnt">${answered} OF ${QSPINE.length+QSNAP.length} ANSWERED</span>
+    <h2>One more thing we'll ask of you</h2>
+    <p>A short questionnaire for A²OK's research into how kindness actually works in real organizations.</p></div>
+  <div class="privbanner"><div class="pi">🔒</div>
+    <div class="pt"><b>None of this appears on your card.</b> Ever. It feeds our research, and once in a
+      while an unattributed line finds its way to the Wall — never your name, never your business.</div></div>
+
+  <div class="gdiv" style="margin-top:20px;"><span class="gn" style="background:var(--green)">✦</span>
+    <span class="gt" style="color:var(--green)">The three we ask everyone, every year</span></div>
+  ${QSPINE.map(chip).join("")}
+
+  <div class="gdiv"><span class="gn" style="background:var(--brown)">·</span>
+    <span class="gt" style="color:var(--brown)">A snapshot of how your organization sees it</span></div>
+  ${QSNAP.map(chip).join("")}
+
+  <div class="gdiv"><span class="gn" style="background:var(--gold)">✎</span>
+    <span class="gt" style="color:var(--gold)">In your own words — both optional</span></div>
+  ${QWRITE.map(write).join("")}
+
+  <div class="qfooter">
+    <button class="backbtn" onclick="goRung(${Math.max(1,D.publishedRung||1)})">← Back to my card</button>
+    <div class="auto">✓ Saved automatically</div>
+  </div>`;
+}
+
+/* ============================ MUTATIONS ============================ */
+function goRung(n){ D.workingRung=n; renderSteps(); renderQuestions(); if(n>0&&n<5) renderCard(); }
+
+function setVal(id,v,el){
+  D.f[id].v=v;
+  const f=FIELDS.find(x=>x.id===id), c=$("c_"+id);
+  if(c){ c.textContent=`${v.length} / ${f.max}`; c.classList.toggle("over",v.length>f.max); }
+  clearTimeout(el._t); el._t=setTimeout(()=>{ renderCard(id); queueSave(); },450);  /* lands on pause, not per keystroke */
+}
+function setOrg(k,v){
+  D.org[k]=v;
+  if(k==="name"){ D.org.initial=(v||"?").trim().charAt(0).toUpperCase();
+    const t=$("orgTitle"); if(t) t.textContent = v || "your organization"; }
+  renderCard("org"); queueSave();
+}
+function setName(id,v){ D.f[id].name=v; renderCard(id); queueSave(); }
+function setChoice(id,c){ D.f[id].chosen=c; D.f[id].v=D.f[id].v||c; renderCard(id); queueSave(); }
+function setQ(at,v){ D.q[at]=v; paintAir(); queueSave(); }
+function setPhotoState(id,s){
+  D.f[id].photoState=s;
+  if(s==="photo" && (!D.f[id].photo || !libEntry(D.f[id].photo))) D.f[id].photo = (LIB[0]||{}).id || "";
+  renderQuestions(); renderCard(id); queueSave();
+}
+function cyclePhoto(id){
+  if(!LIB.length) return;
+  /* no photograph twice on one card — walk past anything already in use */
+  const used = new Set(FIELDS.filter(f=>f.id!==id && D.f[f.id].photoState==="photo")
+                             .map(f=>D.f[f.id].photo));
+  const i = LIB.findIndex(x=>x.id===D.f[id].photo);
+  for(let n=1;n<=LIB.length;n++){
+    const cand = LIB[(i+n)%LIB.length].id;
+    if(!used.has(cand) || n===LIB.length){ D.f[id].photo = cand; break; }
+  }
+  renderQuestions(); renderCard(id); queueSave();
+}
+function toggleOn(id,el){ D.f[id].on=!D.f[id].on; el.classList.toggle("on",D.f[id].on); renderQuestions(); renderCard(id); queueSave(); }
+function toggleReview(el){ D.review.on=!D.review.on; el.classList.toggle("on",D.review.on); renderCard("review"); queueSave(); }
+function askRung4(){ note("A²OK will reach out — usually within a day or two."); queueSave(); }
+
+/* ---- Cloudinary upload ---- */
+function uploadFor(id){
+  openUpload(url=>{
+    const d = D.f[id];
+    d.uploadUrl = url; d.photoState = "upload";
+    renderQuestions(); renderCard(id); queueSave();
+  });
+}
+function uploadLogo(){ openUpload(u=>{ D.media.logo=u; renderCard("org"); queueSave(); }); }
+function uploadHero(){ openUpload(u=>{ D.media.hero=u; renderCard("org"); queueSave(); }); }
+
+function openUpload(cb){
+  if(!window.cloudinary){ note("Photo upload isn't available right now."); return; }
+  cloudinary.createUploadWidget({
+    cloudName: CLOUD.name, uploadPreset: CLOUD.preset, folder: CLOUD.folder,
+    sources:["local","camera"], multiple:false, maxFileSize: 8000000,
+    clientAllowedFormats:["png","jpg","jpeg","webp","heic"]
+  },(err,res)=>{
+    if(!err && res && res.event==="success"){
+      cb(res.info.secure_url.replace("/upload/","/upload/f_auto,q_auto,c_fill,w_900/"));
+    }
+  }).open();
+}
+
+/* ============================ AIRTABLE PAYLOAD ============================
+   The real record. Field names below are the live Organizations columns —
+   verified against the base, not invented for the mock-up.              */
+function buildRecord(){
+  const rec = {};
+  const put = (k,v) => { if(v!==undefined && v!==null && String(v).trim()!=="") rec[k]=v; };
+
+  put("Org name",     D.org.name);
+  put("Card category",D.org.category);
+  put("Contact name", D.org.owner);
+  put("City",         D.org.city);
+  put("State",        D.org.state);
+  put("Contact phone",D.org.phone);
+  put("Website",      D.org.web);
+  put("Motto",        D.org.motto);
+  put("Kicker",       D.org.kicker);
+
+  FIELDS.forEach(f=>{
+    const d = D.f[f.id];
+    if(f.person){ put(f.at, d.name); put(f.atFor, d.v); }
+    else if(f.choice && !d.v) put(f.at, d.chosen);
+    else put(f.at, d.v);
+  });
+
+  /* one comma list, the way the base already models it */
+  const off = FIELDS.filter(f=>!f.internal && !f.req && !D.f[f.id].on).map(f=>f.id);
+  if(off.length) rec["Card fields off"] = off.join(",");
+
+  /* photo choices, on the fields the base already has */
+  const lib = r => FIELDS.filter(f=>f.rung===r && D.f[f.id].photoState==="photo" && D.f[f.id].photo)
+                         .map(f=>`${f.id}:${D.f[f.id].photo}`).join(", ");
+  put("Card 2 photo",  lib(2));
+  put("Card 3 photos", lib(3));
+
+  put("Logo URL",  publishedLogo());
+  put("Hero photo URL", D.media.hero);
+  const gal = FIELDS.map(f=>D.f[f.id].uploadUrl).filter(Boolean);
+  if(gal.length) rec["Gallery photo URLs"] = gal.join(", ");
+
+  /* questionnaire v2 — only when answered, so we never mint blank options */
+  Object.keys(D.q).forEach(at=>put(at,D.q[at]));
+  const answered = [...QSPINE,...QSNAP].filter(g=>D.q[g.at]).length;
+  if(answered) rec["Questions answered"] = answered;
+
+  /* the symbol picks, one string, the way Card 2 photo already works */
+  if(PENDING.symbolChoices) put(PENDING.symbolChoices, symbolString());
+
+  /* fields the base does not have yet — see PENDING */
+  if(PENDING.hours)      put(PENDING.hours, D.org.hours);
+  if(PENDING.reviewText) put(PENDING.reviewText, D.review.text);
+  if(PENDING.reviewShow) rec[PENDING.reviewShow] = !!D.review.on;
+
+  return rec;
+}
+
+function paintAir(){
+  const rec = buildRecord();
+  const j = JSON.stringify(rec,null,2)
+    .replace(/"([^"]+)":/g,'"<span class="k">$1</span>":')
+    .replace(/: "(.*?)"(,?)$/gm,': "<span class="s">$1</span>"$2')
+    .replace(/: (true|false|null)(,?)$/gm,': <span class="n">$1</span>$2');
+  const verb = D.recordId ? `PATCH …/Organizations/${D.recordId}` : "POST …/Organizations";
+  const el = $("air"); if(!el) return;
+  el.innerHTML =
+    `<span class="c">// ${verb}\n`+
+    `// one record per organization · written on every autosave\n`+
+    `// A²OK approves the public rung — filled fields never promote a card</span>\n\n`+j;
+}
+
+/* ============================ SAVE ============================ */
+let saveTimer = null;
+function queueSave(){
+  D.dirty = true; setSaved("Saving…");
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(save, 1200);
+}
+function setSaved(t){ const e=document.querySelector(".saved"); if(e) e.innerHTML=`<span class="tick">✓</span> ${t}`; }
+
+async function save(){
+  if(D.saving || !D.org.name){ if(!D.org.name) setSaved("Add your name to start saving"); return; }
+  D.saving = true;
+  try{
+    const r = await fetch(FN_SAVE,{
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({
+        recordId: D.recordId || undefined,
+        editToken: D.editToken || undefined,
+        fields: buildRecord()
+      })
+    });
+    const j = await r.json();
+    if(!r.ok) throw new Error(j.error || "save failed");
+    if(j.id)   D.recordId  = j.id;
+    if(j.slug) D.slug      = j.slug;
+    if(j.editToken) D.editToken = j.editToken;
+    D.dirty = false; setSaved("All changes saved"); renderLinks(); paintAir();
+  }catch(e){
+    setSaved("Not saved — we'll retry");
+    setTimeout(()=>{ if(D.dirty) save(); }, 6000);
+  }finally{ D.saving = false; }
+}
+
+function note(t){ const n=$("notebar"); if(!n){ alert(t); return; }
+  n.textContent=t; n.classList.add("on"); setTimeout(()=>n.classList.remove("on"),3200); }
+
+/* ============================ BOOT ============================ */
+async function boot(){
+  await loadStock();
+  const p = new URLSearchParams(location.search);
+  const start = parseInt(p.get("start")||"1",10);
+  D.workingRung = (start>=1 && start<=4) ? start : 1;
+
+  /* Only the private edit token rehydrates the builder. A slug lookup is the
+     public read and deliberately returns no private key, so it can't be used
+     to open somebody else's card for editing. */
+  const tok = p.get("edit");
+  if(tok){
+    try{
+      const r = await fetch(`${FN_GET}?edit=${encodeURIComponent(tok)}`);
+      if(r.ok) hydrate(await r.json());
+      else note("That edit link is no longer valid — this is a fresh card.");
+    }catch(e){ /* a fresh card is a fine fallback */ }
+  }
+  if(D.publishedRung && !p.get("start")) D.workingRung = Math.min(3, Math.max(1, D.publishedRung));
+  D.loaded = true;
+  const t=$("orgTitle"); if(t) t.textContent = D.org.name || "your organization";
+  renderSteps(); renderLinks(); renderQuestions(); renderCard(); applyZoom();
+}
+
+/* map a live Airtable record back onto D */
+function hydrate(j){
+  const F = j.fields || j;
+  D.recordId  = j.id || "";
+  D.slug      = j.slug || "";
+  D.editToken = j.editToken || "";
+  D.org.name     = F["Org name"] || "";
+  D.org.initial  = (D.org.name||"?").trim().charAt(0).toUpperCase();
+  D.org.category = F["Card category"] || F["Category"] || "";
+  D.org.owner    = F["Contact name"] || "";
+  D.org.city     = F["City"] || "";
+  D.org.state    = F["State"] || "";
+  D.org.phone    = F["Contact phone"] || "";
+  D.org.web      = F["Website"] || "";
+  D.org.motto    = F["Motto"] || "";
+  D.org.kicker   = F["Kicker"] || "";
+
+  FIELDS.forEach(f=>{
+    const d = D.f[f.id];
+    if(f.person){ d.name = F[f.at] || ""; d.v = F[f.atFor] || ""; }
+    else { d.v = F[f.at] || ""; if(f.choice) d.chosen = d.v; }
+  });
+
+  if(PENDING.symbolChoices) readSymbolString(F[PENDING.symbolChoices]);
+
+  const off = (F["Card fields off"]||"").split(",").map(s=>s.trim()).filter(Boolean);
+  off.forEach(id=>{ if(D.f[id]) D.f[id].on = false; });
+
+  [2,3].forEach(r=>{
+    (F[r===2?"Card 2 photo":"Card 3 photos"]||"").split(",").forEach(pair=>{
+      const [id,ph] = pair.split(":").map(s=>(s||"").trim());
+      if(id && ph && D.f[id]){ D.f[id].photo = ph; D.f[id].photoState = "photo"; }
+    });
+  });
+
+  D.media.logo  = F["Logo URL"] || "";
+  D.media.found = F["Logo URL (found)"] || "";
+  D.media.useFound = !!D.media.logo && D.media.logo === D.media.found;
+  D.media.hero = F["Hero photo URL"] || "";
+
+  [...QSPINE,...QSNAP,...QWRITE].forEach(g=>{ if(F[g.at]) D.q[g.at] = F[g.at]; });
+
+  const pub = F["Rung"] || "";
+  D.publishedRung = parseInt((pub.match(/^\d/)||["0"])[0],10) || 0;
+  if(PENDING.reviewText && F[PENDING.reviewText]){
+    D.review.text = F[PENDING.reviewText]; D.review.on = !!F[PENDING.reviewShow];
+  }
+}
+
+
+/* ---- toolbar ---- */
+function viewPublic(){
+  if(!D.slug){ note("Your public card gets its address the first time you save."); return; }
+  window.open(`/${D.slug}`,"_blank");
+}
+function copyPrivate(btn){
+  if(!D.editToken){ note("Your private link is created the first time you save."); return; }
+  const url = `${location.origin}/?edit=${D.editToken}`;
+  (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject())
+    .then(()=>{ btn.textContent="Copied ✓"; setTimeout(()=>btn.textContent="Copy private link",1400); })
+    .catch(()=>note(url));
+}
+async function sendForReview(){
+  if(!D.org.name){ note("Add your organization's name first."); return; }
+  await save();
+  note("Sent. A²OK reads every card before it goes live — we'll be in touch.");
+  const box = document.querySelector(".airbox");
+  if(box){ box.classList.add("open"); box.scrollIntoView({behavior:"smooth"}); }
+}
+
+/* inject the medallion gradients once, before anything renders */
+if(typeof AOKSymbols !== "undefined") AOKSymbols.mount();
+
+boot();
+
+</script>
+</body>
+</html>
