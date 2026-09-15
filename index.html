@@ -1004,7 +1004,7 @@ const FIELDS = [
 
 FIELDS.forEach(f=>{
   D.f[f.id]={v:"", name:"", on:true, photo:f.photo, photoState:f.photoState||"off", chosen:"",
-             symbol:"", also:[]};
+             symbol:"", also:[], auto:false};
 });
 
 /* ---- the private questionnaire — the live Questionnaire v2 fields ---- */
@@ -1099,7 +1099,7 @@ function renderCard(flashId){
   const rev = (D.review.on && D.review.text && r>=2)
     ? `<div data-fid="review" style="padding:11px 0;border-top:1px solid var(--rule2);">
          <div class="kick ${kc}">Found by A²OK · a neighbour's public review</div>
-         <div class="line sm" style="font-style:italic;">"${esc(D.review.text)}"</div></div>` : "";
+         <div class="line sm" style="font-style:italic;">“${esc(D.review.text)}”</div></div>` : "";
 
   const sparse = r===1;
   const nm = D.org.name || "Your organization";
@@ -1126,13 +1126,13 @@ function renderCard(flashId){
       ${sparse ? `
         <div class="hero-statement" data-fid="kindness_meaning">
           <div class="kick">${meaning?meaning.kick:"What kindness means to us"}</div>
-          <div class="big">"${meaning?esc(D.f.kindness_meaning.v):""}"</div>
+          <div class="big">“${meaning?esc(D.f.kindness_meaning.v):""}”</div>
           <div class="flagline">We support anonymous acts of kindness.</div>
         </div>`
       : `
         ${meaning?`<div class="blk noline" data-fid="kindness_meaning" style="padding-top:2px;">
            <div class="kick ${kc}">${meaning.kick}</div>
-           <div class="line" style="font-size:15px;font-style:italic;">"${esc(D.f.kindness_meaning.v)}"</div>
+           <div class="line" style="font-size:15px;font-style:italic;">“${esc(D.f.kindness_meaning.v)}”</div>
          </div>`:""}
         ${rev}
         <div class="flow2" style="margin-top:6px;">
@@ -1340,6 +1340,14 @@ document.addEventListener("click", function(e){
     d.symbol = pick.dataset.pick;
     symOpen = null;                      /* answered - fold it back up */
     if(d.symbol === "other") focusOther = id;   /* and open the box for them */
+    /* Fill the card with this option's own reader-facing sentence, unless the
+       org has written their own words — real writing always wins and is never
+       overwritten. d.auto marks text that WE put there, so a later pick can
+       still safely replace it. */
+    if(d.symbol !== "other" && (d.auto || !d.v.trim())){
+      const c = AOKSymbols.get(id, d.symbol);
+      if(c){ d.v = c.category; d.auto = true; }
+    }
   } else if(also){
     const a = also.dataset.also; if(a === d.symbol) return;
     d.also = d.also.indexOf(a) > -1 ? d.also.filter(x => x !== a) : d.also.concat([a]);
@@ -1422,7 +1430,7 @@ function renderQuestions(){
   if(r===2 && D.review.text){
     h += `<div class="review">
       <div class="rl">✦ WE FOUND THIS — MAY WE SHOW IT?</div>
-      <div class="rq">"${esc(D.review.text)}"</div>
+      <div class="rq">“${esc(D.review.text)}”</div>
       <div class="rs">${esc(D.review.src)}</div>
       <div class="rrow">
         <div class="tog"><div class="switch ${D.review.on?"on":""}" onclick="toggleReview(this)"></div>
@@ -1467,7 +1475,7 @@ function renderQuestions(){
 
     if(isOpen){
       if(isOther) h += `<div class="otherhead">Your own words &mdash; this is the one we most want to read.</div>`;
-      if(f.starter) h += `<div class="starter">Starts with: "${f.starter}"</div>`;
+      if(f.starter) h += `<div class="starter">Starts with: “${f.starter}”</div>`;
       h += `<div class="fieldwrap">
         <textarea rows="${f.person?2:3}" oninput="setVal('${f.id}',this.value,this)"
           placeholder="${esc(f.starter||f.eg||"Type your answer here…")}">${esc(d.v)}</textarea>
@@ -1606,6 +1614,7 @@ function goRung(n){ D.workingRung=n; renderSteps(); renderQuestions(); if(n>0&&n
 
 function setVal(id,v,el){
   D.f[id].v=v;
+  D.f[id].auto=false;   /* the org is typing, so this is their voice now, not our default */
   const f=FIELDS.find(x=>x.id===id), c=$("c_"+id);
   if(c){ c.textContent=`${v.length} / ${f.max}`; c.classList.toggle("over",v.length>f.max); }
   clearTimeout(el._t); el._t=setTimeout(()=>{ renderCard(id); queueSave(); },450);  /* lands on pause, not per keystroke */
@@ -1814,6 +1823,7 @@ function hydrate(j){
     const d = D.f[f.id];
     if(f.person){ d.name = F[f.at] || ""; d.v = F[f.atFor] || ""; }
     else { d.v = F[f.at] || ""; if(f.choice) d.chosen = d.v; }
+    d.auto = false;   /* a saved value is treated as authored, whatever put it there */
   });
 
   if(PENDING.symbolChoices) readSymbolString(F[PENDING.symbolChoices]);
